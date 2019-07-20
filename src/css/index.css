@@ -1,0 +1,81 @@
+body{
+  margin : 0;
+}
+
+a{
+  cursor: pointer;
+}
+
+footer{
+  background-color: #38673d;
+  width: 100%;
+  height: 64px;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+@font-face {
+    font-family: DHTitle;
+    src: url(../fuentes/CASTELAR.ttf);
+}
+
+h1{
+    font-family: DHTitle !important;
+    font-weight: bolder;
+}
+
+.contenido {
+  min-height: 100vh;
+}
+
+.divisor{
+  margin: 10px 0px !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.loadingBar {
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  left: 0;
+  z-index: 99999;
+}
+
+.grids{
+  width: 100% !important;
+}
+
+.gridsF{
+  width: 100% !important;
+  padding: 0px 5%;
+}
+
+#menuheader div.MuiPaper-root{
+  margin-top: 25px;
+}
+
+.list-container{
+  height: 92.5vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: auto;
+  padding: 10px 0px;
+}
+
+.list-item{
+  max-width: 100%;
+}
+
+.list-item a{
+  padding: 20px 10px;
+}
+
+.header-main{
+  box-shadow: 0 !important;
+}
+
+.ck-content{
+  height: 140px;
+}
