@@ -27,11 +27,12 @@ const formularioTraduccion = theme => ({
     paddingLeft:"270px"
   },
   TextFielIzquierdoT:{
-    paddingLeft:"50px",
+    paddingLeft:"40px",
     top: "10px"
   },
   TextFielDerechoT:{
-    paddingLeft:"130px"
+    paddingLeft:"140px",
+    bottom:"10px"
   },
   ventanaOpcionesT:{
     maxHeight:"20px",
@@ -53,10 +54,22 @@ const formularioTraduccion = theme => ({
   }
 })
 
-const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+const listaletras = [{value:'A', label:'A'},{value:'B', label:'B'},{value:'C', label:'C'},{value:'D', label:'D'},
+                {value:'E', label:'E'},{value:'F', label:'F'},{value:'G', label:'G'},{value:'H', label:'H'},
+                {value:'I', label:'I'},{value:'J', label:'J'},{value:'K', label:'K'},{value:'L', label:'L'},
+                {value:'M', label:'M'},{value:'N', label:'N'},{value:'O', label:'O'},{value:'P', label:'P'},
+                {value:'Q', label:'Q'},{value:'R', label:'R'},{value:'S', label:'S'},{value:'T', label:'T'},
+                {value:'U', label:'U'},{value:'V', label:'V'},{value:'W', label:'W'},{value:'X', label:'X'},
+                {value:'Y', label:'Y'},{value:'Z', label:'Z'}]
 
 function FormularioTraduccion(props){
   const {classes} = props;
+  const [letraIndice, setLetraIndice] = React.useState('A')
+
+  const handleChange = (event) => {
+    setLetraIndice(event.target.value)
+  };
+
   return(
     <div>
       <div>
@@ -97,14 +110,19 @@ function FormularioTraduccion(props){
                   id="input-with-icon-textfield"
                   select
                   margin="normal"
+                  value={letraIndice}
+                  onChange={handleChange}
                   className={classes.TextFielDerechoT}
+                  SelectProps={{
+                    native: true,
+                    MenuProps: {
+                    },
+                  }}
                 >
-                {letras.map(opcion =>(
-                  <List>
-                    <ListItem button>
-                      {opcion}
-                    </ListItem>
-                  </List>
+                {listaletras.map(opcion =>(
+                  <option button key={opcion.letraIndice} value={opcion.letraIndice}>
+                    {opcion.label}
+                  </option>
                 ))}
               </TextField>
             </FormControl>

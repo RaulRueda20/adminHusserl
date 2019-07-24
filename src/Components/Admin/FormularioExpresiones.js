@@ -31,7 +31,8 @@ const formularioExpresiones = theme => ({
     top: "10px"
   },
   TextFielDerecho:{
-    paddingLeft:"130px"
+    paddingLeft:"140px",
+    bottom:"10px"
   },
   ventanaOpciones:{
     maxHeight:"20px",
@@ -50,9 +51,6 @@ const formularioExpresiones = theme => ({
     width: "34px !important",
     borderRadius: "50%",
     height: "34px !important"
-  },
-  menu:{
-    top:"35px"
   }
 })
 
@@ -118,16 +116,13 @@ function FormularioExpresiones(props){
                     SelectProps={{
                       native: true,
                       MenuProps: {
-                        className: classes.menu,
                       },
                     }}
                   >
                   {listaletras.map(opcion =>(
-                    <List>
-                      <ListItem button key={opcion.letraIndice} value={opcion.letraIndice}>
-                        {opcion.label}
-                      </ListItem>
-                    </List>
+                    <option button key={opcion.letraIndice} value={opcion.letraIndice}>
+                      {opcion.label}
+                    </option>
                   ))}
                 </TextField>
               </FormControl>
