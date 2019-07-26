@@ -16,8 +16,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { withStyles } from '@material-ui/styles';
 
-import es from "../../Imagenes/spain.png";
-import al from "../../Imagenes/germany.png";
+import es from "../../../Imagenes/spain.png";
+import al from "../../../Imagenes/germany.png";
+import expresiones from "../../../css/expresiones.css";
+
 
 const formularioExpresiones = theme => ({
   subtituloIzquierdo:{
@@ -39,7 +41,8 @@ const formularioExpresiones = theme => ({
     overflowY:"auto"
   },
   editor:{
-    paddingLeft:"150px"
+    paddingLeft:"150px",
+    height:"180px"
   },
   imagenesBandera:{
     width: "32px !important",

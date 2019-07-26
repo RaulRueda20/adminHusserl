@@ -20,7 +20,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import eliminar from "../../Imagenes/basura.png";
+import eliminar from "../../../Imagenes/basura.png";
 
 const estiloModalJerarquia={
   modalinj:{

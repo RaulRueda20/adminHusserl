@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import {webService} from '../../js/webServices';
+import {webService} from '../../../js/webServices';
 
 // const chunkSize = 100
 
@@ -83,6 +83,8 @@ export default function ListaExpresiones(props){
   //     fixReferencias(data.data.response)
   //   })
   // }, [])
+
+  const expresiones=props.setExpresion
 
   return(
     <div className="list-container">

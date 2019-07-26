@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
@@ -56,7 +56,7 @@ const niveles = [{value:'1', label:'1'}, {value:'2', label:'2'}]
 
 function ModalAgregarPasaje(props){
   const {classes}=props;
-  const [ nivel, setNivel] = React.useState('1')
+  const [nivel, setNivel] = React.useState('1')
 
   const handleChangeN = (event) => {
     setNivel(event.target.value)

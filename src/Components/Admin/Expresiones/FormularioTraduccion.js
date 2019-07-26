@@ -16,8 +16,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { withStyles } from '@material-ui/styles';
 
-import es from "../../Imagenes/spain.png";
-import al from "../../Imagenes/germany.png";
+import es from "../../../Imagenes/spain.png";
+import al from "../../../Imagenes/germany.png";
 
 const formularioTraduccion = theme => ({
   subtituloIzquierdoT:{
@@ -132,6 +132,7 @@ function FormularioTraduccion(props){
         <Grid container>
           <Grid item className={classes.editorT}>
             <CKEditor
+                 className="formularios"
                  editor={ ClassicEditor }
                  data=""
                  onInit={ editor => {

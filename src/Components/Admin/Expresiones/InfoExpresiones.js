@@ -12,11 +12,12 @@ import { withStyles } from '@material-ui/styles';
 
 import ModalJerarquia from './ModalJerarquia';
 import Alertas from './Alertas';
-import ModalAgregarPasaje from './ModalAgregarPasaje'
+import ModalAgregarPasaje from './ModalAgregarPasaje';
+import ModalVerTambien from './ModalVerTambien';
 
-import jerarquia from "../../Imagenes/diagrama.png";
-import editar from "../../Imagenes/editar.png";
-import eliminar from "../../Imagenes/basura.png";
+import jerarquia from "../../../Imagenes/diagrama.png";
+import editar from "../../../Imagenes/editar.png";
+import eliminar from "../../../Imagenes/basura.png";
 
 const infoExpresiones= {
   carta:{
@@ -26,7 +27,7 @@ const infoExpresiones= {
     paddingTop:"10px"
   },
   botonesaccion:{
-    paddingLeft:"80px"
+    paddingLeft:"120px"
   },
   contenedordeinfo:{
     borderRight: "dotted"
@@ -51,6 +52,7 @@ function InfoExpresiones(props){
   const [openMj, setOpenMj] = React.useState(false);
   const [openAl, setOpenAl] = React.useState(false);
   const [openAp, setOpenAp] = React.useState(false);
+  const [openMVT, setOpenMVT] = React.useState(false);
 
   function handleOpenModalJ() {
     setOpenMj(true);
@@ -76,13 +78,21 @@ function InfoExpresiones(props){
     setOpenAp(false);
   }
 
+  function handleClickOpenMVT() {
+    setOpenMVT(true);
+  }
+
+  function handleCloseMVT() {
+    setOpenMVT(false);
+  }
+
   return(
     <div>
       <Card className={classes.carta}>
         <div>
           <CardActionArea>
             <Grid container>
-              <Grid item xs={6} className={classes.titulo}>
+              <Grid item xs={4} className={classes.titulo}>
                 <Typography gutterBottom variant="h3">
                   Expresión
                   </Typography>
@@ -93,6 +103,13 @@ function InfoExpresiones(props){
                     <img src={jerarquia}/>
                   </IconButton>
                   <ModalJerarquia openMj={openMj} handleCloseModalJ={handleCloseModalJ}/>
+                </Grid>
+                <Grid item xs={2} className={classes.botonesaccion}>
+                  <IconButton size="small" onClick={()=>handleClickOpenMVT()}>
+                    VT
+                  </IconButton>
+                  <ModalVerTambien openMVT={openMVT} handleCloseMVT={handleCloseMVT}/>
+                  <ModalJerarquia/>
                 </Grid>
                 <Grid item xs={2} className={classes.botonesaccion}>
                   <IconButton size="small" >

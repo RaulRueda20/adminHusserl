@@ -30,7 +30,6 @@ const estiloModalExpresiones = theme => ({
   }
 })
 
-
 function ModalAdmin(props){
   const { classes } = props;
   const [indiceLang, setIndicelang] = React.useState("al");

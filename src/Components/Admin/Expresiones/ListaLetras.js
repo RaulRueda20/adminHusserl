@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +30,11 @@ const letras = [{value:'A', label:'A'},{value:'B', label:'B'},{value:'C', label:
 function ListaLetras (props){
   const { classes }= props;
 
+  const handleChangeLetraMain = (event) => {
+    props.setLetraMain(event.target.value)
+  };
+
+  console.log(props.letraMain)
 
   return(
     <div>
@@ -41,17 +46,14 @@ function ListaLetras (props){
             alignItems="center"
           >
             {letras.map(letra =>(
-              <Grid item>
-                <ListItem button>
+              <Grid item key={letra.label}>
+                <ListItem button onClick={handleChangeLetraMain}>
                   {letra.value}
                 </ListItem>
               </Grid>
             ))}
           </Grid>
         </List>
-      </div>
-      <div>
-        <Expresiones/>
       </div>
     </div>
   )

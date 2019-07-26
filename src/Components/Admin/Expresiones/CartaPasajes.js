@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
-import docs from "../../Imagenes/docs.png";
+import docs from "../../../Imagenes/docs.png";
 
 const cartaPasajes={
   cartadepasajes:{
