@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import {webService} from '../../../js/webServices';
+// import {webService} from '../../../js/webServices';
 
 // const chunkSize = 100
 
@@ -11,7 +9,7 @@ export default function ListaExpresiones(props){
   // const [expresiones, setExpresiones] = React.useState([])
   // const [chunk, setChunk] = React.useState([])
   // const [top, setTop] = React.useState(chunkSize)
-
+  //
   // const fetchResource = async expresiones => {
   //   const response await=axios.get(
   //     ({
@@ -27,7 +25,7 @@ export default function ListaExpresiones(props){
   //   ),
   //   setExpresiones(response.data)
   // }
-
+  //
   // const fixReferencias = (referencias) => {
   //   var listaExpresiones=[]
   //   var posicActual = -1
@@ -84,11 +82,17 @@ export default function ListaExpresiones(props){
   //   })
   // }, [])
 
-  const expresiones=props.setExpresion
-
+  console.log("cuando mando props solito", props)
+  console.log("cuando mando propsexpresiones", props.expresiones)
   return(
     <div className="list-container">
-      lista
+      <ul>
+        {props.expresiones.map(expresion=>(
+          <li>
+            {expresion.expresion + '//' + expresion.traduccion}
+          </li>
+        ))}
+        </ul>
     </div>
   )
 }
