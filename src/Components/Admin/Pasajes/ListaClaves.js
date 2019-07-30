@@ -1,9 +1,13 @@
 import React from 'react';
 
-function ListaClaves(){
+
+
+function ListaClaves(props){
   return(
     <div className="list-container">
-      lista claves
+      <ul>
+        pitos
+        </ul>
     </div>
   )
 }

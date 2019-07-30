@@ -132,13 +132,13 @@ function InfoExpresiones(props){
             <Grid container>
               <Grid item xs={6} className={classes.contenedordeinfo}>
                 <Typography variant="h3" className={classes.subtitulos}>
-                  Información: {props.expresiones.expresion}
+                  Información
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondeexpresion}>
-                  Expresión
+                  Expresion:
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondetraduccion}>
-                  Traducción
+                  Traducción: 
                 </Typography>
               </Grid>
               <Grid item xs={6}>

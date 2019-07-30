@@ -33,7 +33,7 @@ function NuevaExpresion(props){
     setOpen(false);
   };
 
-  console.log("cuando mando props expresiones a NuevaExpresion",props.expresiones)
+  console.log("Cuando paso expresiones a NuevaExpresion", props.expresiones)
 
   return (
     <div>
@@ -44,13 +44,14 @@ function NuevaExpresion(props){
         <ModalAdmin open={open} handleClose={handleClose}/>
       </div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresiones={props.expresiones}/>
+        <InfoExpresiones/>
       </div>
       <div className={classes.contenedorPasajes}>
         <CartaPasajes/>
       </div>
     </div>
   )
+
 }
 
 export default withStyles(stylebonton)(NuevaExpresion);

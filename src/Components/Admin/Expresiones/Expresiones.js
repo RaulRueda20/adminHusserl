@@ -12,6 +12,7 @@ import ListaLetras from './ListaLetras';
  export default function Expresiones(props){
   const [expresiones, setExpresiones] = React.useState([]);
   const [letraMain, setLetraMain] = React.useState('');
+  const [expresionSeleccionada, setExpresionSeleccionada] = React.useState([]);
 
   // React.useEffect(
   //   ()=>{
@@ -61,7 +62,6 @@ import ListaLetras from './ListaLetras';
         i++
       }
     }
-      console.log("cuando mando lista referencias",listaExpresiones)
       return listaExpresiones
   }
 
@@ -86,11 +86,11 @@ import ListaLetras from './ListaLetras';
         <Grid container>
           <Grid item xs={3}>
             <Busqueda/>
-            <ListaExpresiones expresiones={expresiones}/>
+            <ListaExpresiones expresiones={expresiones} expresionSeleccionada={expresionSeleccionada} setExpresionSeleccionada={setExpresionSeleccionada}/>
           </Grid>
           <Grid item xs={9} align="center">
             <br/>
-            <NuevaExpresion expresiones={expresiones}/>
+            <NuevaExpresion/>
           </Grid>
         </Grid>
       </div>

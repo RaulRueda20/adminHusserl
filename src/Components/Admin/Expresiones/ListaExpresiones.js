@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+
 // import {webService} from '../../../js/webServices';
 
 // const chunkSize = 100
 
 export default function ListaExpresiones(props){
-  // const [expresiones, setExpresiones] = React.useState([])
   // const [chunk, setChunk] = React.useState([])
   // const [top, setTop] = React.useState(chunkSize)
   //
@@ -82,13 +80,15 @@ export default function ListaExpresiones(props){
   //   })
   // }, [])
 
-  console.log("cuando mando props solito", props)
-  console.log("cuando mando propsexpresiones", props.expresiones)
+  // const handleClickExpresion=(event)=>{
+  //   props.setExpresionSeleccionada(event.target.value)
+  // }
+
   return(
     <div className="list-container">
       <ul>
         {props.expresiones.map(expresion=>(
-          <li>
+          <li key={expresion.id}>
             {expresion.expresion + '//' + expresion.traduccion}
           </li>
         ))}
