@@ -29,6 +29,7 @@ var setStore = (user, pass) => {
     newSession['ultimasVisitadas'] = []
     newSession["ultimaVisitada"] = "alfabeto"
     localStore.setObjects("sesion", newSession)
+    document.getElementById("toMain").click()
     // linkTo("main.html")
 }
 
@@ -46,10 +47,11 @@ class LoginForm extends React.Component {
       console.log(data)
       this.setState({loading : false})
       if(data.data.error == null){
-        console.log("Passed")
+        // console.log("Passed")
         localStorage.removeItem("admin_sesion")
-        localStore.setObjects("admin_sesion", data.response)
-        document.getElementById("toMain").click()
+        // console.log(data.data)
+        setStore(data.data.response.email, data.data.response.user_password)
+        // localStore.setObjects("admin_sesion", data.response)
       }else{
         this.setState({mensajeAlert : data.data.error, alert : true, tituloAlert:"Usuario o Contreña Incorrectos"})
         localStorage.removeItem("admin_sesion")

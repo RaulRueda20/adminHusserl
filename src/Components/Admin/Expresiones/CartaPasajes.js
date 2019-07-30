@@ -46,8 +46,9 @@ function CartaPasajes(props){
         <Grid item xs={3} className={classes.botonclear}>
           <IconButton
             aria-haspopup="true"
+            onClick={()=>handleClose()}
           >
-            <ClearIcon fontSize="small" onClick={()=>handleClose()}/>
+            <ClearIcon fontSize="small"/>
           </IconButton>
         </Grid>
       </Grid>

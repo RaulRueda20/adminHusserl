@@ -15,7 +15,6 @@ import Alertas from './Alertas';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
 import ModalVerTambien from './ModalVerTambien';
 
-import jerarquia from "../../../Imagenes/diagrama.png";
 import editar from "../../../Imagenes/editar.png";
 import eliminar from "../../../Imagenes/basura.png";
 
@@ -49,18 +48,8 @@ const infoExpresiones= {
 
 function InfoExpresiones(props){
   const {classes} = props;
-  const [openMj, setOpenMj] = React.useState(false);
   const [openAl, setOpenAl] = React.useState(false);
   const [openAp, setOpenAp] = React.useState(false);
-  const [openMVT, setOpenMVT] = React.useState(false);
-
-  function handleOpenModalJ() {
-    setOpenMj(true);
-  };
-
-  function handleCloseModalJ() {
-    setOpenMj(false);
-  };
 
   function handleClickOpenAl() {
     setOpenAl(true);
@@ -78,53 +67,34 @@ function InfoExpresiones(props){
     setOpenAp(false);
   }
 
-  function handleClickOpenMVT() {
-    setOpenMVT(true);
-  }
-
-  function handleCloseMVT() {
-    setOpenMVT(false);
-  }
-
   return(
     <div>
       <Card className={classes.carta}>
         <div>
-          <CardActionArea>
             <Grid container>
               <Grid item xs={4} className={classes.titulo}>
                 <Typography gutterBottom variant="h3">
                   Expresión
                   </Typography>
               </Grid>
-              <CardActions>
-                <Grid item xs={2} className={classes.botonesaccion}>
-                  <IconButton size="small" onClick={() => handleOpenModalJ()}>
-                    <img src={jerarquia}/>
-                  </IconButton>
-                  <ModalJerarquia openMj={openMj} handleCloseModalJ={handleCloseModalJ}/>
-                </Grid>
-                <Grid item xs={2} className={classes.botonesaccion}>
-                  <IconButton size="small" onClick={()=>handleClickOpenMVT()}>
-                    VT
-                  </IconButton>
-                  <ModalVerTambien openMVT={openMVT} handleCloseMVT={handleCloseMVT}/>
-                  <ModalJerarquia/>
-                </Grid>
-                <Grid item xs={2} className={classes.botonesaccion}>
-                  <IconButton size="small" >
-                    <img src={editar}/>
-                  </IconButton>
-                </Grid>
-                <Grid item xs={2} className={classes.botonesaccion}>
-                  <IconButton size="small" onClick={()=>handleClickOpenAl()}>
-                    <img src={eliminar}/>
-                  </IconButton>
-                  <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
-                </Grid>
-              </CardActions>
+              <Grid item xs={2} className={classes.botonesaccion}>
+                <ModalJerarquia/>
+              </Grid>
+              <Grid item xs={2} className={classes.botonesaccion}>
+                <ModalVerTambien/>
+              </Grid>
+              <Grid item xs={2} className={classes.botonesaccion}>
+                <IconButton size="small" >
+                  <img src={editar}/>
+                </IconButton>
+              </Grid>
+              <Grid item xs={2} className={classes.botonesaccion}>
+                <IconButton size="small" onClick={()=>handleClickOpenAl()}>
+                  <img src={eliminar}/>
+                </IconButton>
+                <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
+              </Grid>
             </Grid>
-          </CardActionArea>
         </div>
         <Divider className="divisor"/>
         <div>

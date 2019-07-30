@@ -9,7 +9,7 @@ import Busqueda from './Busqueda';
 import NuevaExpresion from './NuevaExpresion';
 import ListaLetras from './ListaLetras';
 
- export default function Expresiones(props){
+export default function Expresiones(props){
   const [expresiones, setExpresiones] = React.useState([]);
   const [letraMain, setLetraMain] = React.useState('');
   const [expresionSeleccionada, setExpresionSeleccionada] = React.useState([]);
@@ -62,7 +62,7 @@ import ListaLetras from './ListaLetras';
         i++
       }
     }
-      return listaExpresiones
+    return listaExpresiones
   }
 
   React.useEffect(()=>{

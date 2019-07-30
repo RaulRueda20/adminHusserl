@@ -50,18 +50,30 @@ const mvt={
 function ModalVerTambien(props){
   const {classes}=props;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [open, setOpen] = React.useState(false);
 
   function handleListItemClick(event, index) {
     setSelectedIndex(index);
   }
 
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
+
   return(
     <div>
+      <IconButton size="small" onClick={()=>handleClickOpen()}>
+        VT
+      </IconButton>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={props.openMVT}
-        handleOpen={props.handleCloseMVT}
+        open={open}
+        onClose={handleClose}
       >
         <Paper className={classes.modalinvt}>
           <Grid container>
@@ -73,7 +85,7 @@ function ModalVerTambien(props){
             <Grid item xs={1}>
               <IconButton
                 aria-haspopup="true"
-                onClick={props.handleCloseMVT}
+                onClick={handleClose}
                 className={classes.botonClearvt}
               >
                 <ClearIcon fontSize="small"/>
