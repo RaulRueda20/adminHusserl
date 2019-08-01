@@ -105,10 +105,10 @@ function InfoExpresiones(props){
                   Información
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondeexpresion}>
-                  Expresion:
+                  {"Expresion: " + props.expresionSeleccionada.expresion_original}
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondetraduccion}>
-                  Traducción: 
+                  Traducción:
                 </Typography>
               </Grid>
               <Grid item xs={6}>

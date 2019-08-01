@@ -12,6 +12,7 @@ import ListaLetras from './ListaLetras';
 export default function Expresiones(props){
   const [expresiones, setExpresiones] = React.useState([]);
   const [letraMain, setLetraMain] = React.useState('');
+  const [idExpresion, setIdExpresion] = React.useState([1]);
   const [expresionSeleccionada, setExpresionSeleccionada] = React.useState([]);
 
   // React.useEffect(
@@ -86,11 +87,13 @@ export default function Expresiones(props){
         <Grid container>
           <Grid item xs={3}>
             <Busqueda/>
-            <ListaExpresiones expresiones={expresiones} expresionSeleccionada={expresionSeleccionada} setExpresionSeleccionada={setExpresionSeleccionada}/>
+            <ListaExpresiones expresiones={expresiones} expresionSeleccionada={expresionSeleccionada} setExpresionSeleccionada={setExpresionSeleccionada}
+                idExpresion={idExpresion} setIdExpresion={setIdExpresion}
+            />
           </Grid>
           <Grid item xs={9} align="center">
             <br/>
-            <NuevaExpresion/>
+            <NuevaExpresion expresionSeleccionada={expresionSeleccionada}/>
           </Grid>
         </Grid>
       </div>

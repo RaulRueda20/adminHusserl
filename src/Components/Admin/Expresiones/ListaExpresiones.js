@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-// import {webService} from '../../../js/webServices';
+import {adminService} from '../../../js/webServices';
 
 // const chunkSize = 100
 
@@ -80,15 +80,21 @@ export default function ListaExpresiones(props){
   //   })
   // }, [])
 
-  // const handleClickExpresion=(event)=>{
-  //   props.setExpresionSeleccionada(event.target.value)
-  // }
+   const handleClickExpresion=(event)=>{
+     props.setIdExpresion(event.target.value)
+     var service = "/referencias/obtieneReferenciasByTerm/" + props.idExpresion
+     adminService(service, "GET", {}, (data) =>{
+       console.log(data)
+       props.setExpresionSeleccionada(data.data.response[0])
+       console.log("la expresion mandada", props.expresionSeleccionada)
+     })
+   }
 
   return(
     <div className="list-container">
       <ul>
         {props.expresiones.map(expresion=>(
-          <li key={expresion.id}>
+          <li key={expresion.id} value={expresion.id} onClick={handleClickExpresion}>
             {expresion.expresion + '//' + expresion.traduccion}
           </li>
         ))}

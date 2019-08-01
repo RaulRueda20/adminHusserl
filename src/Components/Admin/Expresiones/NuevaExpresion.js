@@ -33,7 +33,7 @@ function NuevaExpresion(props){
     setOpen(false);
   };
 
-  console.log("Cuando paso expresiones a NuevaExpresion", props.expresiones)
+  console.log("Cuando paso expresiones a NuevaExpresion", props.expresionSeleccionada)
 
   return (
     <div>
@@ -44,7 +44,7 @@ function NuevaExpresion(props){
         <ModalAdmin open={open} handleClose={handleClose}/>
       </div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones/>
+        <InfoExpresiones expresionSeleccionada={props.expresionSeleccionada}/>
       </div>
       <div className={classes.contenedorPasajes}>
         <CartaPasajes/>

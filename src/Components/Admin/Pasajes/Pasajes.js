@@ -14,7 +14,8 @@ function Pasajes(props){
   React.useEffect(()=>{
     var service = "/referencias/lista"
     adminService(service, "GET", {}, (data) => {
-      setPasajes(data.response)
+      console.log("Buscando la data",data)
+      setPasajes(data.data.response)
     })
   }, [])
 
