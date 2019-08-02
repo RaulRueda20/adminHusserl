@@ -10,7 +10,6 @@ class Login extends React.Component{
     const {classes} = this.props
     return(
       <div>
-        <br/>
         <Header/>
         <LoginForm/>
         <br/>

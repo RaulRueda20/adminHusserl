@@ -66,7 +66,7 @@ function ModalVerTambien(props){
 
   return(
     <div>
-      <IconButton size="small" onClick={()=>handleClickOpen()}>
+      <IconButton onClick={()=>handleClickOpen()}>
         VT
       </IconButton>
       <Modal
@@ -111,7 +111,7 @@ function ModalVerTambien(props){
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 Ver También
               </Typography>
             </Grid>

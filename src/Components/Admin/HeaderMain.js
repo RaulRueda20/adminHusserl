@@ -17,7 +17,7 @@ class HeaderMain extends React.Component{
               <MenuHeader match={this.props.match}/>
             </Grid>
             <Grid item xs={10} align="center">
-              <Typography variant="h3" component="h5">
+              <Typography variant="h2" style={{color: "white"}}>
                 PORTAL ADMINISTRATIVO
               </Typography>
             </Grid>

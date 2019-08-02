@@ -19,7 +19,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import jerarquia from "../../../Imagenes/diagrama.png";
+
+import Jerarquia from '@material-ui/icons/DeviceHub';
+// import jerarquia from "../../../Imagenes/diagrama.png";
 
 import eliminar from "../../../Imagenes/basura.png";
 
@@ -75,8 +77,8 @@ function ModalJerarquia(props){
 
   return(
     <div>
-      <IconButton size="small" onClick={() => handleOpenModal()}>
-        <img src={jerarquia}/>
+      <IconButton onClick={() => handleOpenModal()}>
+        <Jerarquia/>
       </IconButton>
       <Modal
       aria-labelledby="simple-modal-title"
@@ -87,7 +89,7 @@ function ModalJerarquia(props){
         <Paper className={classes.modalinj}>
           <Grid container>
             <Grid item xs={11}>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 Parentesco
               </Typography>
             </Grid>
@@ -138,7 +140,7 @@ function ModalJerarquia(props){
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <Typography variant="h2">
+              <Typography variant="h3">
                 Expresión
               </Typography>
             </Grid>

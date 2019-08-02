@@ -87,12 +87,12 @@ function ModalAgregarPasaje(props){
         <Divider className="divisor"/>
         <Grid container>
           <Grid item xs={12} className={classes.subtitulos} >
-            <Typography variant="h2">
+            <Typography variant="h3">
               Escriba el pasaje que desea asociar con la expresión seleccionada.
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.subtitulos}>
-            <Typography variant="h2">
+            <Typography variant="h3">
               Referencias
             </Typography>
           </Grid>

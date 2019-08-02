@@ -8,14 +8,18 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
-import docs from "../../../Imagenes/docs.png";
+import Description from '@material-ui/icons/Description';
 
 const cartaPasajes={
   cartadepasajes:{
-    maxWidth:"180px"
+    width:"100%",
+    paddingTop : "10px"
   },
   cardheader:{
-    paddingLeft:"55px"
+    paddingLeft:"30px"
+  },
+  cardContent:{
+    padding: "15px"
   },
   imagendocs:{
     width:"20px",
@@ -23,6 +27,9 @@ const cartaPasajes={
   },
   botonclear:{
     paddingRight:"30px"
+  },
+  closeButton:{
+    marginRight: "5px"
   }
 }
 
@@ -39,28 +46,24 @@ function CartaPasajes(props){
     <Card className={classes.cartadepasajes}>
       <Grid container>
         <Grid item xs={9} className={classes.cardheader}>
-          <CardHeader
-            avatar={<img className={classes.imagendocs} src={docs}/>}
-          />
+          <Description/>
         </Grid>
-        <Grid item xs={3} className={classes.botonclear}>
+        <Grid item xs={3}>
           <IconButton
-            aria-haspopup="true"
-            onClick={()=>handleClose()}
+          size="small"
+          className={classes.closeButton}
+          aria-haspopup="true"
+          onClick={()=>handleClose()}
           >
             <ClearIcon fontSize="small"/>
           </IconButton>
         </Grid>
       </Grid>
-      <Grid container>
-        <CardContent>
-          <Grid item>
-            <Typography>
-              Pasajes
-            </Typography>
-          </Grid>
-        </CardContent>
-      </Grid>
+      <div className={classes.cardContent}>
+        <Typography>
+          {props.pasaje.ref_original}
+        </Typography>
+      </div>
     </Card>
   )
 }

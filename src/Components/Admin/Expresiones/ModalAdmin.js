@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +13,9 @@ import FormularioExpresiones from './FormularioExpresiones';
 import FormularioTraduccion from './FormularioTraduccion';
 
 const estiloModalExpresiones = theme => ({
+  Boton1:{
+    width:"80%"
+  },
   modalin:{
     width: "60%",
     left: "20vw",
@@ -33,7 +37,15 @@ const estiloModalExpresiones = theme => ({
 function ModalAdmin(props){
   const { classes } = props;
   const [indiceLang, setIndicelang] = React.useState("al");
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleAl = () => {
     setIndicelang("al");
@@ -45,11 +57,14 @@ function ModalAdmin(props){
 
   return(
     <div>
+      <Button variant="contained" className={classes.Boton1} onClick={() => handleOpen()}>
+        Nueva Expresión
+      </Button>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={props.open}
-        handleOpen={props.handleOpen}
+        open={open}
+        onClose={handleClose}
       >
       <Paper className={classes.modalin}>
         <Grid container className={classes.contenedorSubtitulos}>
@@ -61,7 +76,7 @@ function ModalAdmin(props){
           <Grid item xs={2}>
             <IconButton
               aria-haspopup="true"
-              onClick={props.handleClose}
+              onClick={handleClose}
               className={classes.botonClear}
             >
               <ClearIcon fontSize="small"/>

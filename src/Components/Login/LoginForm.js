@@ -21,7 +21,10 @@ const stylesFor = {
   TextField2:{
      justify: 'center',
      width:"100%",
-   }
+  },
+  gridsF : {
+    margin: "7.5vh 2.5vw"
+  }
  }
 
 var setStore = (user, pass) => {
@@ -70,11 +73,11 @@ class LoginForm extends React.Component {
     const { classes } = this.props;
 
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <form className={classes.gridsF} onSubmit={this.onFormSubmit}>
         <br/><br/>
-        <Typography variant="h3" align="center" gutterBottom >
+        <Typography variant="h4" align="center" gutterBottom >
           Inicio
-        </Typography>
+        </Typography><br/><br/>
         <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
           <Grid item xs={12} sm={8} lg={7} className="grids">
             <TextField

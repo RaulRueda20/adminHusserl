@@ -1,8 +1,4 @@
 import React, {useState} from 'react';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
@@ -15,35 +11,43 @@ import Alertas from './Alertas';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
 import ModalVerTambien from './ModalVerTambien';
 
-import editar from "../../../Imagenes/editar.png";
-import eliminar from "../../../Imagenes/basura.png";
+// import editar from "../../../Imagenes/editar.png";
+import Create from "@material-ui/icons/Create";
+import Delete from "@material-ui/icons/Delete";
 
 const infoExpresiones= {
-  carta:{
-    maxWidth: "1000px"
-  },
   titulo:{
     paddingTop:"10px"
   },
   botonesaccion:{
-    paddingLeft:"120px"
+    // paddingLeft:"120px"
   },
   contenedordeinfo:{
-    borderRight: "dotted"
+    borderRight: "lightgrey 1px dashed"
   },
   subtitulo:{
     paddingTop:"20px"
   },
-  informaciondeexpresion:{
-    paddingTop:"10px",
-    paddingRight:"35px",
-    fontWeight: "900 !important",
+  infoPanel:{
+    padding: "25px 0px"
   },
-  informaciondetraduccion:{
-    paddingTop:"20px",
-    paddingRight:"35px",
-    fontWeight: "900 !important"
+  w100: {
+    width : "100% !important"
+  },
+  scrolledHeight: {
+    maxHeight: "100px",
+    overflow: "scroll"
   }
+  // informaciondeexpresion:{
+  //   paddingTop:"10px",
+  //   paddingRight:"35px",
+  //   fontWeight: "900 !important",
+  // },
+  // informaciondetraduccion:{
+  //   paddingTop:"20px",
+  //   paddingRight:"35px",
+  //   fontWeight: "900 !important"
+  // }
 }
 
 function InfoExpresiones(props){
@@ -67,85 +71,116 @@ function InfoExpresiones(props){
     setOpenAp(false);
   }
 
-  console.log("hijos mandados a info", props.hijos)
-  
+  const paintJerarquia = (lista) => {
+    var lastString = ""
+    for(var i in lista){
+      if(i == lista.length-1)
+        lastString += lista[i].expresion + "."
+      else lastString += lista[i].expresion + ", "
+    }
+    return lastString
+  }
+
   return(
     <div>
-      <Card className={classes.carta}>
-        <div>
-            <Grid container>
-              <Grid item xs={4} className={classes.titulo}>
-                <Typography gutterBottom variant="h3">
-                  Expresión
-                  </Typography>
-              </Grid>
-              <Grid item xs={2} className={classes.botonesaccion}>
-                <ModalJerarquia/>
-              </Grid>
-              <Grid item xs={2} className={classes.botonesaccion}>
-                <ModalVerTambien/>
-              </Grid>
-              <Grid item xs={2} className={classes.botonesaccion}>
-                <IconButton size="small" >
-                  <img src={editar}/>
-                </IconButton>
-              </Grid>
-              <Grid item xs={2} className={classes.botonesaccion}>
-                <IconButton size="small" onClick={()=>handleClickOpenAl()}>
-                  <img src={eliminar}/>
-                </IconButton>
-                <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
-              </Grid>
+      <Grid container className={classes.titulo}>
+        <Grid item xs={8} className={classes.titulo}>
+          <Typography gutterBottom variant="h3">
+          {props.expresionSeleccionada.expresion_original + " // " + props.expresionSeleccionada.expresion_traduccion}
+            </Typography>
+        </Grid>
+        <Grid item xs={1} className={classes.botonesaccion}>
+          <ModalJerarquia/>
+        </Grid>
+        <Grid item xs={1} className={classes.botonesaccion}>
+          <IconButton>
+            <Create/>
+          </IconButton>
+        </Grid>
+        <Grid item xs={1} className={classes.botonesaccion}>
+          <ModalVerTambien/>
+        </Grid>
+        <Grid item xs={1} className={classes.botonesaccion}>
+          <IconButton onClick={()=>handleClickOpenAl()}>
+            <Delete/>
+          </IconButton>
+          <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
+        </Grid>
+      </Grid>
+      <Divider className="divisor"/>
+      <Grid container className={classes.infoPanel}>
+        <Grid item xs={6} className={classes.contenedordeinfo}>
+          <Typography variant="h3" className={classes.subtitulos}>
+            Información
+          </Typography><br/><br/>
+          <Grid container spacing={2} className={classes.w100}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                <b>Expresión: </b>
+              </Typography>
             </Grid>
-        </div>
-        <Divider className="divisor"/>
-        <div>
-          <CardContent>
-            <Grid container>
-              <Grid item xs={6} className={classes.contenedordeinfo}>
-                <Typography variant="h3" className={classes.subtitulos}>
-                  Información
-                </Typography>
-                <Typography variant="h2" className={classes.informaciondeexpresion}>
-                  {"Expresion: " + props.expresionSeleccionada.expresion_original}
-                </Typography>
-                <Typography variant="h2" className={classes.informaciondetraduccion}>
-                  {"Traducción: " + props.expresionSeleccionada.expresion_traduccion}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h3" className={classes.subtitulos}>
-                  Parentesco
-                </Typography>
-                <Typography variant="h2" className={classes.informaciondeexpresion}>
-                  {"Padre(s): " + props.padres.expresion}
-                </Typography>
-                <Typography ariant="h2" className={classes.informaciondeexpresion}>
-                  Hijo(s):
-                </Typography>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                {props.expresionSeleccionada.expresion_original}
+              </Typography>
             </Grid>
-          </CardContent>
-        </div>
-        <Divider className="divisor"/>
-        <div>
-          <CardContent>
-            <Grid container>
-              <Grid item  xs={10}>
-                <Typography variant="h3">
-                  Pasajes
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <IconButton size="small" onClick={()=>handleClickOpenAp()}>
-                  <AddIcon/>
-                </IconButton>
-                <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
-              </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                <b>Traducción: </b>
+              </Typography>
             </Grid>
-          </CardContent>
-        </div>
-      </Card>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                {props.expresionSeleccionada.expresion_traduccion}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Typography variant="h3" className={classes.subtitulos}>
+            Parentesco
+          </Typography><br/><br/>
+          <Grid container spacing={2} className={classes.w100}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                <b>Padre(s): </b>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.scrolledHeight}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                {props.padres.length > 0 ? paintJerarquia(props.padres) : null}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                <b>Hijo(s): </b>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.scrolledHeight}>
+              <Typography variant="h4" className={classes.informaciondeexpresion}>
+                {props.hijos.length > 0 ? paintJerarquia(props.hijos) : null}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Divider className="divisor"/>
+      <Grid container>
+        <Grid item  xs={10}>
+          <Typography variant="h3">
+            Pasajes
+          </Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <IconButton onClick={()=>handleClickOpenAp()}>
+            <AddIcon/>
+          </IconButton>
+          <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
+        </Grid>
+      </Grid>
     </div>
   )
 }

@@ -1,40 +1,38 @@
 import React, {useState} from 'react';
+import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 
 import Expresiones from './Expresiones'
+import { Typography } from '@material-ui/core';
 
 const styleList = {
   lista:{
      width:"100% !important",
-     maxWidth: 1160,
-     maxHeight: "32px"
+    //  maxWidth: 1160,
+    //  maxHeight: "32px"
   },
   contenedorLista:{
     backgroundColor: "#5dab70",
     overflow: "auto",
     height: "100%"
+  },
+  listaItem : {
+    justifyContent: "center",
+    padding: "10px 0"
   }
 }
 
-const letras = [{value:'A', label:'A'},{value:'B', label:'B'},{value:'C', label:'C'},{value:'D', label:'D'},
-                {value:'E', label:'E'},{value:'F', label:'F'},{value:'G', label:'G'},{value:'H', label:'H'},
-                {value:'I', label:'I'},{value:'J', label:'J'},{value:'K', label:'K'},{value:'L', label:'L'},
-                {value:'M', label:'M'},{value:'N', label:'N'},{value:'O', label:'O'},{value:'P', label:'P'},
-                {value:'Q', label:'Q'},{value:'R', label:'R'},{value:'S', label:'S'},{value:'T', label:'T'},
-                {value:'U', label:'U'},{value:'V', label:'V'},{value:'W', label:'W'},{value:'X', label:'X'},
-                {value:'Y', label:'Y'},{value:'Z', label:'Z'}]
+const letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
 function ListaLetras (props){
   const { classes }= props;
 
   const handleChangeLetraMain = (event) => {
-    props.setLetraMain(event.target.value)
+    props.setLetraMain(event.target.id)
   };
-
-  console.log(props.letraMain)
 
   return(
     <div>
@@ -46,9 +44,9 @@ function ListaLetras (props){
             alignItems="center"
           >
             {letras.map(letra =>(
-              <Grid item key={letra.label}>
-                <ListItem button onClick={handleChangeLetraMain}>
-                  {letra.value}
+              <Grid item xs key={letra} className={classNames({"selected" : props.letraMain == letra})}>
+                <ListItem className={classes.listaItem} button onClick={handleChangeLetraMain} id={letra}>
+                  <Typography variant="h6" align="center">{letra}</Typography>
                 </ListItem>
               </Grid>
             ))}

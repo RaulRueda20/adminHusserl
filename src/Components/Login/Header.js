@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +8,9 @@ import Divider from "@material-ui/core/Divider"
 const stylesHed = {
   subtitulo1:{
     marginTop: "10px",
+  },
+  grids : {
+    margin: "5vh 0"
   }
 }
 
@@ -16,7 +20,7 @@ class Header extends React.Component{
     const { classes } = this.props;
     return(
       <div>
-        <Grid className="grids" container justify="center">
+        <Grid className={classNames("grids", classes.grids)} container justify="center">
           <Grid item xs={12}  align="center">
             <Typography variant="h1" align="center">
               Diccionario Husserl

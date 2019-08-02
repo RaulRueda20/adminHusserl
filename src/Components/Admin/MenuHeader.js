@@ -32,7 +32,7 @@ class MenuHeader extends React.Component{
           aria-owns={anchorEl ? 'menuheader': undefined}
           onClick={this.setMenu}
         >
-          <MenuIcon />
+          <MenuIcon fontSize="large"/>
         </IconButton>
         <Menu
           id="menuheader"
