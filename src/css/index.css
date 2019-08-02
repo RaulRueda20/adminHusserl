@@ -131,3 +131,8 @@ header{
   height: 7vh;
   justify-content: center;
 }
+
+a{
+  color: rgba(80, 80, 80);
+  text-decoration: none;
+}

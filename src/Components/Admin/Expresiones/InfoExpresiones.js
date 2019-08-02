@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +10,8 @@ import ModalJerarquia from './ModalJerarquia';
 import Alertas from './Alertas';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
 import ModalVerTambien from './ModalVerTambien';
+
+import {adminService} from '../../../js/webServices';
 
 // import editar from "../../../Imagenes/editar.png";
 import Create from "@material-ui/icons/Create";
@@ -54,6 +56,13 @@ function InfoExpresiones(props){
   const {classes} = props;
   const [openAl, setOpenAl] = React.useState(false);
   const [openAp, setOpenAp] = React.useState(false);
+  const [hijos, setHijos] = React.useState([]);
+  const [padres, setPadres] = React.useState([]);
+
+  React.useEffect(()=>{
+    adminService(("/expresiones/al/abuelosList/" + props.expresionId),"GET", {}, (data) => setPadres(data.data.response))
+    adminService(("/expresiones/al/hijosList/" + props.expresionId), "GET", {}, (data) => setHijos(data.data.response))
+  }, [props.expresionId])
 
   function handleClickOpenAl() {
     setOpenAl(true);
@@ -86,8 +95,8 @@ function InfoExpresiones(props){
       <Grid container className={classes.titulo}>
         <Grid item xs={8} className={classes.titulo}>
           <Typography gutterBottom variant="h3">
-          {props.expresionSeleccionada.expresion_original + " // " + props.expresionSeleccionada.expresion_traduccion}
-            </Typography>
+            {props.expresionSeleccionada.expresion_original + " // " + props.expresionSeleccionada.expresion_traduccion}
+          </Typography>
         </Grid>
         <Grid item xs={1} className={classes.botonesaccion}>
           <ModalJerarquia/>
@@ -150,7 +159,7 @@ function InfoExpresiones(props){
             </Grid>
             <Grid item xs={12} sm={6} className={classes.scrolledHeight}>
               <Typography variant="h4" className={classes.informaciondeexpresion}>
-                {props.padres.length > 0 ? paintJerarquia(props.padres) : null}
+                {padres.length > 0 ? paintJerarquia(padres) : null}
               </Typography>
             </Grid>
 
@@ -161,7 +170,7 @@ function InfoExpresiones(props){
             </Grid>
             <Grid item xs={12} sm={6} className={classes.scrolledHeight}>
               <Typography variant="h4" className={classes.informaciondeexpresion}>
-                {props.hijos.length > 0 ? paintJerarquia(props.hijos) : null}
+                {hijos.length > 0 ? paintJerarquia(hijos) : null}
               </Typography>
             </Grid>
           </Grid>

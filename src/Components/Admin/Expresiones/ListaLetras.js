@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 
-import Expresiones from './Expresiones'
+// import Expresiones from './Expresiones'
 import { Typography } from '@material-ui/core';
 
 const styleList = {
@@ -21,7 +21,7 @@ const styleList = {
   },
   listaItem : {
     justifyContent: "center",
-    padding: "10px 0"
+    padding: "10px 0",
   }
 }
 
@@ -31,7 +31,8 @@ function ListaLetras (props){
   const { classes }= props;
 
   const handleChangeLetraMain = (event) => {
-    props.setLetraMain(event.target.id)
+    if(event.target.id === undefined) props.setLetraMain(event.target.innerHTML)
+    else props.setLetraMain(event.target.innerText)
   };
 
   return(
@@ -47,7 +48,7 @@ function ListaLetras (props){
               <Grid item xs key={letra} className={classNames({"selected" : props.letraMain == letra})}>
                 <ListItem className={classes.listaItem} button onClick={handleChangeLetraMain} id={letra}>
                   <Typography variant="h6" align="center">{letra}</Typography>
-                </ListItem>
+                </ListItem> 
               </Grid>
             ))}
           </Grid>

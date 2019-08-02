@@ -16,7 +16,7 @@ const webService = (service, method, params, next) => {
       "Content-Type" : 'application/json'
     }
   }).then((response) => {
-    console.log(response)
+    // console.log(response)
     return next(response)
   }).catch(error => {
     console.log(error)
@@ -38,7 +38,7 @@ const adminService = (service, method, params, next) => {
       "Content-Type" : 'application/json'
     }
   }).then((response) => {
-    console.log(response)
+    // console.log(response)
     next(response)
   }).catch(error => {
     console.log(error)

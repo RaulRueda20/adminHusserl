@@ -24,7 +24,6 @@ class MenuHeader extends React.Component{
   render(){
     const {anchorEl} = this.state
     const {match} = this.props
-    console.log(match)
     return(
       <div>
         <IconButton

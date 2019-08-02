@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -21,36 +21,46 @@ const stylebonton = {
   }
 }
 
+const emptyObj = {
+  clave: "",
+  epretty: "",
+  expresion_original: "",
+  expresion_traduccion: "",
+  id: null,
+  orden: null,
+  ref_original: "",
+  ref_traduccion: "",
+  refid: "",
+  tpretty: ""}
+
 function NuevaExpresion(props){
   const { classes } = props;
-  const [expresion, setExpresion] = React.useState({
-    clave: "",
-    epretty: "",
-    expresion_original: "",
-    expresion_traduccion: "",
-    id: null,
-    orden: null,
-    ref_original: "",
-    ref_traduccion: "",
-    refid: "",
-    tpretty: ""})
-  const [hijos, setHijos] = React.useState([]);
-  const [padres, setPadres] = React.useState([]);
+  const [expresion, setExpresion] = React.useState(emptyObj)
   const [pasajes, setPasajes] = React.useState([]);
   
   React.useEffect(()=>{
-    var service = "/referencias/obtieneReferenciasByTerm/" + props.expresionSeleccionada
-    adminService(service, "GET", {}, (expresionEncontrada) => {
-      setExpresion(expresionEncontrada.data.response[0])
-      adminService(("/expresiones/al/abuelosList/" + props.expresionSeleccionada),"GET", {}, (data) => setPadres(data.data.response))
-      adminService(("/expresiones/al/hijosList/" + props.expresionSeleccionada), "GET", {}, (data) => setHijos(data.data.response))
-      adminService("/referencias/obtieneReferencias/" + props.expresionSeleccionada, "GET", {}, (data) => {
-        console.log("pasajes", data.data.response)
-        setPasajes(data.data.response)
+    if(props.expresionSeleccionada != ""){
+      var service = "/referencias/obtieneReferenciasByTerm/" + props.expresionSeleccionada
+      adminService(service, "GET", {}, (expresionEncontrada) => {
+        // console.log(expresionEncontrada)
+        // console.log(expresionEncontrada.data.response[0])
+        if(expresionEncontrada.data.response.length > 0){
+          setExpresion(expresionEncontrada.data.response[0])
+          setPasajes(expresionEncontrada.data.response)
+        }else{
+          setExpresion(emptyObj)
+          setPasajes([emptyObj])
+        }
+        // adminService("/referencias/obtieneReferencias/" + props.expresionSeleccionada, "GET", {}, (data) => {
+        //   console.log("pasajes", data.data.response)
+        //   setPasajes(data.data.response)
+        // })
       })
-      // setExpresiones(data.data.response)
-      // setIdExpresion(data.data.response[0].id)
-    })
+    }else{
+      setExpresion(emptyObj)
+      setPasajes([emptyObj])
+    }
+    
   }, [props.expresionSeleccionada])
 
   return (
@@ -59,7 +69,7 @@ function NuevaExpresion(props){
         <ModalAdmin/>
       </div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresionSeleccionada={expresion} padres={padres} hijos={hijos}/>
+        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada}/>
       </div>
       <Grid container className={classes.contenedorPasajes} spacing={1}>
         {

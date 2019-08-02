@@ -9,7 +9,6 @@ import Manual from './Manual';
 
 
 export default function Subvistas({match}){
-  console.log(match)
   return(
     <div>
       <HeaderMain match={match}/>
