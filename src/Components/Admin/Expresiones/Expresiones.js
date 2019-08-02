@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 
-import {webService} from '../../../js/webServices';
+import {webService, adminService} from '../../../js/webServices';
 
 import ListaExpresiones from './ListaExpresiones';
 import Busqueda from './Busqueda';
@@ -14,6 +14,8 @@ export default function Expresiones(props){
   const [letraMain, setLetraMain] = React.useState('');
   const [idExpresion, setIdExpresion] = React.useState([1]);
   const [expresionSeleccionada, setExpresionSeleccionada] = React.useState([]);
+  const [padres, setPadres] = React.useState([]);
+  const [hijos, setHijos] = React.useState([]);
 
   // React.useEffect(
   //   ()=>{
@@ -72,6 +74,16 @@ export default function Expresiones(props){
       console.log(data)
       setExpresiones(fixReferencias(data.data.response))
     })
+    var service = "/referencias/obtieneReferenciasByTerm/" + idExpresion
+    adminService(service, "GET", {}, (data) =>{
+      setExpresionSeleccionada(data.data.response[0])
+    })
+    adminService(("/expresiones/al/abuelosList/" + idExpresion),"GET", {}, (data) =>{
+      setPadres(data.data.response[0])
+    })
+    adminService(("/expresiones/al/hijosList/" + idExpresion), "GET", {}, (datah) =>{
+      setHijos(datah.data.response)
+    })
   }, [])
 
   return(
@@ -88,12 +100,12 @@ export default function Expresiones(props){
           <Grid item xs={3}>
             <Busqueda/>
             <ListaExpresiones expresiones={expresiones} expresionSeleccionada={expresionSeleccionada} setExpresionSeleccionada={setExpresionSeleccionada}
-                idExpresion={idExpresion} setIdExpresion={setIdExpresion}
+                idExpresion={idExpresion} setIdExpresion={setIdExpresion} padres={padres} setPadres={setPadres} hijos={hijos} setHijos={setHijos}
             />
           </Grid>
           <Grid item xs={9} align="center">
             <br/>
-            <NuevaExpresion expresionSeleccionada={expresionSeleccionada}/>
+            <NuevaExpresion expresionSeleccionada={expresionSeleccionada} padres={padres} hijos={hijos}/>
           </Grid>
         </Grid>
       </div>

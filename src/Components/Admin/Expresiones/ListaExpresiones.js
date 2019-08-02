@@ -84,9 +84,13 @@ export default function ListaExpresiones(props){
      props.setIdExpresion(event.target.value)
      var service = "/referencias/obtieneReferenciasByTerm/" + props.idExpresion
      adminService(service, "GET", {}, (data) =>{
-       console.log(data)
        props.setExpresionSeleccionada(data.data.response[0])
-       console.log("la expresion mandada", props.expresionSeleccionada)
+     })
+     adminService(("/expresiones/al/abuelosList/" + props.idExpresion),"GET", {}, (data) =>{
+       props.setPadres(data.data.response[0])
+     })
+     adminService(("/expresiones/al/hijosList/" + props.idExpresion), "GET", {}, (datah) =>{
+       props.setHijos(datah.data.response)
      })
    }
 

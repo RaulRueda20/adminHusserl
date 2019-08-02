@@ -67,6 +67,8 @@ function InfoExpresiones(props){
     setOpenAp(false);
   }
 
+  console.log("hijos mandados a info", props.hijos)
+  
   return(
     <div>
       <Card className={classes.carta}>
@@ -108,7 +110,7 @@ function InfoExpresiones(props){
                   {"Expresion: " + props.expresionSeleccionada.expresion_original}
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondetraduccion}>
-                  Traducción:
+                  {"Traducción: " + props.expresionSeleccionada.expresion_traduccion}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -116,10 +118,10 @@ function InfoExpresiones(props){
                   Parentesco
                 </Typography>
                 <Typography variant="h2" className={classes.informaciondeexpresion}>
-                  Padre(s)
+                  {"Padre(s): " + props.padres.expresion}
                 </Typography>
-                <Typography variant="h2" className={classes.informaciondetraduccion}>
-                  Hijo(s)
+                <Typography ariant="h2" className={classes.informaciondeexpresion}>
+                  Hijo(s):
                 </Typography>
               </Grid>
             </Grid>

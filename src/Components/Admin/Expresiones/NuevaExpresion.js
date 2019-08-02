@@ -33,8 +33,7 @@ function NuevaExpresion(props){
     setOpen(false);
   };
 
-  console.log("Cuando paso expresiones a NuevaExpresion", props.expresionSeleccionada)
-
+  console.log("Como se mandan los hijos a nueva expresión", props.hijos)
   return (
     <div>
       <div>
@@ -44,7 +43,7 @@ function NuevaExpresion(props){
         <ModalAdmin open={open} handleClose={handleClose}/>
       </div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresionSeleccionada={props.expresionSeleccionada}/>
+        <InfoExpresiones expresionSeleccionada={props.expresionSeleccionada} padres={props.padres} hijos={props.hijos}/>
       </div>
       <div className={classes.contenedorPasajes}>
         <CartaPasajes/>
