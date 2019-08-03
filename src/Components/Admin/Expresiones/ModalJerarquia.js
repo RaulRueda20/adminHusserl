@@ -31,8 +31,9 @@ import eliminar from "../../../Imagenes/basura.png";
 const estiloModalJerarquia={
   modalinj:{
     width: "50%",
+    maxHeight:"500px",
     left: "25vw",
-    top: "20vh",
+    top: "10vh",
     position:"absolute",
     padding: "15px 10px",
     overflowY: "auto"
