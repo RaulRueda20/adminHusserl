@@ -15,7 +15,7 @@ function Alertas(props){
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"www.diccionariohusserl.org dice"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title"></DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           ¿Quiere eliminar la expresión seleccionada?

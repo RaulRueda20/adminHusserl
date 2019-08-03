@@ -20,6 +20,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/styles';
 
+import Share from '@material-ui/icons/Share';
+
 const mvt={
   modalinvt:{
     width: "60%",
@@ -67,7 +69,7 @@ function ModalVerTambien(props){
   return(
     <div>
       <IconButton onClick={()=>handleClickOpen()}>
-        VT
+        <Share/>
       </IconButton>
       <Modal
         aria-labelledby="simple-modal-title"

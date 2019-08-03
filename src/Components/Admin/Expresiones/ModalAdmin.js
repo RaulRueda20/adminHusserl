@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import Grid from '@material-ui/core/Grid';
 import ClearIcon from '@material-ui/icons/Clear';
 import { withStyles } from '@material-ui/styles';
+import Add from '@material-ui/icons/AddCircle';
 
 import FormularioExpresiones from './FormularioExpresiones';
 import FormularioTraduccion from './FormularioTraduccion';
@@ -57,9 +58,9 @@ function ModalAdmin(props){
 
   return(
     <div>
-      <Button variant="contained" className={classes.Boton1} onClick={() => handleOpen()}>
-        Nueva Expresión
-      </Button>
+      <IconButton onClick={()=>handleOpen()}>
+        <Add/>
+      </IconButton>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"

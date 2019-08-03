@@ -27,8 +27,8 @@ class Header extends React.Component{
             </Typography>
           </Grid>
           <Grid item xs={12}>
-          <Typography className={classes.subtitulo1} variant="h2" align="center">
-            Portal Administrativo
+            <Typography className={classes.subtitulo1} variant="h2" align="center">
+              Portal Administrativo
             </Typography>
           </Grid>
         </Grid>

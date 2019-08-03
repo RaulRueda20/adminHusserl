@@ -1,10 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import ModalAdmin from './ModalAdmin';
 import InfoExpresiones from './InfoExpresiones';
 import CartaPasajes from './CartaPasajes';
+import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import ModalAgregarPasaje from './ModalAgregarPasaje';
 
 import {adminService} from '../../../js/webServices';
 
@@ -37,6 +39,7 @@ function NuevaExpresion(props){
   const { classes } = props;
   const [expresion, setExpresion] = React.useState(emptyObj)
   const [pasajes, setPasajes] = React.useState([]);
+  const [openAp, setOpenAp] = React.useState(false);
   
   React.useEffect(()=>{
     if(props.expresionSeleccionada != ""){
@@ -63,14 +66,32 @@ function NuevaExpresion(props){
     
   }, [props.expresionSeleccionada])
 
+  function handleClickOpenAp() {
+    setOpenAp(true);
+  }
+
+  function handleCloseAp() {
+    setOpenAp(false);
+  }
+  
   return (
     <div>
-      <div>
-        <ModalAdmin/>
-      </div>
       <div className={classes.contenedorPaper}>
         <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada}/>
       </div>
+      <Grid container>
+        <Grid item  xs={10}>
+          <Typography variant="h3">
+            Pasajes
+          </Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <IconButton onClick={()=>handleClickOpenAp()}>
+            <AddIcon/>
+          </IconButton>
+          <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
+        </Grid>
+      </Grid>
       <Grid container className={classes.contenedorPasajes} spacing={1}>
         {
           pasajes.map(pasaje => 

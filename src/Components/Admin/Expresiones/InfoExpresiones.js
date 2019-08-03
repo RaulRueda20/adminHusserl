@@ -1,6 +1,4 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from "@material-ui/core/Divider";
@@ -8,8 +6,10 @@ import { withStyles } from '@material-ui/styles';
 
 import ModalJerarquia from './ModalJerarquia';
 import Alertas from './Alertas';
-import ModalAgregarPasaje from './ModalAgregarPasaje';
 import ModalVerTambien from './ModalVerTambien';
+import ModalAdmin from './ModalAdmin';
+
+import MenuBarra from './MenuBarra';
 
 import {adminService} from '../../../js/webServices';
 
@@ -55,7 +55,6 @@ const infoExpresiones= {
 function InfoExpresiones(props){
   const {classes} = props;
   const [openAl, setOpenAl] = React.useState(false);
-  const [openAp, setOpenAp] = React.useState(false);
   const [hijos, setHijos] = React.useState([]);
   const [padres, setPadres] = React.useState([]);
 
@@ -63,22 +62,6 @@ function InfoExpresiones(props){
     adminService(("/expresiones/al/abuelosList/" + props.expresionId),"GET", {}, (data) => setPadres(data.data.response))
     adminService(("/expresiones/al/hijosList/" + props.expresionId), "GET", {}, (data) => setHijos(data.data.response))
   }, [props.expresionId])
-
-  function handleClickOpenAl() {
-    setOpenAl(true);
-  }
-
-  function handleCloseAl() {
-    setOpenAl(false);
-  }
-
-  function handleClickOpenAp() {
-    setOpenAp(true);
-  }
-
-  function handleCloseAp() {
-    setOpenAp(false);
-  }
 
   const paintJerarquia = (lista) => {
     var lastString = ""
@@ -93,27 +76,13 @@ function InfoExpresiones(props){
   return(
     <div>
       <Grid container className={classes.titulo}>
-        <Grid item xs={8} className={classes.titulo}>
+        <Grid item xs={7} className={classes.titulo}>
           <Typography gutterBottom variant="h3">
             {props.expresionSeleccionada.expresion_original + " // " + props.expresionSeleccionada.expresion_traduccion}
           </Typography>
         </Grid>
-        <Grid item xs={1} className={classes.botonesaccion}>
-          <ModalJerarquia/>
-        </Grid>
-        <Grid item xs={1} className={classes.botonesaccion}>
-          <IconButton>
-            <Create/>
-          </IconButton>
-        </Grid>
-        <Grid item xs={1} className={classes.botonesaccion}>
-          <ModalVerTambien/>
-        </Grid>
-        <Grid item xs={1} className={classes.botonesaccion}>
-          <IconButton onClick={()=>handleClickOpenAl()}>
-            <Delete/>
-          </IconButton>
-          <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
+        <Grid item xs={5} className={classes.botonesaccion}>
+          <MenuBarra/>
         </Grid>
       </Grid>
       <Divider className="divisor"/>
@@ -177,19 +146,6 @@ function InfoExpresiones(props){
         </Grid>
       </Grid>
       <Divider className="divisor"/>
-      <Grid container>
-        <Grid item  xs={10}>
-          <Typography variant="h3">
-            Pasajes
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <IconButton onClick={()=>handleClickOpenAp()}>
-            <AddIcon/>
-          </IconButton>
-          <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
-        </Grid>
-      </Grid>
     </div>
   )
 }
