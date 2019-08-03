@@ -20,6 +20,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import ModalJerarquiaPadres from './ModalJerarquiaPadres';
+import ModalJerarquiaHijos from './ModalJerarquiaHijos';
+
 import Jerarquia from '@material-ui/icons/DeviceHub';
 // import jerarquia from "../../../Imagenes/diagrama.png";
 
@@ -60,12 +63,8 @@ const estiloModalJerarquia={
 
 function ModalJerarquia(props){
   const {classes}=props;
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [open, setOpen] = React.useState(false);
-
-  function handleListItemClick(event, index) {
-    setSelectedIndex(index);
-  }
+  const [vistaModal, setVistaModal] = React.useState("padres");
 
   function handleOpenModal() {
     setOpen(true);
@@ -74,6 +73,14 @@ function ModalJerarquia(props){
   function handleCloseModal() {
     setOpen(false);
   };
+
+  const handleVistasPadres=()=>{
+    setVistaModal("padres");
+  }
+
+  const handleVistasHijos=()=>{
+    setVistaModal("hijos");
+  }
 
   return(
     <div>
@@ -109,6 +116,7 @@ function ModalJerarquia(props){
               <Button
                 variant="contained"
                 size="small"
+                onClick={handleVistasPadres}
               >
                 Padres
               </Button>
@@ -116,72 +124,19 @@ function ModalJerarquia(props){
                 variant="contained"
                 className={classes.botonhijos}
                 size="small"
+                onClick={handleVistasHijos}
               >
                 Hijos
               </Button>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <List>
-                <ListItem
-                  className={classes.listaitemj}
-                  selected={selectedIndex === 1}
-                >
-                  padre
-                </ListItem>
-                <ListItemSecondaryAction>
-                  <IconButton size="small">
-                    <ClearIcon/>
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </List>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h3">
-                Expresión
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.contenedorbusquedaj}>
-              <FormControl className={classes.busquedaj}>
-                <InputLabel htmlFor="input-with-icon-adornment">Busqueda</InputLabel>
-                <Input
-                  id="input-with-icon-adornment"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={"expresiones hijas"}/>
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                className={classes.botonAgregar}
-              >
-                Agregar
-              </Button>
-            </Grid>
-          </Grid>
+          <div>
+            {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones}/> : <ModalJerarquiaHijos hijos={props.hijos} expresiones={props.expresiones}/>}
+          </div>
         </Paper>
       </Modal>
     </div>
-    
+
   )
 }
 

@@ -40,7 +40,7 @@ function NuevaExpresion(props){
   const [expresion, setExpresion] = React.useState(emptyObj)
   const [pasajes, setPasajes] = React.useState([]);
   const [openAp, setOpenAp] = React.useState(false);
-  
+
   React.useEffect(()=>{
     if(props.expresionSeleccionada != ""){
       var service = "/referencias/obtieneReferenciasByTerm/" + props.expresionSeleccionada
@@ -63,7 +63,7 @@ function NuevaExpresion(props){
       setExpresion(emptyObj)
       setPasajes([emptyObj])
     }
-    
+
   }, [props.expresionSeleccionada])
 
   function handleClickOpenAp() {
@@ -73,11 +73,11 @@ function NuevaExpresion(props){
   function handleCloseAp() {
     setOpenAp(false);
   }
-  
+
   return (
     <div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada}/>
+        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada} expresiones={props.expresiones}/>
       </div>
       <Grid container>
         <Grid item  xs={10}>
@@ -94,7 +94,7 @@ function NuevaExpresion(props){
       </Grid>
       <Grid container className={classes.contenedorPasajes} spacing={1}>
         {
-          pasajes.map(pasaje => 
+          pasajes.map(pasaje =>
             <Grid key={pasaje.refid} item xs={6} sm={4} md={3} lg={2}>
               <CartaPasajes pasaje={pasaje}/>
             </Grid>

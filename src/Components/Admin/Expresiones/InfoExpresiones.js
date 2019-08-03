@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Divider from "@material-ui/core/Divider";
 import { withStyles } from '@material-ui/styles';
 
-import ModalJerarquia from './ModalJerarquia';
-import Alertas from './Alertas';
-import ModalVerTambien from './ModalVerTambien';
-import ModalAdmin from './ModalAdmin';
+// import ModalJerarquia from './ModalJerarquia';
+// import Alertas from './Alertas';
+// import ModalVerTambien from './ModalVerTambien';
+// import ModalAdmin from './ModalAdmin';
 
 import MenuBarra from './MenuBarra';
 
@@ -72,7 +72,7 @@ function InfoExpresiones(props){
     }
     return lastString
   }
-
+  
   return(
     <div>
       <Grid container className={classes.titulo}>
@@ -82,7 +82,7 @@ function InfoExpresiones(props){
           </Typography>
         </Grid>
         <Grid item xs={5} className={classes.botonesaccion}>
-          <MenuBarra/>
+          <MenuBarra padres={padres} hijos={hijos} expresiones={props.expresiones}/>
         </Grid>
       </Grid>
       <Divider className="divisor"/>

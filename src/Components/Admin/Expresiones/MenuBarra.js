@@ -48,11 +48,11 @@ function InfoExpresiones(props){
   function handleCloseAl() {
     setOpenAl(false);
   }
-
+  
   return(
       <Grid container className={classes.titulo}>
         <Grid item xs className={classes.botonesaccion}>
-          <ModalJerarquia/>
+          <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={props.expresiones}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
           <IconButton>
