@@ -7,6 +7,8 @@ import Divider from "@material-ui/core/Divider";
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
+import {adminService} from '../../js/webServices';
+
 const acercade={
   botonespañol:{
     left:"2px"
@@ -32,11 +34,53 @@ const acercade={
   },
   botonguardar:{
     width:"70%"
+  },
+  editor:{
+    minHeight:"350px"
   }
 }
 
 function Acercade(props){
   const {classes}=props;
+  const [contenidoGuia, setContenidoGuia]=React.useState("")
+  const [contenidoEditorGuia, setContenidoEditorGuia]=React.useState("")
+  const [tituloGuia, setTituloGuia]=React.useState("Acerca de")
+
+  React.useEffect(()=>{
+    var service = "/acerca_de/get"
+    adminService(service, "GET", {}, (data) =>{
+      console.log("data",data)
+      setContenidoGuia(data.data.response[0])
+      setContenidoEditorGuia(data.data.response[0].contenido)
+    })
+  }, [])
+
+  const handleClickEsp=()=>{
+    setContenidoEditorGuia(contenidoGuia.contenido);
+    setTituloGuia("Guía");
+  }
+
+  const handleClickAl=()=>{
+    setContenidoEditorGuia(contenidoGuia.contenido_de);
+    setTituloGuia("Über das");
+  }
+
+  const handleClickIn=()=>{
+    setContenidoEditorGuia(contenidoGuia.contenido_en);
+    setTituloGuia("About");
+  }
+
+  const handleClickFr=()=>{
+    setContenidoEditorGuia(contenidoGuia.contenido_fr);
+    setTituloGuia("A propos");
+  }
+
+  const handleClickCa=()=>{
+    setContenidoEditorGuia(contenidoGuia.contenido_ca);
+    setTituloGuia("A propos");
+  }
+
+  console.log("Guia", contenidoEditorGuia)
 
   return(
     <div>
@@ -46,6 +90,7 @@ function Acercade(props){
             <Button
               variant="contained"
               size="small"
+              onClick={handleClickAl}
             >
               Aleman
             </Button>
@@ -53,6 +98,7 @@ function Acercade(props){
               variant="contained"
               size="small"
               className={classes.botonespañol}
+              onClick={handleClickEsp}
             >
               Español
             </Button>
@@ -60,6 +106,7 @@ function Acercade(props){
               variant="contained"
               size="small"
               className={classes.botoningles}
+              onClick={handleClickIn}
             >
               Inglés
             </Button>
@@ -67,6 +114,7 @@ function Acercade(props){
               variant="contained"
               size="small"
               className={classes.botonfrances}
+              onClick={handleClickFr}
             >
               Francés
             </Button>
@@ -74,6 +122,7 @@ function Acercade(props){
               variant="contained"
               size="small"
               className={classes.botoncatalan}
+              onClick={handleClickFr}
             >
               Catalán
             </Button>
@@ -83,37 +132,21 @@ function Acercade(props){
       <Divider/>
       <div className={classes.acerdaDe}>
         <Grid container>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography variant="h3">
-              Acerca de
+              {tituloGuia}
             </Typography>
           </Grid>
         </Grid>
       </div>
       <Divider className="divisor"/>
       <div>
-        <Grid container className={classes.contenedoreditoracercade}>
-          <Grid item>
-            <CKEditor
-                 editor={ ClassicEditor }
-                 data=""
-                 onInit={ editor => {
-                     // You can store the "editor" and use when it is needed.
-                     console.log( 'Editor is ready to use!', editor );
-                 } }
-                 onChange={ ( event, editor ) => {
-                     const data = editor.getData();
-                     console.log( { event, editor, data } );
-                 } }
-                 onBlur={ editor => {
-                     console.log( 'Blur.', editor );
-                 } }
-                 onFocus={ editor => {
-                     console.log( 'Focus.', editor );
-                 } }
-             />
-          </Grid>
-        </Grid>
+        <div className={classes.editor}>
+          <CKEditor
+               editor={ ClassicEditor }
+               data={contenidoEditorGuia}
+           />
+        </div>
       </div>
       <Divider className="divisor"/>
       <div className={classes.contenedorbontonguardar}>

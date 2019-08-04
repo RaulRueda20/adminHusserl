@@ -7,6 +7,8 @@ import Divider from "@material-ui/core/Divider";
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
+import {adminService} from '../../js/webServices';
+
 const manual={
   botonespañolm:{
     left:"2px"
@@ -23,20 +25,58 @@ const manual={
   manualin:{
     paddingLeft:"670px"
   },
-  contenedoreditormanual:{
-    paddingLeft:"450px",
-    paddingTop:"30px"
-  },
   contenedorbontonguardarm:{
     paddingLeft:"350px"
   },
   botonguardarm:{
     width:"70%"
+  },
+  editor:{
+    minHeight:"350px"
   }
 }
 
 function Manual(props){
   const {classes}=props;
+  const [contenidoManual, setContenidoManual]=React.useState("")
+  const [contenidoEditor, setContenidoEditor]=React.useState("")
+  const [tituloManual, setTituloManual]=React.useState("Guía")
+
+  React.useEffect(()=>{
+    var service = "/manual/get"
+    adminService(service, "GET", {}, (data) =>{
+      console.log("data",data)
+      setContenidoManual(data.data.response[0])
+      setContenidoEditor(data.data.response[0].contenido)
+    })
+  }, [])
+
+  const handleClickEsp=()=>{
+    setContenidoEditor(contenidoManual.contenido);
+    setTituloManual("Guía");
+  }
+
+  const handleClickAl=()=>{
+    setContenidoEditor(contenidoManual.contenido_de);
+    setTituloManual("Führer");
+  }
+
+  const handleClickIn=()=>{
+    setContenidoEditor(contenidoManual.contenido_en);
+    setTituloManual("Guide");
+  }
+
+  const handleClickFr=()=>{
+    setContenidoEditor(contenidoManual.contenido_fr);
+    setTituloManual("Guide");
+  }
+
+  const handleClickCa=()=>{
+    setContenidoEditor(contenidoManual.contenido_ca);
+    setTituloManual("Guide");
+  }
+
+  console.log("lo que mando al editor",contenidoEditor)
 
   return(
     <div>
@@ -46,6 +86,7 @@ function Manual(props){
             <Button
               variant="contained"
               size="small"
+              onClick={handleClickAl}
             >
               Aleman
             </Button>
@@ -53,6 +94,7 @@ function Manual(props){
               variant="contained"
               size="small"
               className={classes.botonespañolm}
+              onClick={handleClickEsp}
             >
               Español
             </Button>
@@ -60,6 +102,7 @@ function Manual(props){
               variant="contained"
               size="small"
               className={classes.botoninglesm}
+              onClick={handleClickIn}
             >
               Inglés
             </Button>
@@ -67,6 +110,7 @@ function Manual(props){
               variant="contained"
               size="small"
               className={classes.botonfrancesm}
+              onClick={handleClickFr}
             >
               Francés
             </Button>
@@ -74,6 +118,7 @@ function Manual(props){
               variant="contained"
               size="small"
               className={classes.botoncatalanm}
+              onClick={handleClickCa}
             >
               Catalán
             </Button>
@@ -83,37 +128,25 @@ function Manual(props){
       <Divider/>
       <div className={classes.manualin}>
         <Grid container>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography variant="h3">
-              Manual
+              {tituloManual}
             </Typography>
           </Grid>
         </Grid>
       </div>
       <Divider className="divisor"/>
       <div>
-        <Grid container className={classes.contenedoreditormanual}>
-          <Grid item>
-            <CKEditor
-                 editor={ ClassicEditor }
-                 data=""
-                 onInit={ editor => {
-                     // You can store the "editor" and use when it is needed.
-                     console.log( 'Editor is ready to use!', editor );
-                 } }
-                 onChange={ ( event, editor ) => {
-                     const data = editor.getData();
-                     console.log( { event, editor, data } );
-                 } }
-                 onBlur={ editor => {
-                     console.log( 'Blur.', editor );
-                 } }
-                 onFocus={ editor => {
-                     console.log( 'Focus.', editor );
-                 } }
-             />
-          </Grid>
-        </Grid>
+        <div className={classes.editor}>
+          <CKEditor
+               editor={ ClassicEditor }
+               data={contenidoEditor}
+               onChange={ ( event, editor ) => {
+                 console.log(editor.getData())
+                 setContenidoEditor(editor.getData())
+               } }
+           />
+         </div>
       </div>
       <Divider className="divisor"/>
       <div className={classes.contenedorbontonguardarm}>
