@@ -19,9 +19,6 @@ const infoExpresiones= {
   titulo:{
     paddingTop:"10px"
   },
-  botonesaccion:{
-    // paddingLeft:"120px"
-  },
   contenedordeinfo:{
     borderRight: "lightgrey 1px dashed"
   },
@@ -61,26 +58,22 @@ function InfoExpresiones(props){
   React.useEffect(()=>{
     var service = "/expresiones/getAllList"
     adminService(service, "GET", {}, (data) => {
-      // console.log(data)
       setAllExpresiones(data.data.response)
-      // console.log("lista de expresiones", data)
-      // setExpresiones(data.data.response)
-      // setIdExpresion(data.data.response.length > 0 ? data.data.response[0].id : "")
     })
   }, [true])
 
   return(
       <Grid container className={classes.titulo}>
-        <Grid item xs className={classes.botonesaccion}>
+        <Grid item xs>
           <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={allExpresiones}/>
         </Grid>
-        <Grid item xs className={classes.botonesaccion}>
+        <Grid item xs>
           <ModalEditar expresion={props.expresion}/>
         </Grid>
-        <Grid item xs className={classes.botonesaccion}>
+        <Grid item xs>
           <ModalVerTambien expresiones={allExpresiones}/>
         </Grid>
-        <Grid item xs className={classes.botonesaccion}>
+        <Grid item xs>
           <Tooltip title="Eliminar expresión">
             <IconButton onClick={()=>handleClickOpenAl()}>
               <Delete/>
@@ -88,7 +81,7 @@ function InfoExpresiones(props){
           </Tooltip>
           <Alertas text="¿Quiere eliminar la expresión seleccionada?" openAl={openAl} handleCloseAl={handleCloseAl} accept={deleteExpresion}/>
         </Grid>
-        <Grid item xs className={classes.botonesaccion}>
+        <Grid item xs>
           <ModalAdmin/>
         </Grid>
       </Grid>

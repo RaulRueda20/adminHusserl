@@ -103,24 +103,21 @@ function ModalJerarquia(props){
               </IconButton>
             </Grid>
           </Grid>
-          {/* <Divider className="divisor"/> */}
           <div className={classes.menuButtons}>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={handleVistasPadres}
-                className={classNames({"selectedButton" : vistaModal == 'padres'}, classes.Buttons)}
-              >
-                Padres
-              </Button>
-              <Button
-                variant="contained"
-                className={classNames({"selectedButton" : vistaModal != 'padres'}, classes.Buttons)}
-                size="small"
-                onClick={handleVistasHijos}
-              >
-                Hijos
-              </Button>
+            <Button
+              size="small"
+              onClick={handleVistasPadres}
+              className={classNames({"selectedButton" : vistaModal == 'padres'}, classes.Buttons)}
+            >
+              Padres
+            </Button>
+            <Button
+              className={classNames({"selectedButton" : vistaModal != 'padres'}, classes.Buttons)}
+              size="small"
+              onClick={handleVistasHijos}
+            >
+              Hijos
+            </Button>
           </div>
           {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones}/> : <ModalJerarquiaHijos hijos={props.hijos} expresiones={props.expresiones}/>}
         </Paper>

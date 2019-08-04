@@ -21,6 +21,9 @@ const infoExpresiones= {
   titulo:{
     paddingTop:"10px"
   },
+  tit : {
+    paddingTop: "5px"
+  },
   botonesaccion:{
     // paddingLeft:"120px"
   },
@@ -40,16 +43,6 @@ const infoExpresiones= {
     maxHeight: "100px",
     overflow: "scroll"
   }
-  // informaciondeexpresion:{
-  //   paddingTop:"10px",
-  //   paddingRight:"35px",
-  //   fontWeight: "900 !important",
-  // },
-  // informaciondetraduccion:{
-  //   paddingTop:"20px",
-  //   paddingRight:"35px",
-  //   fontWeight: "900 !important"
-  // }
 }
 
 function InfoExpresiones(props){
@@ -75,9 +68,9 @@ function InfoExpresiones(props){
   
   return(
     <div>
-      <Grid container className={classes.titulo}>
-        <Grid item xs={7} className={classes.titulo}>
-          <Typography gutterBottom variant="h3">
+      <Grid container className={classes.titulo} alignItems="center">
+        <Grid item xs={7} className={classes.tit}>
+          <Typography variant="h3">
             {props.expresionSeleccionada.expresion_original + " // " + props.expresionSeleccionada.expresion_traduccion}
           </Typography>
         </Grid>

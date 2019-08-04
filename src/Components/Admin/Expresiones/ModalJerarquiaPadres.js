@@ -1,21 +1,17 @@
 import React from 'react'
-// import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-// import Divider from "@material-ui/core/Divider";
 import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
-// import Checkbox from '@material-ui/core/Checkbox';
+import Snackbar from '@material-ui/core/Snackbar';
 import ClearIcon from '@material-ui/icons/Clear';
 
 const estiloModalJerarquiaPadres={
@@ -47,9 +43,31 @@ function ModalJerarquiaPadres(props){
   const {classes}=props;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [selectedExpresions, setSelectedExpresions] = React.useState([]);
+  const [snack, setSnack] = React.useState({open : false, text : ""})
   
   function handleListItemClick(event, index) {
     setSelectedIndex(index);
+  }
+
+  function handleClose() {
+    setSnack({open: false, text: ""});
+  }
+
+  const checkExistence = () => {
+    if(selectedExpresions.length == 0){
+      setSnack({open : true, text: "No ha seleccionado ninguna expresión."})
+      return true
+    }
+    for(var i in selectedExpresions){
+      for(var j in props.padres){
+        if(selectedExpresions[i] == props.padres[j].padre){
+          setSnack({open : true, text: "La expresión '" + props.padres[j].padre + " - " + props.padres[j].expresion + "' ya forma parte de la jerarquía."})
+          return true
+        }
+      }
+    }
+    console.log("ok")
+    return false
   }
 
   const addEToList = (id) => {
@@ -62,6 +80,16 @@ function ModalJerarquiaPadres(props){
 
   return(
     <div>
+      <Snackbar
+        anchorOrigin={{ vertical : "top", horizontal : "left" }}
+        key={`top,left`}
+        open={snack.open}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{snack.text}</span>}
+      />
       <List className={classes.listacontenedor}>
         {props.padres.map(padre=>(
           <ListItem
@@ -75,7 +103,7 @@ function ModalJerarquiaPadres(props){
             />
             <ListItemSecondaryAction>
               <IconButton size="small">
-                <ClearIcon/>
+                <ClearIcon fontSize="small"/>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
@@ -108,6 +136,7 @@ function ModalJerarquiaPadres(props){
       <Button
         variant="contained"
         className={classes.botonAgregar}
+        onClick={checkExistence}
       >
         Agregar
       </Button>

@@ -7,6 +7,7 @@ import CartaPasajes from './CartaPasajes';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
+import Tooltip from '@material-ui/core/Tooltip';
 import Alertas from './Alertas';
 import {adminService} from '../../../js/webServices';
 
@@ -100,9 +101,11 @@ function NuevaExpresion(props){
           </Typography>
         </Grid>
         <Grid item xs={2}>
-          <IconButton onClick={()=>handleClickOpenAp()}>
-            <AddIcon/>
-          </IconButton>
+          <Tooltip title="Agregar Pasaje">
+            <IconButton onClick={()=>handleClickOpenAp()}>
+              <AddIcon/>
+            </IconButton>
+          </Tooltip>
           <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
         </Grid>
       </Grid>

@@ -15,7 +15,6 @@ function Pasajes(props){
   React.useEffect(()=>{
     var service = "/referencias/lista"
     adminService(service, "GET", {}, (data) => {
-      console.log("Buscando la data",data)
       setPasajes(data.data.response)
       setPasajeSeleccionado(data.data.response[0].ref_id)
     })
@@ -23,17 +22,15 @@ function Pasajes(props){
 
   return (
     <div>
-      <div>
-        <Grid container>
-          <Grid item xs={3}>
-            <Busqueda/>
-            <ListaClaves pasajes={pasajes} pasajeId={pasajeSeleccionado} setPasajeId={setPasajeSeleccionado}/>
-          </Grid>
-          <Grid item xs={9}>
-            <NuevoPasaje/>
-          </Grid>
+      <Grid container>
+        <Grid item xs={3} style={{borderRight : "1px rgb(230, 230, 230) solid"}}>
+          <Busqueda/>
+          <ListaClaves pasajes={pasajes} pasajeId={pasajeSeleccionado} setPasajeId={setPasajeSeleccionado}/>
         </Grid>
-      </div>
+        <Grid item xs={9}>
+          <NuevoPasaje setPasajeSeleccionado={setPasajeSeleccionado} pasajeSeleccionado={pasajeSeleccionado}/>
+        </Grid>
+      </Grid>
     </div>
   )
 }

@@ -12,6 +12,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 import ClearIcon from '@material-ui/icons/Clear';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const estiloModalJerarquiaHijos={
   botonhijos:{
@@ -42,9 +43,31 @@ function ModalJerarquiaHijos(props){
   const {classes}=props;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [selectedExpresions, setSelectedExpresions] = React.useState([]);
+  const [snack, setSnack] = React.useState({open : false, text : ""})
 
   function handleListItemClick(event, index) {
     setSelectedIndex(index);
+  }
+
+  const checkExistence = () => {
+    if(selectedExpresions.length == 0){
+      setSnack({open : true, text: "No ha seleccionado ninguna expresión."})
+      return true
+    }
+    for(var i in selectedExpresions){
+      for(var j in props.hijos){
+        if(selectedExpresions[i] == props.hijos[j].hijo){
+          setSnack({open : true, text: "La expresión '" + props.hijos[j].hijo + " - " + props.hijos[j].expresion + "' ya forma parte de la jerarquía."})
+          return true
+        }
+      }
+    }
+    console.log("ok")
+    return false
+  }
+
+  function handleClose() {
+    setSnack({open: false, text: ""});
   }
 
   const addEToList = (id) => {
@@ -57,6 +80,16 @@ function ModalJerarquiaHijos(props){
 
   return(
     <div>
+      <Snackbar
+        anchorOrigin={{ vertical : "top", horizontal : "left" }}
+        key={`top,left`}
+        open={snack.open}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{snack.text}</span>}
+      />
       <List className={classes.listacontenedor}>
         {props.hijos.map(hijo=>(
           <ListItem
@@ -70,7 +103,7 @@ function ModalJerarquiaHijos(props){
             />
             <ListItemSecondaryAction>
               <IconButton size="small">
-                <ClearIcon/>
+                <ClearIcon fontSize="small"/>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
@@ -104,6 +137,7 @@ function ModalJerarquiaHijos(props){
       <Button
         variant="contained"
         className={classes.botonAgregar}
+        onClick={checkExistence}
       >
         Agregar
       </Button>

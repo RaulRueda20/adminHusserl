@@ -82,7 +82,7 @@ function ModalJerarquia(props){
   const {classes}=props;
   const [open, setOpen] = React.useState(false);
   const [selectedExpresions, setSelectedExpresions] = React.useState([]);
-  const [verTambien, setVerTambien] = React.useState([]);
+  const [verTambien, setVerTambien] = React.useState([{expresion: "Abbildungsfunktion", hijo: "1"}]);
 
   function handleOpenModal() {
     setOpen(true);
@@ -129,60 +129,58 @@ function ModalJerarquia(props){
                 <ClearIcon fontSize="small"/>
               </IconButton>
             </Grid>
-          </Grid>
-          <div>
-            <List className={classes.listacontenedor}>
-              {verTambien.map(expresion=>(
-                <ListItem
-                  key={expresion.hijo}
-                  className={classes.listaitemj}
-                  // selected={selectedIndex === 1}
-                >
-                  <ListItemText
-                    primary={expresion.expresion}
-                    // secondary={secondary ? 'Secondary text' : null}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton size="small">
-                      <ClearIcon/>
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-            </List>
+          </Grid><br/>
+          <List className={classes.listacontenedor}>
+            {verTambien.map(expresion=>{
+              return(<ListItem
+                key={expresion.hijo}
+                className={classes.listaitemj}
+                // selected={selectedIndex === 1}
+              >
+                <ListItemText
+                  primary={expresion.expresion}
+                  // secondary={secondary ? 'Secondary text' : null}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton size="small">
+                    <ClearIcon fontSize="small"/>
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>)
+            })}
+          </List>
 
-            <Typography variant="h3">
-              Expresiones
-            </Typography>
-            <FormControl className={classes.busquedaj}>
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <List className={classes.listacontenedor}>
-              {props.expresiones.map(expresionp=>(
-                // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
-                <li 
-                  id={expresionp.t_id}
-                  key={expresionp.t_id} 
-                  className={"sideList"} 
-                  onClick={() => addEToList(expresionp.t_id)}>
-                    {expresionp.t_id + " - " + expresionp.t_term_de + " // " + expresionp.t_term_es}
-                </li>
-              ))}
-            </List>
-            <Button
-              variant="contained"
-              className={classes.botonAgregar}
-            >
-              Agregar
-            </Button>
-          </div>
+          <Typography variant="h3">
+            Expresiones
+          </Typography>
+          <FormControl className={classes.busquedaj}>
+            <Input
+              id="input-with-icon-adornment"
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <List className={classes.listacontenedor}>
+            {props.expresiones.map(expresionp=>(
+              // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
+              <li 
+                id={expresionp.t_id}
+                key={expresionp.t_id} 
+                className={"sideList"} 
+                onClick={() => addEToList(expresionp.t_id)}>
+                  {expresionp.t_id + " - " + expresionp.t_term_de + " // " + expresionp.t_term_es}
+              </li>
+            ))}
+          </List>
+          <Button
+            variant="contained"
+            className={classes.botonAgregar}
+          >
+            Agregar
+          </Button>
         </Paper>
       </Modal>
     </div>
