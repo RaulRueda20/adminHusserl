@@ -7,8 +7,10 @@ import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
 import Grid from '@material-ui/core/Grid';
 import ClearIcon from '@material-ui/icons/Clear';
-import { withStyles } from '@material-ui/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Add from '@material-ui/icons/AddCircle';
+import { withStyles } from '@material-ui/styles';
+
 
 import FormularioExpresiones from './FormularioExpresiones';
 import FormularioTraduccion from './FormularioTraduccion';
@@ -58,9 +60,11 @@ function ModalAdmin(props){
 
   return(
     <div>
-      <IconButton onClick={()=>handleOpen()}>
-        <Add/>
-      </IconButton>
+      <Tooltip title="Agregar expresión">
+        <IconButton onClick={()=>handleOpen()}>
+          <Add/>
+        </IconButton>
+      </Tooltip>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"

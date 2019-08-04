@@ -17,8 +17,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { withStyles } from '@material-ui/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
+import { withStyles } from '@material-ui/styles';
+
 
 import ModalJerarquiaPadres from './ModalJerarquiaPadres';
 import ModalJerarquiaHijos from './ModalJerarquiaHijos';
@@ -85,9 +87,11 @@ function ModalJerarquia(props){
 
   return(
     <div>
-      <IconButton onClick={() => handleOpenModal()}>
-        <Jerarquia/>
-      </IconButton>
+      <Tooltip title="Jerarquia de la expresión">
+        <IconButton onClick={() => handleOpenModal()}>
+          <Jerarquia/>
+        </IconButton>
+      </Tooltip>
       <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"

@@ -1,6 +1,7 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/styles';
 
 import ModalJerarquia from './ModalJerarquia';
@@ -48,24 +49,28 @@ function InfoExpresiones(props){
   function handleCloseAl() {
     setOpenAl(false);
   }
-  
+
   return(
       <Grid container className={classes.titulo}>
         <Grid item xs className={classes.botonesaccion}>
           <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={props.expresiones}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
-          <IconButton>
-            <Create/>
-          </IconButton>
+          <Tooltip title="Editar expresión">
+            <IconButton>
+              <Create/>
+            </IconButton>
+          </Tooltip>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
           <ModalVerTambien/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
-          <IconButton onClick={()=>handleClickOpenAl()}>
-            <Delete/>
-          </IconButton>
+          <Tooltip title="Eliminar expresión">
+            <IconButton onClick={()=>handleClickOpenAl()}>
+              <Delete/>
+            </IconButton>
+          </Tooltip>
           <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>

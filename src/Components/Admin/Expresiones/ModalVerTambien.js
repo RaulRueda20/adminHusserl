@@ -18,6 +18,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/styles';
 
 import Share from '@material-ui/icons/Share';
@@ -68,9 +69,11 @@ function ModalVerTambien(props){
 
   return(
     <div>
-      <IconButton onClick={()=>handleClickOpen()}>
-        <Share/>
-      </IconButton>
+      <Tooltip title="Ver también">
+        <IconButton onClick={()=>handleClickOpen()}>
+          <Share/>
+        </IconButton>
+      </Tooltip>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
