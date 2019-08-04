@@ -14,8 +14,8 @@ import MenuBarra from './MenuBarra';
 import {adminService} from '../../../js/webServices';
 
 // import editar from "../../../Imagenes/editar.png";
-import Create from "@material-ui/icons/Create";
-import Delete from "@material-ui/icons/Delete";
+// import Create from "@material-ui/icons/Create";
+// import Delete from "@material-ui/icons/Delete";
 
 const infoExpresiones= {
   titulo:{
@@ -82,7 +82,7 @@ function InfoExpresiones(props){
           </Typography>
         </Grid>
         <Grid item xs={5} className={classes.botonesaccion}>
-          <MenuBarra padres={padres} hijos={hijos} expresiones={props.expresiones}/>
+          <MenuBarra expresion={props.expresionSeleccionada} padres={padres} hijos={hijos} expresiones={props.expresiones}/>
         </Grid>
       </Grid>
       <Divider className="divisor"/>

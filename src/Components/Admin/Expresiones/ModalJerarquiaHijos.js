@@ -4,18 +4,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Divider from "@material-ui/core/Divider";
-import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
-import Checkbox from '@material-ui/core/Checkbox';
 import ClearIcon from '@material-ui/icons/Clear';
 
 const estiloModalJerarquiaHijos={
@@ -24,104 +19,94 @@ const estiloModalJerarquiaHijos={
     size:"small"
   },
   listacontenedor:{
-    MaxWidth:"100%",
+    height: "25vh",
+    overflow: "scroll"
   },
   listaitemj:{
-    borderBottom:"dotted",
+    background: "rgb(230,230,230)",
+    borderBottom:"rgb(150,150,150) dotted",
   },
   busquedaj:{
-    width:"80%",
-    left: "70px",
+    width:"100%",
   },
   contenedorbusquedaj:{
     paddingTop:"10px"
   },
   botonAgregar:{
-    width:"100%",
-    left:"270px",
-    top:"10px"
-  },
-  listaexpresiones:{
-    maxHeight: "200px",
-    overflow: "scroll"
+    width:"50%",
+    left:"50%",
   }
 }
 
 function ModalJerarquiaHijos(props){
   const {classes}=props;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedExpresions, setSelectedExpresions] = React.useState([]);
 
   function handleListItemClick(event, index) {
     setSelectedIndex(index);
   }
 
-  console.log("hijos",props.hijos)
+  const addEToList = (id) => {
+    var se = selectedExpresions
+    if(se.indexOf(id) < 0) se.push(id)
+    else se.splice(selectedExpresions.indexOf(id), 1)
+    document.getElementById(id).classList.toggle("selected")
+    setSelectedExpresions(se)
+  }
 
   return(
     <div>
-      <Grid container>
-        <Grid item xs={12}>
-          <List className={classes.listacontenedor}>
-            {props.hijos.map(hijo=>(
-              <div>
-                <ListItem
-                  className={classes.listaitemj}
-                  selected={selectedIndex === 1}
-                  key={hijo.expresion}
-                >
-                  {hijo.expresion}
-                </ListItem>
-                <ListItemSecondaryAction>
-                  <IconButton size="small">
-                    <ClearIcon/>
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </div>
-            ))}
-          </List>
-        </Grid>
-      </Grid>
-      <div>
-        <Grid container>
-          <Grid item xs={12} sm={6} md={4} lg={2}>
-            <Typography variant="h3">
-              Expresión
-            </Typography>
-          </Grid>
-          <Grid item xs={12} className={classes.contenedorbusquedaj}>
-            <FormControl className={classes.busquedaj}>
-              <InputLabel htmlFor="input-with-icon-adornment">Busqueda</InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <List className={classes.listaexpresiones}>
-              {props.expresiones.map(expresionh=>(
-                <li key={expresionh.id}>
-                  {expresionh.id + " - " + expresionh.expresion_de + " // " + expresionh.expresion_es}
-                </li>
-              ))}
-            </List>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12} sm={6} md={4} lg={2}>
-            <Button
-              variant="contained"
-              className={classes.botonAgregar}
-            >
-              Agregar
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
+      <List className={classes.listacontenedor}>
+        {props.hijos.map(hijo=>(
+          <ListItem
+            key={hijo.hijo}
+            className={classes.listaitemj}
+            // selected={selectedIndex === 1}
+          >
+            <ListItemText
+              primary={hijo.expresion}
+              // secondary={secondary ? 'Secondary text' : null}
+            />
+            <ListItemSecondaryAction>
+              <IconButton size="small">
+                <ClearIcon/>
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))}
+      </List>
+      <Typography variant="h3">
+        Expresiones
+      </Typography>
+      <FormControl className={classes.busquedaj}>
+        <Input
+          id="input-with-icon-adornment"
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <List className={classes.listacontenedor}>
+        {props.expresiones.map(expresionp=>(
+          // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
+          <li 
+            id={expresionp.t_id}
+            key={expresionp.t_id} 
+            className={"sideList"} 
+            onClick={() => addEToList(expresionp.t_id)}>
+              {expresionp.t_id + " - " + expresionp.t_term_de + " // " + expresionp.t_term_es}
+          </li>
+        ))}
+      </List>
+      <Button
+        variant="contained"
+        className={classes.botonAgregar}
+      >
+        Agregar
+      </Button>
     </div>
   )
 }

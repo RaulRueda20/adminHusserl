@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Divider from "@material-ui/core/Divider";
 import Grid from '@material-ui/core/Grid';
 import ClearIcon from '@material-ui/icons/Clear';
 import Tooltip from '@material-ui/core/Tooltip';
 import Add from '@material-ui/icons/AddCircle';
 import { withStyles } from '@material-ui/styles';
 
+import es from "../../../Imagenes/spain.png";
+import al from "../../../Imagenes/germany.png";
 
 import FormularioExpresiones from './FormularioExpresiones';
-import FormularioTraduccion from './FormularioTraduccion';
 
 const estiloModalExpresiones = theme => ({
   Boton1:{
@@ -24,16 +24,21 @@ const estiloModalExpresiones = theme => ({
     left: "20vw",
     top: "20vh",
     position:"absolute",
-    padding: "15px 10px",
+    padding: "30px",
     maxHeight: "450px",
     overflowY: "auto"
   },
   contenedorSubtitulos:{
+    width:"100%",
     padding: "15px 15px"
   },
   botonClear:{
     left: "210px",
     bottom: "20px"
+  },
+  botonAgregar:{
+    width:"50%",
+    left:"50%",
   }
 })
 
@@ -41,6 +46,14 @@ function ModalAdmin(props){
   const { classes } = props;
   const [indiceLang, setIndicelang] = React.useState("al");
   const [open, setOpen] = React.useState(false);
+
+  const [expresionLetraIndice, setExpresionLetraIndice] = React.useState('A')
+  const [expresion, setExpresion] = React.useState('')
+  const [expresionContenido, setExpresionContenido] = React.useState('')
+
+  const [traduccionLetraIndice, setTraduccionLetraIndice] = React.useState('A')
+  const [traduccion, setTraduccion] = React.useState('')
+  const [traduccionContenido, setTraduccionContenido] = React.useState('')
 
   const handleOpen = () => {
     setOpen(true);
@@ -71,26 +84,42 @@ function ModalAdmin(props){
         open={open}
         onClose={handleClose}
       >
-      <Paper className={classes.modalin}>
-        <Grid container className={classes.contenedorSubtitulos}>
-          <Grid item xs={8}>
-            <Typography variant ="h4">
-              Nueva Expresión
-            </Typography>
+        <Paper className={classes.modalin}>
+          <Grid container className={classes.contenedorSubtitulos}>
+            <Grid item xs={8}>
+              <Typography variant="h3">
+                Nueva Expresión
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <IconButton
+                onClick={handleClose}
+                className={classes.botonClear}
+              >
+                <ClearIcon fontSize="small"/>
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
-            <IconButton
-              aria-haspopup="true"
-              onClick={handleClose}
-              className={classes.botonClear}
-            >
-              <ClearIcon fontSize="small"/>
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Divider className="divisor"/>
-        {indiceLang == "al" ? <FormularioExpresiones indiceLang={indiceLang} handleEs={handleEs}/> :  <FormularioTraduccion indiceLang={indiceLang} handleAl={handleAl}/>}
-      </Paper>
+          {indiceLang == "al" ? 
+            <FormularioExpresiones 
+              expresion={expresion} setExpresion={setExpresion}
+              letra={expresionLetraIndice} setLetra={setExpresionLetraIndice} 
+              contenido={expresionContenido} setContenido={setExpresionContenido}
+              indiceLang={indiceLang} handleLang={handleEs} flag={es}
+              label="Expresión"/> : 
+            <FormularioExpresiones 
+              expresion={traduccion} setExpresion={setTraduccion}
+              letra={traduccionLetraIndice} setLetra={setTraduccionLetraIndice} 
+              contenido={traduccionContenido} setContenido={setTraduccionContenido}
+              indiceLang={indiceLang} handleLang={handleAl} flag={al}
+              label="Traducción"/>}
+          <Button
+            variant="contained"
+            className={classes.botonAgregar}
+          >
+            Agregar
+          </Button>
+        </Paper>
       </Modal>
     </div>
   )

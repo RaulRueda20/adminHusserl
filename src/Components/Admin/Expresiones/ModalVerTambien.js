@@ -1,163 +1,193 @@
-import React from 'react'
+import React from 'react';
+// import classNames from 'classnames';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Divider from "@material-ui/core/Divider";
 import Grid from '@material-ui/core/Grid';
 import ClearIcon from '@material-ui/icons/Clear';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Checkbox from '@material-ui/core/Checkbox';
-import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/styles';
 
 import Share from '@material-ui/icons/Share';
 
-const mvt={
-  modalinvt:{
-    width: "60%",
-    left: "20vw",
-    top: "20vh",
+const estiloModalJerarquia={
+  modalinj:{
+    width: "50%",
+    maxHeight:"75vh",
+    left: "25vw",
+    top: "15vh",
     position:"absolute",
-    padding: "15px 10px",
-    maxHeight: "450px",
+    padding: "30px 30px",
     overflowY: "auto"
   },
-  botonClearvt:{
-    bottom: "10px",
-    size:"small"
+  botonClearj:{
+    // bottom: "10px",
+    // size:"small"
   },
-  busquedavt:{
+  listaitemj:{
+    borderBottom:"dotted"
+  },
+  busquedaj:{
     width:"90%",
     left: "30px",
   },
-  contenedorbusquedavt:{
+  contenedorbusquedaj:{
     paddingTop:"10px"
   },
-  botonAgregarvt:{
+  botonAgregar:{
     width:"45%",
     left:"170px"
+  },
+  menuButtons: {
+    margin: "10px 0px"
+  },
+  Buttons:{
+    marginLeft : "10px"
+  },
+  botonhijos:{
+    left:"10px",
+    size:"small"
+  },
+  listacontenedor:{
+    height: "25vh",
+    overflow: "scroll"
+  },
+  listaitemj:{
+    background: "rgb(230,230,230)",
+    borderBottom:"rgb(150,150,150) dotted",
+  },
+  busquedaj:{
+    width:"100%",
+  },
+  contenedorbusquedaj:{
+    paddingTop:"10px"
+  },
+  botonAgregar:{
+    width:"50%",
+    left:"50%",
   }
 }
 
-function ModalVerTambien(props){
+function ModalJerarquia(props){
   const {classes}=props;
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [open, setOpen] = React.useState(false);
+  const [selectedExpresions, setSelectedExpresions] = React.useState([]);
+  const [verTambien, setVerTambien] = React.useState([]);
 
-  function handleListItemClick(event, index) {
-    setSelectedIndex(index);
-  }
-
-  function handleClickOpen() {
+  function handleOpenModal() {
     setOpen(true);
-  }
+  };
 
-  function handleClose() {
+  function handleCloseModal() {
     setOpen(false);
+  };
+
+  const addEToList = (id) => {
+    var se = selectedExpresions
+    if(se.indexOf(id) < 0) se.push(id)
+    else se.splice(selectedExpresions.indexOf(id), 1)
+    document.getElementById(id).classList.toggle("selected")
+    setSelectedExpresions(se)
   }
 
   return(
     <div>
-      <Tooltip title="Ver también">
-        <IconButton onClick={()=>handleClickOpen()}>
+      <Tooltip title="Ver También">
+        <IconButton onClick={() => handleOpenModal()}>
           <Share/>
         </IconButton>
       </Tooltip>
       <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+      open={open}
+      onClose={handleCloseModal}
       >
-        <Paper className={classes.modalinvt}>
-          <Grid container>
+        <Paper className={classes.modalinj}>
+          <Grid container alignItems="center">
             <Grid item xs={11}>
               <Typography variant="h3">
-                Expresiones relacionadas
+                Ver También
               </Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} align="center">
               <IconButton
                 aria-haspopup="true"
-                onClick={handleClose}
-                className={classes.botonClearvt}
+                onClick={handleCloseModal}
+                className={classes.botonClearj}
               >
                 <ClearIcon fontSize="small"/>
               </IconButton>
             </Grid>
           </Grid>
-          <Divider className="divisor"/>
-          <Grid container>
-            <Grid item xs={12}>
-              <List>
+          <div>
+            <List className={classes.listacontenedor}>
+              {verTambien.map(expresion=>(
                 <ListItem
-                  selected={selectedIndex === 1}
+                  key={expresion.hijo}
+                  className={classes.listaitemj}
+                  // selected={selectedIndex === 1}
                 >
-                  Expresión
+                  <ListItemText
+                    primary={expresion.expresion}
+                    // secondary={secondary ? 'Secondary text' : null}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton size="small">
+                      <ClearIcon/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
-                <ListItemSecondaryAction>
-                  <IconButton size="small">
-                    <ClearIcon/>
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </List>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h3">
-                Ver También
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.contenedorbusquedavt}>
-              <FormControl className={classes.busquedavt}>
-                <InputLabel htmlFor="input-with-icon-adornment">Busqueda</InputLabel>
-                <Input
-                  id="input-with-icon-adornment"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={"expresiones relacionadas"}/>
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                className={classes.botonAgregarvt}
-              >
-                Agregar
-              </Button>
-            </Grid>
-          </Grid>
+              ))}
+            </List>
+
+            <Typography variant="h3">
+              Expresiones
+            </Typography>
+            <FormControl className={classes.busquedaj}>
+              <Input
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <List className={classes.listacontenedor}>
+              {props.expresiones.map(expresionp=>(
+                // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
+                <li 
+                  id={expresionp.t_id}
+                  key={expresionp.t_id} 
+                  className={"sideList"} 
+                  onClick={() => addEToList(expresionp.t_id)}>
+                    {expresionp.t_id + " - " + expresionp.t_term_de + " // " + expresionp.t_term_es}
+                </li>
+              ))}
+            </List>
+            <Button
+              variant="contained"
+              className={classes.botonAgregar}
+            >
+              Agregar
+            </Button>
+          </div>
         </Paper>
       </Modal>
     </div>
+
   )
 }
 
-export default withStyles(mvt)(ModalVerTambien);
+export default withStyles(estiloModalJerarquia)(ModalJerarquia);

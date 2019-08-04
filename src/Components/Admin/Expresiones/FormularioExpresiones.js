@@ -1,59 +1,41 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Divider from "@material-ui/core/Divider";
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
-import ClearIcon from '@material-ui/icons/Clear';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import { withStyles } from '@material-ui/styles';
 
-import es from "../../../Imagenes/spain.png";
-import al from "../../../Imagenes/germany.png";
-import expresiones from "../../../css/expresiones.css";
-
-
 const formularioExpresiones = theme => ({
-  subtituloIzquierdo:{
-    paddingLeft:"80px"
-  },
-  subtituloDerecho:{
-    paddingLeft:"270px"
-  },
   TextFielIzquierdo:{
-    paddingLeft:"40px",
-    top: "10px"
+    width:"100%"
   },
   TextFielDerecho:{
-    paddingLeft:"140px",
-    bottom:"10px"
+    width:"100%",
+    margin : 0
   },
   ventanaOpciones:{
     maxHeight:"20px",
     overflowY:"auto"
   },
   editor:{
-    paddingLeft:"150px",
-    height:"180px"
+    minHeight:"180px"
   },
   imagenesBandera:{
     width: "32px !important",
     height: "32px !important",
-    left: "200px",
-    top: "5px"
   },
   banderas:{
     width: "34px !important",
     borderRadius: "50%",
     height: "34px !important"
+  },
+  divisor: {
+    margin: "35px 0px"
   }
 })
 
@@ -61,94 +43,75 @@ const letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 
 function FormularioExpresiones(props){
   const {classes} = props;
-  const [letraIndice, setLetraIndice] = React.useState('A')
+ 
 
   const handleChange = (event) => {
-    setLetraIndice(event.target.value)
+    props.setLetra(event.target.value)
   };
 
-  console.log(letraIndice)
+  const handleEChange = (event) => {
+    props.setExpresion(event.target.value)
+  };
+
   return(
     <div>
-      <div>
-        <Grid container>
-          <Grid item xs={4}>
-            <Typography variant="h4" className={classes.subtituloIzquierdo}>
-              Expresión
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="h4" className={classes.subtituloDerecho}>
-              Indice
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Fab className={classes.imagenesBandera} onClick={props.handleEs}>
-              <img className={classes.banderas} src={es}/>
-            </Fab>
-          </Grid>
+      <Grid container alignItems="center">
+        <Grid item xs={8}>
+          <Typography variant="h4">
+            {props.label}
+          </Typography>
         </Grid>
-        <div>
-          <Grid container >
-            <Grid item xs={6}>
-              <FormControl >
-                <TextField
-                  id="input-with-icon-textfield"
-                  className={classes.TextFielIzquierdo}
-                  InputProps={{
-                     startAdornment: <InputAdornment position="start"><EditIcon/></InputAdornment>,
-                   }}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl>
-                <TextField
-                    id="input-with-icon-textfield"
-                    select
-                    margin="normal"
-                    value={letraIndice}
-                    onChange={handleChange}
-                    className={classes.TextFielDerecho}
-                    SelectProps={{
-                      native: true,
-                      MenuProps: {
-                      },
-                    }}
-                  >
-                  {letras.map(opcion =>(
-                    <option button key={opcion} value={opcion}>
-                      {opcion}
-                    </option>
-                  ))}
-                </TextField>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Divider className="divisor"/>
-          <Grid container>
-            <Grid item className={classes.editor}>
-              <CKEditor
-                   editor={ ClassicEditor }
-                   data=""
-                   onInit={ editor => {
-                       // You can store the "editor" and use when it is needed.
-                       console.log( 'Editor is ready to use!', editor );
-                   } }
-                   onChange={ ( event, editor ) => {
-                       const data = editor.getData();
-                       console.log( { event, editor, data } );
-                   } }
-                   onBlur={ editor => {
-                       console.log( 'Blur.', editor );
-                   } }
-                   onFocus={ editor => {
-                       console.log( 'Focus.', editor );
-                   } }
-               />
-            </Grid>
-          </Grid>
-        </div>
+        <Grid item xs={3}>
+          <Typography variant="h4">
+            Indice
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <Fab className={classes.imagenesBandera} onClick={props.handleLang}>
+            <img className={classes.banderas} src={props.flag}/>
+          </Fab>
+        </Grid>
+      </Grid>
+      <br/>
+      <Grid container >
+        <Grid item xs={8}>
+          <TextField
+            id="input-with-icon-textfield"
+            className={classes.TextFielIzquierdo}
+            value={props.expresion}
+            onChange={handleEChange}
+            InputProps={{
+              startAdornment: <InputAdornment position="start"><EditIcon/></InputAdornment>,
+            }}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+              id="input-with-icon-textfield"
+              select
+              margin="normal"
+              value={props.letra}
+              onChange={handleChange}
+              className={classes.TextFielDerecho}
+            >
+            {letras.map(opcion =>(
+              <option button key={opcion} value={opcion}>
+                {opcion}
+              </option>
+            ))}
+          </TextField>
+        </Grid>
+      </Grid>
+      <Divider className={classes.divisor}/>
+      <div className={classes.editor}>
+        <CKEditor
+          editor={ ClassicEditor }
+          data={props.contenido}
+          onChange={ ( event, editor ) => {
+            console.log(editor.getData())
+            props.setContenido(editor.getData())
+          } }
+        />
       </div>
     </div>
   )

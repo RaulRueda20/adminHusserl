@@ -7,7 +7,7 @@ import CartaPasajes from './CartaPasajes';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
-
+import Alertas from './Alertas';
 import {adminService} from '../../../js/webServices';
 
 const stylebonton = {
@@ -40,6 +40,7 @@ function NuevaExpresion(props){
   const [expresion, setExpresion] = React.useState(emptyObj)
   const [pasajes, setPasajes] = React.useState([]);
   const [openAp, setOpenAp] = React.useState(false);
+  const [openAl, setOpenAl] = React.useState(false);
 
   React.useEffect(()=>{
     if(props.expresionSeleccionada != ""){
@@ -74,10 +75,23 @@ function NuevaExpresion(props){
     setOpenAp(false);
   }
 
+  function handleClickOpenAl() {
+    setOpenAl(true);
+  }
+
+  function handleCloseAl() {
+    setOpenAl(false);
+  }
+
+  function deletePasaje(){
+    console.log("ok")
+    setOpenAl(false);
+  }
+
   return (
     <div>
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada} expresiones={props.expresiones}/>
+        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada}/>
       </div>
       <Grid container>
         <Grid item  xs={10}>
@@ -96,11 +110,12 @@ function NuevaExpresion(props){
         {
           pasajes.map(pasaje =>
             <Grid key={pasaje.refid} item xs={6} sm={4} md={3} lg={2}>
-              <CartaPasajes pasaje={pasaje}/>
+              <CartaPasajes pasaje={pasaje} deletePasaje={handleClickOpenAl}/>
             </Grid>
           )
         }
       </Grid>
+      <Alertas text="¿Desea deshacer la relación del pasaje con la expresión?" openAl={openAl} handleCloseAl={handleCloseAl} accept={deletePasaje}/>
     </div>
   )
 

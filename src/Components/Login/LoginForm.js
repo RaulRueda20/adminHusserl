@@ -79,9 +79,9 @@ class LoginForm extends React.Component {
           Inicio
         </Typography><br/><br/>
         <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
             <TextField
-              label="Correo"
+              label="Usuario"
               // variant="outlined"
               id="custom-css-outlined-input"
               margin="normal"
@@ -90,7 +90,7 @@ class LoginForm extends React.Component {
               className={classes.TextField1}
             />
           </Grid>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
             <TextField
               label="Contraseña"
               // variant="outlined"
@@ -101,7 +101,7 @@ class LoginForm extends React.Component {
               type = "password"
             />
           </Grid>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
             <Grid container justify="flex-end" className="grids">
               <Grid item>
                 <Button

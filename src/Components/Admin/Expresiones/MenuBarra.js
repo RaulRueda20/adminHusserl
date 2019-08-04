@@ -8,10 +8,12 @@ import ModalJerarquia from './ModalJerarquia';
 import Alertas from './Alertas';
 import ModalVerTambien from './ModalVerTambien';
 import ModalAdmin from './ModalAdmin';
+import ModalEditar from './ModalEditExpresion';
 
 // import editar from "../../../Imagenes/editar.png";
-import Create from "@material-ui/icons/Create";
 import Delete from "@material-ui/icons/Delete";
+
+import {adminService} from '../../../js/webServices';
 
 const infoExpresiones= {
   titulo:{
@@ -41,6 +43,7 @@ const infoExpresiones= {
 function InfoExpresiones(props){
   const {classes} = props;
   const [openAl, setOpenAl] = React.useState(false);
+  const [allExpresiones, setAllExpresiones] = React.useState([])
 
   function handleClickOpenAl() {
     setOpenAl(true);
@@ -50,20 +53,32 @@ function InfoExpresiones(props){
     setOpenAl(false);
   }
 
+  function deleteExpresion(){
+    console.log("ok")
+    setOpenAl(false);
+  }
+
+  React.useEffect(()=>{
+    var service = "/expresiones/getAllList"
+    adminService(service, "GET", {}, (data) => {
+      // console.log(data)
+      setAllExpresiones(data.data.response)
+      // console.log("lista de expresiones", data)
+      // setExpresiones(data.data.response)
+      // setIdExpresion(data.data.response.length > 0 ? data.data.response[0].id : "")
+    })
+  }, [true])
+
   return(
       <Grid container className={classes.titulo}>
         <Grid item xs className={classes.botonesaccion}>
-          <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={props.expresiones}/>
+          <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={allExpresiones}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
-          <Tooltip title="Editar expresión">
-            <IconButton>
-              <Create/>
-            </IconButton>
-          </Tooltip>
+          <ModalEditar expresion={props.expresion}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
-          <ModalVerTambien/>
+          <ModalVerTambien expresiones={allExpresiones}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
           <Tooltip title="Eliminar expresión">
@@ -71,7 +86,7 @@ function InfoExpresiones(props){
               <Delete/>
             </IconButton>
           </Tooltip>
-          <Alertas openAl={openAl} handleCloseAl={handleCloseAl}/>
+          <Alertas text="¿Quiere eliminar la expresión seleccionada?" openAl={openAl} handleCloseAl={handleCloseAl} accept={deleteExpresion}/>
         </Grid>
         <Grid item xs className={classes.botonesaccion}>
           <ModalAdmin/>

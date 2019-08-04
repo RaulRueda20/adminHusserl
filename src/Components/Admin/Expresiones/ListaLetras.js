@@ -31,8 +31,7 @@ function ListaLetras (props){
   const { classes }= props;
 
   const handleChangeLetraMain = (event) => {
-    if(event.target.id === undefined) props.setLetraMain(event.target.innerHTML)
-    else props.setLetraMain(event.target.innerText)
+      props.setLetraMain(event.target.innerText)
   };
 
   return(

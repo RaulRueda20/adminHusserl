@@ -36,7 +36,7 @@ export default function Expresiones(props){
             <ListaExpresiones expresiones={expresiones} idExpresion={idExpresion} setIdExpresion={setIdExpresion}/>
           </Grid>
           <Grid item xs={9} align="center">
-            <NuevaExpresion expresionSeleccionada={idExpresion} expresiones={expresiones}/>
+            <NuevaExpresion expresionSeleccionada={idExpresion}/>
           </Grid>
         </Grid>
     </div>

@@ -11,7 +11,10 @@ export default function ListaExpresiones(props){
     <div className="list-container">
       <ul>
         {props.expresiones.map(expresion=>(
-          <li className={classNames({"selected" : expresion.id === props.idExpresion})} key={expresion.id} value={expresion.id} onClick={handleClickExpresion}>
+          <li 
+            className={classNames({"selected" : expresion.id === props.idExpresion}, "sideList")} 
+            key={expresion.id} value={expresion.id} onClick={handleClickExpresion}
+          >
             {expresion.id + " - " + expresion.expresion_de + '//' + expresion.expresion_es}
           </li>
         ))}

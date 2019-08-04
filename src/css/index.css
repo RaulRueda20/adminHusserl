@@ -86,7 +86,7 @@ ul{
   padding: 0px !important;
 }
 
-li{
+li.sideList{
   padding: 10px;
   border-bottom: 1px lightgray solid;
   cursor: pointer;
@@ -94,7 +94,11 @@ li{
   color: rgba(80, 80, 80);
 }
 
-li:hover{
+option{
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+li.sideList:hover{
   background: rgba(0,0,0,0.18);
 }
 
@@ -135,4 +139,14 @@ header{
 a{
   color: rgba(80, 80, 80);
   text-decoration: none;
+}
+
+.selectedButton{
+  color: white !important;
+  background : #38673d !important;
+}
+
+.selectedButton:hover{
+  color: white !important;
+  background : #315a35 !important;
 }

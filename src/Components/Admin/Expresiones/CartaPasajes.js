@@ -53,7 +53,8 @@ function CartaPasajes(props){
           size="small"
           className={classes.closeButton}
           aria-haspopup="true"
-          onClick={()=>handleClose()}
+          onClick={()=>props.deletePasaje()}
+          // onClick={()=>handleClose()}
           >
             <ClearIcon fontSize="small"/>
           </IconButton>

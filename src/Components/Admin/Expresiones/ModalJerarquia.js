@@ -1,24 +1,13 @@
 import React from 'react';
+import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Divider from "@material-ui/core/Divider";
 import Grid from '@material-ui/core/Grid';
 import ClearIcon from '@material-ui/icons/Clear';
-import FormControl from '@material-ui/core/FormControl';
-import SearchIcon from '@material-ui/icons/Search';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Tooltip from '@material-ui/core/Tooltip';
-import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/styles';
 
 
@@ -26,27 +15,20 @@ import ModalJerarquiaPadres from './ModalJerarquiaPadres';
 import ModalJerarquiaHijos from './ModalJerarquiaHijos';
 
 import Jerarquia from '@material-ui/icons/DeviceHub';
-// import jerarquia from "../../../Imagenes/diagrama.png";
-
-import eliminar from "../../../Imagenes/basura.png";
 
 const estiloModalJerarquia={
   modalinj:{
     width: "50%",
-    maxHeight:"500px",
+    maxHeight:"75vh",
     left: "25vw",
-    top: "10vh",
+    top: "15vh",
     position:"absolute",
-    padding: "15px 10px",
+    padding: "30px 30px",
     overflowY: "auto"
   },
   botonClearj:{
-    bottom: "10px",
-    size:"small"
-  },
-  botonhijos:{
-    left:"10px",
-    size:"small"
+    // bottom: "10px",
+    // size:"small"
   },
   listaitemj:{
     borderBottom:"dotted"
@@ -61,6 +43,12 @@ const estiloModalJerarquia={
   botonAgregar:{
     width:"45%",
     left:"170px"
+  },
+  menuButtons: {
+    margin: "10px 0px"
+  },
+  Buttons:{
+    marginLeft : "10px"
   }
 }
 
@@ -99,13 +87,13 @@ function ModalJerarquia(props){
       onClose={handleCloseModal}
       >
         <Paper className={classes.modalinj}>
-          <Grid container>
+          <Grid container alignItems="center">
             <Grid item xs={11}>
               <Typography variant="h3">
                 Parentesco
               </Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} align="center">
               <IconButton
                 aria-haspopup="true"
                 onClick={handleCloseModal}
@@ -115,29 +103,26 @@ function ModalJerarquia(props){
               </IconButton>
             </Grid>
           </Grid>
-          <Divider className="divisor"/>
-          <Grid container>
-            <Grid item xs={3}>
+          {/* <Divider className="divisor"/> */}
+          <div className={classes.menuButtons}>
               <Button
                 variant="contained"
                 size="small"
                 onClick={handleVistasPadres}
+                className={classNames({"selectedButton" : vistaModal == 'padres'}, classes.Buttons)}
               >
                 Padres
               </Button>
               <Button
                 variant="contained"
-                className={classes.botonhijos}
+                className={classNames({"selectedButton" : vistaModal != 'padres'}, classes.Buttons)}
                 size="small"
                 onClick={handleVistasHijos}
               >
                 Hijos
               </Button>
-            </Grid>
-          </Grid>
-          <div>
-            {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones}/> : <ModalJerarquiaHijos hijos={props.hijos} expresiones={props.expresiones}/>}
           </div>
+          {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones}/> : <ModalJerarquiaHijos hijos={props.hijos} expresiones={props.expresiones}/>}
         </Paper>
       </Modal>
     </div>

@@ -7,25 +7,24 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Alertas(props){
-
   return(
     <Dialog
       open={props.openAl}
       onClose={props.handleCloseAl}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby="simple-dialog-title"
+      aria-describedby="simple-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title"></DialogTitle>
+      <DialogTitle id="simple-dialog-title">Alerta</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          ¿Quiere eliminar la expresión seleccionada?
+        <DialogContentText id="simple-dialog-description">
+          {props.text}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={props.handleCloseAl}>
           Cancelar
         </Button>
-        <Button onClick={props.handleCloseAl}>
+        <Button onClick={props.accept}>
           Aceptar
         </Button>
       </DialogActions>
