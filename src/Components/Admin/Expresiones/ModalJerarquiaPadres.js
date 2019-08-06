@@ -14,6 +14,8 @@ import { withStyles } from '@material-ui/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import ClearIcon from '@material-ui/icons/Clear';
 
+import {adminService} from '../../../js/webServices';
+
 const estiloModalJerarquiaPadres={
   botonhijos:{
     left:"10px",
@@ -54,6 +56,11 @@ function ModalJerarquiaPadres(props){
   }
 
   const checkExistence = () => {
+    var padre=props.padres.padre
+    var service = "/expresiones/agregarPadre/" + selectedExpresions
+    adminService(service, "POST", JSON.stringify(padre), (datax)=>{
+      console.log("datos de padres",datax)
+    })
     if(selectedExpresions.length == 0){
       setSnack({open : true, text: "No ha seleccionado ninguna expresión."})
       return true
@@ -76,6 +83,17 @@ function ModalJerarquiaPadres(props){
     else se.splice(selectedExpresions.indexOf(id), 1)
     document.getElementById(id).classList.toggle("selected")
     setSelectedExpresions(se)
+  }
+
+  const handleClickEliminarPadre=()=>{
+    var padre_id=props.padres.id
+    var padre_expresion=props.padres.padre
+    var service = "/expresiones/eliminarRelacion/" +  padre_id + "/" +  padre_expresion
+    adminService(service, "DELETE", {}, (datax) => {
+      console.log("Eliminación de padres",datax)
+    })
+    setSnack({open : true, text: "Se ha eliminado el padre de la expresión"})
+    return true
   }
 
   return(
@@ -102,7 +120,7 @@ function ModalJerarquiaPadres(props){
               // secondary={secondary ? 'Secondary text' : null}
             />
             <ListItemSecondaryAction>
-              <IconButton size="small">
+              <IconButton size="small" onClick={handleClickEliminarPadre}>
                 <ClearIcon fontSize="small"/>
               </IconButton>
             </ListItemSecondaryAction>

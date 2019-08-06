@@ -10,6 +10,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Create from '@material-ui/icons/Create';
 import { withStyles } from '@material-ui/styles';
 
+import {adminService} from '../../../js/webServices';
+
 import es from "../../../Imagenes/spain.png";
 import al from "../../../Imagenes/germany.png";
 
@@ -82,6 +84,21 @@ function ModalAdmin(props){
         setTraduccionLetraIndice(tl[0])
     }, [props.expresion])
 
+    const handleClickEdicion=()=>{
+        var params={
+            'indice_es' : traduccionLetraIndice,
+            'indice_de' : expresionLetraIndice,
+            'pretty_es' : traduccionContenido,
+            'pretty_de' : expresionContenido,
+            'expresion' : expresion,
+            'traduccion' : traduccion
+        }
+        var service = "/expresiones/updateExpresion/" + props.expresion.id
+        adminService(service, "POST", JSON.stringify(params), (data) =>{
+            console.log("datos",data) 
+        })
+    }
+    
     return(
         <div>
         <Tooltip title="Editar Expresión">
@@ -127,6 +144,7 @@ function ModalAdmin(props){
             <Button
                 variant="contained"
                 className={classes.botonAgregar}
+                onClick={handleClickEdicion}
             >
                 Agregar
             </Button>

@@ -68,6 +68,7 @@ function ModalAgregarPasaje(props){
   React.useEffect(()=>{
     var service = "/referencias/lista"
     adminService(service, "GET", {}, (data) => {
+      console.log("datos de la data",data)
       setPasajes(data.data.response)
     })
   }, [true])
@@ -81,6 +82,20 @@ function ModalAgregarPasaje(props){
   const handleChangeN = (event) => {
     setNivel(event.target.value)
   };
+
+  const handleClickAddPasaje=()=>{
+    var params={
+      'ref_id': selectedPasajes.ref_id,
+      'ref_de' : selectedPasajes.ref_libro_de,
+      'ref_es' : selectedPasajes.ref_libro_es,
+      'clave' : selectedPasajes.clave,
+      'nivel' : nivel
+  }
+    var servicio = "/referencias/new/nuevoPasaje"
+    adminService(servicio, "POST", JSON.stringify(params), (data) =>{
+      console.log("datos",data)
+    })
+  }
 
   return(
     <Modal
@@ -154,7 +169,7 @@ function ModalAgregarPasaje(props){
           ))}
         </List>
         <Divider className="divisor"/>
-        <Button className={classes.botonguardar} variant="contained" size="small">
+        <Button className={classes.botonguardar} variant="contained" size="small" onClick={handleClickAddPasaje}>
           Agregar
         </Button>
       </Paper>

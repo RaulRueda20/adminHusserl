@@ -14,6 +14,8 @@ import { withStyles } from '@material-ui/styles';
 import ClearIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
 
+import {adminService} from '../../../js/webServices';
+
 const estiloModalJerarquiaHijos={
   botonhijos:{
     left:"10px",
@@ -50,6 +52,11 @@ function ModalJerarquiaHijos(props){
   }
 
   const checkExistence = () => {
+    var hijo=props.hijos.hijo
+    var service = "/expresiones/agregarHijo/" + selectedExpresions
+    adminService(service, "POST", JSON.stringify(hijo),(datax)=>{
+      console.log("hijos ingresados", datax)
+    })
     if(selectedExpresions.length == 0){
       setSnack({open : true, text: "No ha seleccionado ninguna expresión."})
       return true
@@ -78,6 +85,17 @@ function ModalJerarquiaHijos(props){
     setSelectedExpresions(se)
   }
 
+  const handleClickEliminarHijo=()=>{
+    var hijo_id=props.hijos.id
+    var hijo_expresion=props.hijos.hijo
+    var service = "/expresiones/eliminarRelacion/" + hijo_id + "/" + hijo_expresion
+    adminService(service, "DELETE", {}, (datax) => {
+      console.log("eliminacion de hijos",datax)
+    })
+    setSnack({open : true, text: "Se ha eliminado el hijo de la expresión"})
+    return true
+  }
+
   return(
     <div>
       <Snackbar
@@ -102,7 +120,7 @@ function ModalJerarquiaHijos(props){
               // secondary={secondary ? 'Secondary text' : null}
             />
             <ListItemSecondaryAction>
-              <IconButton size="small">
+              <IconButton size="small" onClick={handleClickEliminarHijo}>
                 <ClearIcon fontSize="small"/>
               </IconButton>
             </ListItemSecondaryAction>

@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Alertas(props){
+
   return(
     <Dialog
       open={props.openAl}

@@ -52,6 +52,10 @@ function InfoExpresiones(props){
 
   function deleteExpresion(){
     console.log("ok")
+    var service = "/expresiones/deleteExpresion/" + props.expresionId
+    adminService(service, "DELETE", {}, (data) =>{
+      console.log("Eliminar",data)
+    })
     setOpenAl(false);
   }
 
@@ -61,6 +65,8 @@ function InfoExpresiones(props){
       setAllExpresiones(data.data.response)
     })
   }, [true])
+
+  console.log("que hay dentro de hijos",props.hijos)
 
   return(
       <Grid container className={classes.titulo}>
