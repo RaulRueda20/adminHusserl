@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Button from '@material-ui/core/Button';
@@ -8,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 
 import {adminService} from '../../js/webServices';
+
+import '../../css/manual.css';
 
 const acercade={
   botonespañol:{
@@ -23,20 +26,20 @@ const acercade={
     left:"5px"
   },
   acerdaDe:{
-    paddingLeft:"670px"
+    textAlign: "center"
   },
   contenedoreditoracercade:{
     paddingLeft:"450px",
     paddingTop:"30px"
   },
   contenedorbontonguardar:{
-    paddingLeft:"350px"
+    paddingLeft:"50%"
   },
   botonguardar:{
-    width:"70%"
+    width:"calc(100% - 25px)"
   },
   editor:{
-    minHeight:"350px"
+    padding: "0px 25px"
   }
 }
 
@@ -49,7 +52,6 @@ function Acercade(props){
   React.useEffect(()=>{
     var service = "/acerca_de/get"
     adminService(service, "GET", {}, (data) =>{
-      console.log("data",data)
       setContenidoGuia(data.data.response[0])
       setContenidoEditorGuia(data.data.response[0].contenido)
     })
@@ -77,10 +79,8 @@ function Acercade(props){
 
   const handleClickCa=()=>{
     setContenidoEditorGuia(contenidoGuia.contenido_ca);
-    setTituloGuia("A propos");
+    setTituloGuia("Acerca de");
   }
-
-  console.log("Guia", contenidoEditorGuia)
 
   return(
     <div>
@@ -91,38 +91,39 @@ function Acercade(props){
               variant="contained"
               size="small"
               onClick={handleClickAl}
+              className={classNames({"selectedButton" : tituloGuia == 'Über das'})}
             >
               Aleman
             </Button>
             <Button
               variant="contained"
               size="small"
-              className={classes.botonespañol}
               onClick={handleClickEsp}
+              className={classNames({"selectedButton" : tituloGuia == 'Guía'})}
             >
               Español
             </Button>
             <Button
               variant="contained"
               size="small"
-              className={classes.botoningles}
               onClick={handleClickIn}
+              className={classNames({"selectedButton" : tituloGuia == 'About'})}
             >
               Inglés
             </Button>
             <Button
               variant="contained"
               size="small"
-              className={classes.botonfrances}
               onClick={handleClickFr}
+              className={classNames({"selectedButton" : tituloGuia == 'A propos'})}
             >
               Francés
             </Button>
             <Button
               variant="contained"
               size="small"
-              className={classes.botoncatalan}
-              onClick={handleClickFr}
+              onClick={handleClickCa}
+              className={classNames({"selectedButton" : tituloGuia == 'Acerca de'})}
             >
               Catalán
             </Button>
@@ -131,17 +132,13 @@ function Acercade(props){
       </div>
       <Divider/>
       <div className={classes.acerdaDe}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography variant="h3">
-              {tituloGuia}
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography variant="h3">
+          {tituloGuia}
+        </Typography>
       </div>
       <Divider className="divisor"/>
       <div>
-        <div className={classes.editor}>
+        <div className={classes.editor} id="manual">
           <CKEditor
                editor={ ClassicEditor }
                data={contenidoEditorGuia}

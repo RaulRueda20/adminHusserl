@@ -6,6 +6,8 @@ import InfoPasajes from './InfoPasajes';
 
 import {adminService} from '../../../js/webServices';
 
+import '../../../css/pasajes.css';
+
 const botonpasaje = {
   Botonp:{
      width:"80%"

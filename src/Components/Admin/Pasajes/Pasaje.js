@@ -89,7 +89,7 @@ function InfoPasajes(props){
             </Grid>
         </Grid>
         <Grid container>
-            <Grid item className={classes.contenedoreditorpasaje}>
+            <Grid item className={classes.contenedoreditorpasaje} id="pasaje">
                 <CKEditor
                     editor={ ClassicEditor }
                     data={pasaje}

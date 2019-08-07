@@ -12,6 +12,7 @@ import ModalEditar from './ModalEditExpresion';
 
 // import editar from "../../../Imagenes/editar.png";
 import Delete from "@material-ui/icons/Delete";
+import '../../../css/expresiones.css';
 
 import {adminService} from '../../../js/webServices';
 
