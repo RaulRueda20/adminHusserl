@@ -5,11 +5,16 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Divider from "@material-ui/core/Divider";
+import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/styles';
+
+import {adminService} from '../../../js/webServices';
 
 import Delete from '@material-ui/icons/Delete';
 import Add from '@material-ui/icons/NoteAdd';
 
+import AlertaPasaje from './AlertaPasaje';
 import Pasaje from './Pasaje';
 
 const infopasajes={
@@ -52,11 +57,13 @@ function InfoPasajes(props){
   const [vista, setVista] = React.useState('de')
   const [expresionClave, setExpresionClave] = React.useState("")
   const [expresionId, setExpresionId] = React.useState("")
+  const [openAlP, setOpenAlP] = React.useState(false);
 
   const [expresionPasaje, setExpresionPasaje] = React.useState("")
   const [expresionPasajeName, setExpresionPasajeName] = React.useState("")
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
+  const [snack, setSnack] = React.useState({open : false, text : ""})
 
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
@@ -73,6 +80,51 @@ function InfoPasajes(props){
     setClave(event.target.value)
   };
 
+  const handleClickiNuevoPasaje=()=>{
+    var params = {
+      "ref_id": expresionId,
+      "pasaje_de" : expresionPasaje,
+      "ref_de" : expresionPasajeName,
+      "pasaje_es" : traduccionPasaje,
+      "ref_es" : traduccionPasajeName,
+      "clave" : expresionClave
+    }
+    var servicio = "/referencias/new/nuevoPasaje"
+    adminService(servicio, "POST", JSON.stringify(params), (data) => {
+      console.log("nuevo pasaje", data)
+    })
+  }
+
+  const handleClickEditarPasaje=()=>{
+    var params = {
+      "ref_id": expresionId,
+      "pasaje_de" : expresionPasaje,
+      "ref_de" : expresionPasajeName,
+      "pasaje_es" : traduccionPasaje,
+      "ref_es" : traduccionPasajeName,
+      "clave" : expresionClave
+    }
+    var servicio = "/referencias/editarPasaje/" + expresionId
+    adminService(servicio, "POST", JSON.stringify(params), (data) =>{
+      console.log("Edición de pasajes", data)
+    })
+    if (expresionId == "ref_id"){
+      setSnack({open : true, text: "El id que intenta guardar ya existe."})
+    }
+  }
+
+  // const handleClickEliminarPasaje=()=>{
+
+  // }
+
+  function handleClickOpenAlP() {
+    setOpenAlP(true);
+  }
+
+  function handleCloseAlP() {
+    setOpenAlP(false);
+  }
+
   return(
     <div className={classes.cartainfodepasajes}>
       <Grid container alignItems="center" className={classes.headerContainer}>
@@ -84,14 +136,19 @@ function InfoPasajes(props){
           />
         </Grid>
         <Grid item xs={1} className={classes.botoneliminarpasaje}>
-          <IconButton>
+          <Tooltip title="Agregar pasaje">
+          <IconButton onClick={handleClickiNuevoPasaje}>
             <Add/>
           </IconButton>
+          </Tooltip>
         </Grid>
         <Grid item xs={1} className={classes.botoneliminarpasaje}>
-          <IconButton>
-            <Delete/>
-          </IconButton>
+          <Tooltip title="Eliminar pasaje">
+            <IconButton onClick={handleClickOpenAlP}>
+              <Delete/>
+            </IconButton>
+          </Tooltip>
+          <AlertaPasaje text="¿Quiere eliminar el pasaje seleccionado?" openAlP={openAlP} handleCloseAlP={handleCloseAlP}/>
         </Grid>
       </Grid>
       <Grid container>
@@ -134,6 +191,7 @@ function InfoPasajes(props){
           <Button
             variant="contained"
             size="small"
+            onClick={handleClickEditarPasaje}
           >
               Guardar
           </Button>
