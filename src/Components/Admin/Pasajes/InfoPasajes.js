@@ -58,16 +58,16 @@ function InfoPasajes(props){
   const [expresionClave, setExpresionClave] = React.useState("")
   const [expresionId, setExpresionId] = React.useState("")
   const [openAlP, setOpenAlP] = React.useState(false);
+  const [snack, setSnack] = React.useState({open : false, text : ""})
 
   const [expresionPasaje, setExpresionPasaje] = React.useState("")
   const [expresionPasajeName, setExpresionPasajeName] = React.useState("")
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
-  const [snack, setSnack] = React.useState({open : false, text : ""})
-
+  
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
-    console.log(pasajeSeleccionado)
+    console.log("pasaje",pasajeSeleccionado)
     setExpresionClave(pasajeSeleccionado.clave)
     setExpresionId(pasajeSeleccionado.ref_id)
     setExpresionPasaje(pasajeSeleccionado.ref_def_de)
@@ -108,14 +108,18 @@ function InfoPasajes(props){
     adminService(servicio, "POST", JSON.stringify(params), (data) =>{
       console.log("Edición de pasajes", data)
     })
-    if (expresionId == "ref_id"){
-      setSnack({open : true, text: "El id que intenta guardar ya existe."})
-    }
   }
 
-  // const handleClickEliminarPasaje=()=>{
-
-  // }
+  const handleClickEliminarPasaje=()=>{
+    if (props.pasajeSeleccionado > 0){
+      setSnack({open : true, text: "Este pasaje está relacionado con expresiones del diccionario. Por favor, elimine dichas relaciones antes de continuar."})
+      return true
+    }else{
+      adminService("/referencias/eliminarPasaje/" + expresionId, "DELETE", {}, (datad) => {
+        console.log("pasaje eliminado", datad)
+      })
+    }
+  }
 
   function handleClickOpenAlP() {
     setOpenAlP(true);
@@ -148,7 +152,7 @@ function InfoPasajes(props){
               <Delete/>
             </IconButton>
           </Tooltip>
-          <AlertaPasaje text="¿Quiere eliminar el pasaje seleccionado?" openAlP={openAlP} handleCloseAlP={handleCloseAlP}/>
+          <AlertaPasaje text="¿Quiere eliminar el pasaje seleccionado?" openAlP={openAlP} handleCloseAlP={handleCloseAlP} accept={handleClickEliminarPasaje}/>
         </Grid>
       </Grid>
       <Grid container>

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 
 import {adminService} from '../../../js/webServices';
 
-import Busqueda from '../Expresiones/Busqueda';
+import BusquedaPasajes from './BusquedaPasajes';
 import ListaClaves from './ListaClaves';
 import NuevoPasaje from './NuevoPasaje';
 
@@ -24,7 +24,7 @@ function Pasajes(props){
     <div>
       <Grid container>
         <Grid item xs={3} style={{borderRight : "1px rgb(230, 230, 230) solid"}}>
-          <Busqueda/>
+          <BusquedaPasajes pasajeId={pasajeSeleccionado}/>
           <ListaClaves pasajes={pasajes} pasajeId={pasajeSeleccionado} setPasajeId={setPasajeSeleccionado}/>
         </Grid>
         <Grid item xs={9}>
