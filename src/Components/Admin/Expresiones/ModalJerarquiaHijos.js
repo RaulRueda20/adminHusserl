@@ -16,6 +16,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import {adminService} from '../../../js/webServices';
 
+import '../../../css/expresiones.css';
+
 const estiloModalJerarquiaHijos={
   botonhijos:{
     left:"10px",
@@ -96,6 +98,23 @@ function ModalJerarquiaHijos(props){
     return true
   }
 
+  var expresionesHijos= props.expresiones
+
+  console.log("expresiones en hijos", expresionesHijos)
+
+  const handleChangeBusquedaHijos = (event) => {
+    var expresionHijosBuscada=event.target.value
+    expresionesHijos.map(expresionp=>{
+      var expresionHijosNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
+      var expresionHijosEncontrada= expresionHijosNombre.indexOf(expresionHijosBuscada)
+      console.log("expresion buscada",expresionHijosEncontrada)
+      document.getElementById(expresionp.t_id).classList.remove("hiddenE")
+      if (expresionHijosEncontrada == -1){
+        document.getElementById(expresionp.t_id).className += " hiddenE";
+      }
+    })
+  }
+
   return(
     <div>
       <Snackbar
@@ -138,6 +157,7 @@ function ModalJerarquiaHijos(props){
               <SearchIcon />
             </InputAdornment>
           }
+          onChange={handleChangeBusquedaHijos}
         />
       </FormControl>
       <List className={classes.listacontenedor}>

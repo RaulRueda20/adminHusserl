@@ -1,3 +1,7 @@
 .ck-content {
 	min-height: 125px;
 }
+
+.hiddenE{
+	display: none;
+}

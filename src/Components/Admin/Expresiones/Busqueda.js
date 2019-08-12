@@ -6,6 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 
+import '../../../css/expresiones.css';
+
 const styles = {
  TextFieldbus:{
     width:"100%"
@@ -21,11 +23,12 @@ function Busqueda(props){
   const handleChangeBusquedaExpresiones = (event) => {
     var expresionBuscada=event.target.value
     expresiones.map(expresion=>{
-      var expresionNombre=expresion.expresion_de + expresion.expresion_es + expresion.expresion_id
-      var expresionBuscada= expresionNombre.indexOf(expresionBuscada)
+      var expresionNombre=expresion.expresion_de  +  expresion.expresion_es +  expresion.id
+      var expresionEncontrada= expresionNombre.indexOf(expresionBuscada)
       console.log("expresion buscada",expresionBuscada)
-      if (expresionBuscada == -1){
-        document.getElementById(expresion.expresion_id).className += " hidden";
+      document.getElementById(expresion.id).classList.remove("hiddenE")
+      if (expresionEncontrada == -1){
+        document.getElementById(expresion.id).className += " hiddenE";
       }
     })
   }

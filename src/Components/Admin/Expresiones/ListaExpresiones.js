@@ -14,6 +14,7 @@ export default function ListaExpresiones(props){
           <li 
             className={classNames({"selected" : expresion.id === props.idExpresion}, "sideList")} 
             key={expresion.id} value={expresion.id} onClick={handleClickExpresion}
+            id ={expresion.id}
           >
             {expresion.id + " - " + expresion.expresion_de + '//' + expresion.expresion_es}
           </li>
