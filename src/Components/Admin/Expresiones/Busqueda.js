@@ -15,6 +15,22 @@ const styles = {
 
 function Busqueda(props){
   const { classes } = props;
+
+  var expresiones=props.expresiones
+  
+  const handleChangeBusquedaExpresiones = (event) => {
+    var expresionBuscada=event.target.value
+    expresiones.map(expresion=>{
+      var expresionNombre=expresion.expresion_de + expresion.expresion_es + expresion.expresion_id
+      var expresionBuscada= expresionNombre.indexOf(expresionBuscada)
+      console.log("expresion buscada",expresionBuscada)
+      if (expresionBuscada == -1){
+        document.getElementById(expresion.expresion_id).className += " hidden";
+      }
+    })
+  }
+
+
   return (
     <FormControl className={classes.TextFieldbus}>
       <InputLabel htmlFor="input-with-icon-adornment">Busqueda por letra</InputLabel>
@@ -25,6 +41,7 @@ function Busqueda(props){
             <SearchIcon />
           </InputAdornment>
         }
+        onChange={handleChangeBusquedaExpresiones}
       />
     </FormControl>
   )

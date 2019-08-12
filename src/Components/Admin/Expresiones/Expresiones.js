@@ -17,7 +17,7 @@ export default function Expresiones(props){
   React.useEffect(()=>{
     var service = "/expresiones/todas/" + letraMain
     adminService(service, "GET", {}, (data) => {
-      // console.log("lista de expresiones", data)
+      console.log("lista de expresiones", data)
       setExpresiones(data.data.response)
       setIdExpresion(data.data.response.length > 0 ? data.data.response[0].id : "")
     })
@@ -32,7 +32,7 @@ export default function Expresiones(props){
         </Grid>
         <Grid container>
           <Grid item xs={3} style={{borderRight:"1px rgb(240, 240, 240) solid"}}>
-            <Busqueda/><br/>
+            <Busqueda expresiones={expresiones} setExpresiones={setExpresiones}/><br/>
             <ListaExpresiones expresiones={expresiones} idExpresion={idExpresion} setIdExpresion={setIdExpresion}/>
           </Grid>
           <Grid item xs={9} align="center">

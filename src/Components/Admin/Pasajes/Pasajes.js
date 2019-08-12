@@ -20,11 +20,13 @@ function Pasajes(props){
     })
   }, [true])
 
+  console.log("lista pasajes", pasajes)
+
   return (
     <div>
       <Grid container>
         <Grid item xs={3} style={{borderRight : "1px rgb(230, 230, 230) solid"}}>
-          <BusquedaPasajes pasajeId={pasajeSeleccionado}/>
+          <BusquedaPasajes pasajes={pasajes} setPasajes={setPasajes}/>
           <ListaClaves pasajes={pasajes} pasajeId={pasajeSeleccionado} setPasajeId={setPasajeSeleccionado}/>
         </Grid>
         <Grid item xs={9}>

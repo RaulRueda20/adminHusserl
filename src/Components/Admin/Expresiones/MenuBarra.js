@@ -67,8 +67,6 @@ function InfoExpresiones(props){
     })
   }, [true])
 
-  console.log("que hay dentro de hijos",props.hijos)
-
   return(
       <Grid container className={classes.titulo}>
         <Grid item xs>
