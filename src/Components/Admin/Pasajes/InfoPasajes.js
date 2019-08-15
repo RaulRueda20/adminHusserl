@@ -64,6 +64,7 @@ function InfoPasajes(props){
   const [expresionPasajeName, setExpresionPasajeName] = React.useState("")
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
+  const [pasajesEnBlanco, setPasajesEnBlanco] = React.useState([])
   
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
@@ -89,10 +90,21 @@ function InfoPasajes(props){
       "ref_es" : traduccionPasajeName,
       "clave" : expresionClave
     }
-    var servicio = "/referencias/new/nuevoPasaje"
-    adminService(servicio, "POST", JSON.stringify(params), (data) => {
-      console.log("nuevo pasaje", data)
-    })
+    var emptyPasajeNuevo = {
+      clave: "",
+      ref_def_de: "",
+      ref_def_es: "",
+      ref_id: "",
+      ref_libro_de: "",
+      ref_libro_es: ""
+    }
+    setExpresionClave(emptyPasajeNuevo.clave)
+    setExpresionId(emptyPasajeNuevo.ref_id)
+    setExpresionPasaje(emptyPasajeNuevo.ref_def_de)
+    setExpresionPasajeName(emptyPasajeNuevo.ref_libro_de)
+    setTraduccionPasaje(emptyPasajeNuevo.ref_def_es)
+    setTraduccionPasajeName(emptyPasajeNuevo.ref_libro_es)
+    console.log("pasajes en blanco", pasajesEnBlanco)
   }
 
   const handleClickEditarPasaje=()=>{
@@ -104,10 +116,17 @@ function InfoPasajes(props){
       "ref_es" : traduccionPasajeName,
       "clave" : expresionClave
     }
-    var servicio = "/referencias/editarPasaje/" + expresionId
-    adminService(servicio, "POST", JSON.stringify(params), (data) =>{
-      console.log("Edición de pasajes", data)
-    })
+    if (expresionClave=="" && expresionId=="" && expresionPasaje=="" && expresionPasajeName=="" && traduccionPasaje=="" && traduccionPasajeName==""){
+        var servicio = "/referencias/new/nuevoPasaje"
+        adminService(servicio, "POST", JSON.stringify(params), (data) =>{
+        console.log("nuevo pasaje", data)
+        })
+      }else{
+        var servicio = "/referencias/editarPasaje/" + expresionId
+        adminService(servicio, "POST", JSON.stringify(params), (data) => {
+        console.log("Edición de pasajes", data)
+      })
+    }
   }
 
   const handleClickEliminarPasaje=()=>{
@@ -182,12 +201,14 @@ function InfoPasajes(props){
           clave={expresionClave} setClave={setExpresionClave}
           eId={expresionId} setEId={setExpresionId}
           pasaje={expresionPasaje} setPasaje={setExpresionPasaje}
-          pasajeName={expresionPasajeName} setPasajeName={setExpresionPasajeName}/> : 
+          pasajeName={expresionPasajeName} setPasajeName={setExpresionPasajeName}
+          /> : 
         <Pasaje 
           clave={expresionClave} setClave={setExpresionClave}
           eId={expresionId} setEId={setExpresionId}
           pasaje={traduccionPasaje} setPasaje={setTraduccionPasaje}
-          pasajeName={traduccionPasajeName} setPasajeName={setTraduccionPasajeName}/>
+          pasajeName={traduccionPasajeName} setPasajeName={setTraduccionPasajeName}
+          />
       }
       <Divider className="divisor"/>
       <Grid container justify="flex-end">

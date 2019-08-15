@@ -63,6 +63,8 @@ function InfoPasajes(props){
     setPasajeName(props.pasajeName)
   }, [props])
 
+
+
   return(
     <div className={classes.cartainfodepasajes}>
         <Grid container alignItems="center" className={classes.headerPasajes}>
@@ -100,8 +102,7 @@ function InfoPasajes(props){
                     } }
                 />
             </Grid>
-        </Grid>
-        
+        </Grid>  
     </div>
   )
 }
