@@ -20,6 +20,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Share from '@material-ui/icons/Share';
 
+import '../../../css/expresiones.css';
+
 const estiloModalJerarquia={
   modalinj:{
     width: "50%",
@@ -100,6 +102,21 @@ function ModalJerarquia(props){
     setSelectedExpresions(se)
   }
 
+  var expresiones=props.expresiones
+
+  const handleChangeBusquedaVerTambien = (event) => {
+    var expresionVertBuscada=event.target.value
+    expresiones.map(expresionp=>{
+      var expresionVertNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
+      var expresionVertEncontrada= expresionVertNombre.indexOf(expresionVertBuscada)
+      console.log("expresion buscada",expresionVertBuscada)
+      document.getElementById("vertam"+expresionp.t_id).classList.remove("hiddenE")
+      if (expresionVertEncontrada == -1){
+        document.getElementById("vertam"+expresionp.t_id).className += " hiddenE";
+      }
+    })
+  }
+
   return(
     <div>
       <Tooltip title="Ver También">
@@ -161,13 +178,14 @@ function ModalJerarquia(props){
                   <SearchIcon />
                 </InputAdornment>
               }
+              onChange={handleChangeBusquedaVerTambien}
             />
           </FormControl>
           <List className={classes.listacontenedor}>
             {props.expresiones.map(expresionp=>(
               // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
               <li 
-                id={expresionp.t_id}
+                id={"vertam"+expresionp.t_id}
                 key={expresionp.t_id} 
                 className={"sideList"} 
                 onClick={() => addEToList(expresionp.t_id)}>

@@ -96,6 +96,21 @@ function ModalJerarquiaPadres(props){
     return true
   }
 
+  var expresionesPadres= props.expresiones
+
+  const handleChangeBusquedaPadres = (event) => {
+    var expresionPadresBuscada=event.target.value
+    expresionesPadres.map(expresionp=>{
+      var expresionPadresNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
+      var expresionPadresEncontrada= expresionPadresNombre.indexOf(expresionPadresBuscada)
+      console.log("expresion buscada",expresionPadresEncontrada)
+      document.getElementById("padre"+expresionp.t_id).classList.remove("hiddenE")
+      if (expresionPadresEncontrada == -1){
+        document.getElementById("padre"+expresionp.t_id).className += " hiddenE";
+      }
+    })
+  }
+
   return(
     <div>
       <Snackbar
@@ -138,12 +153,13 @@ function ModalJerarquiaPadres(props){
               <SearchIcon />
             </InputAdornment>
           }
+          onChange={handleChangeBusquedaPadres}
         />
       </FormControl>
       <List className={classes.listacontenedor}>
         {props.expresiones.map(expresionp=>(
           <li 
-          id={expresionp.t_id}
+          id={"padre"+expresionp.t_id}
           key={expresionp.t_id} 
           className={"sideList"} 
           onClick={() => addEToList(expresionp.t_id)}>

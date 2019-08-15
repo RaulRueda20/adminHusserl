@@ -108,9 +108,9 @@ function ModalJerarquiaHijos(props){
       var expresionHijosNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
       var expresionHijosEncontrada= expresionHijosNombre.indexOf(expresionHijosBuscada)
       console.log("expresion buscada",expresionHijosEncontrada)
-      document.getElementById(expresionp.t_id).classList.remove("hiddenE")
+      document.getElementById('hijo'+expresionp.t_id).classList.remove("hiddenE")
       if (expresionHijosEncontrada == -1){
-        document.getElementById(expresionp.t_id).className += " hiddenE";
+        document.getElementById('hijo'+expresionp.t_id).className += " hiddenE";
       }
     })
   }
@@ -164,7 +164,7 @@ function ModalJerarquiaHijos(props){
         {props.expresiones.map(expresionp=>(
           // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
           <li 
-            id={expresionp.t_id}
+            id={'hijo'+expresionp.t_id}
             key={expresionp.t_id} 
             className={"sideList"} 
             onClick={() => addEToList(expresionp.t_id)}>
