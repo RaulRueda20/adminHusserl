@@ -20,8 +20,6 @@ function Pasajes(props){
     })
   }, [true])
 
-  console.log("lista pasajes", pasajes)
-
   return (
     <div>
       <Grid container>

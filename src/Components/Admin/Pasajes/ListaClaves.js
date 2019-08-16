@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 export default function ListaClaves(props){
   var pasajeSeleccionado = props.pasajeId
+
+  console.log("pasaje seleccionado en la lista", pasajeSeleccionado)
   return(
     <div>
       <ul className="list-containerP">

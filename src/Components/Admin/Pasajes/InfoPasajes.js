@@ -65,6 +65,7 @@ function InfoPasajes(props){
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
   const [pasajesEnBlanco, setPasajesEnBlanco] = React.useState([])
+  const [pasajeSeleccionadillo, setPasajeSeleccionadillo] = React.useState("")
   
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
@@ -90,6 +91,7 @@ function InfoPasajes(props){
       "ref_es" : traduccionPasajeName,
       "clave" : expresionClave
     }
+    var pasajasillo = pasajeSeleccionadillo
     var emptyPasajeNuevo = {
       clave: "",
       ref_def_de: "",
@@ -98,6 +100,7 @@ function InfoPasajes(props){
       ref_libro_de: "",
       ref_libro_es: ""
     }
+    setPasajeSeleccionado(props.setPasajeSeleccionado)
     setExpresionClave(emptyPasajeNuevo.clave)
     setExpresionId(emptyPasajeNuevo.ref_id)
     setExpresionPasaje(emptyPasajeNuevo.ref_def_de)
@@ -148,6 +151,10 @@ function InfoPasajes(props){
     setOpenAlP(false);
   }
 
+  const handleChangePasajes=(event)=>{
+    setExpresionId(event.target.value);
+  }
+
   return(
     <div className={classes.cartainfodepasajes}>
       <Grid container alignItems="center" className={classes.headerContainer}>
@@ -156,6 +163,7 @@ function InfoPasajes(props){
             id="standard-name"
             value={expresionId}
             className={classes.textfieldlista}
+            onChange={handleChangePasajes}
           />
         </Grid>
         <Grid item xs={1} className={classes.botoneliminarpasaje}>

@@ -12,6 +12,7 @@ import Description from '@material-ui/icons/Description';
 import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
 import Exit from '@material-ui/icons/ExitToApp';
+import People from '@material-ui/icons/People';
 
 class MenuHeader extends React.Component{
   state = { anchorEl : null  }
@@ -78,6 +79,14 @@ class MenuHeader extends React.Component{
                 <Help />
               </ListItemIcon>
               <ListItemText primary="Manual" />
+            </MenuItem>
+          </Link>
+          <Link to={`${match.url}/usuarios`}>
+            <MenuItem onClick={this.closeMenu}>
+              <ListItemIcon>
+                <People />
+              </ListItemIcon>
+              <ListItemText primary="Usuarios" />
             </MenuItem>
           </Link>
           <MenuItem onClick={this.exitMain}>

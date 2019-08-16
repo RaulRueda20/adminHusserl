@@ -49,7 +49,7 @@ function NuevoPasaje(props){
   return(
     <div className={classes.contenedorpaperpasajes}>
       {/* <div className={classes.contenedorpaperpasajes}> */}
-        <InfoPasajes pasajeSeleccionado={pasaje}/>
+        <InfoPasajes pasajeSeleccionado={pasaje} setPasajeSeleccionado={setPasaje}/>
     </div>
   )
 }
