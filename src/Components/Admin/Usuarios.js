@@ -110,6 +110,11 @@ function Usuarios() {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [usuarios, setUsuarios] = React.usetState([])
+
+  React.useEffect(()=>{
+    var service = '/listausuarios'
+  })
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 

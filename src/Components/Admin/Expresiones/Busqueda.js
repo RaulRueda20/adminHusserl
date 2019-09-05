@@ -19,20 +19,22 @@ function Busqueda(props){
   const { classes } = props;
 
   var expresiones=props.expresiones
-  
+  var valorB=props.valorB
+  var setValorB=props.setValorB
+
   const handleChangeBusquedaExpresiones = (event) => {
-    var expresionBuscada=event.target.value
-    expresiones.map(expresion=>{
+    const value=event.target.value
+    setValorB(value)
+      expresiones.map(expresion=>{
       var expresionNombre=expresion.expresion_de  +  expresion.expresion_es +  expresion.id
-      var expresionEncontrada= expresionNombre.indexOf(expresionBuscada)
-      console.log("expresion buscada",expresionBuscada)
+      var expresionEncontrada=expresionNombre.indexOf(valorB)
+      console.log("expresion buscada",valorB)
       document.getElementById(expresion.id).classList.remove("hiddenE")
       if (expresionEncontrada == -1){
         document.getElementById(expresion.id).className += " hiddenE";
       }
     })
   }
-
 
   return (
     <FormControl className={classes.TextFieldbus}>

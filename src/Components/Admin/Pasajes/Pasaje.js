@@ -58,12 +58,10 @@ function InfoPasajes(props){
 
   React.useEffect(() => {
     setClave(props.clave)
-    // setId(props.eId)
+    setId(props.eId)
     setPasaje(props.pasaje)
     setPasajeName(props.pasajeName)
   }, [props])
-
-
 
   return(
     <div className={classes.cartainfodepasajes}>

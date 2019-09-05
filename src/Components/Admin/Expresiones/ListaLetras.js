@@ -30,8 +30,14 @@ const letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 function ListaLetras (props){
   const { classes }= props;
 
+  var clean=props.emptyB
+
   const handleChangeLetraMain = (event) => {
-      props.setLetraMain(event.target.innerText)
+    props.setLetraMain(event.target.innerText)
+    if(props.cambioLetra==false){
+      props.setCambioLetra(true)
+      props.setValorB(clean)
+    }
   };
 
   return(

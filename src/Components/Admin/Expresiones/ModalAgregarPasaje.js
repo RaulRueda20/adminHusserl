@@ -17,6 +17,8 @@ import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/styles';
 import {adminService} from '../../../js/webServices';
 
+import '../../../css/pasajes.css';
+
 const modalagregar={
   modalina:{
     width: "50%",
@@ -64,6 +66,7 @@ function ModalAgregarPasaje(props){
   const [pasajes, setPasajes] = React.useState([])
   const [nivel, setNivel] = React.useState('1')
   const [selectedPasajes, setSelectedPasajes] = React.useState(null);
+  
 
   React.useEffect(()=>{
     var service = "/referencias/lista"
@@ -90,10 +93,24 @@ function ModalAgregarPasaje(props){
       'ref_es' : selectedPasajes.ref_libro_es,
       'clave' : selectedPasajes.clave,
       'nivel' : nivel
-  }
+    }
+   
     var servicio = "/referencias/new/nuevoPasaje"
     adminService(servicio, "POST", JSON.stringify(params), (data) =>{
       console.log("datos",data)
+    })
+  }
+
+  const handleChangeBusquedaAgregar = (event) => {
+    var busquedaAg = event.target.value
+    pasajes.map(pasaje=>{
+      var pasajeNombre=pasaje.ref_libro_de + pasaje.ref_libro_es + pasaje.ref_id
+      var pasajeBuscado= pasajeNombre.indexOf(busquedaAg)
+      console.log("pasajeNombre",pasajeNombre)
+      document.getElementById("agregar"+pasaje.ref_id).classList.remove("hidden")
+      if (pasajeBuscado == -1){
+        document.getElementById("agregar"+pasaje.ref_id).className += " hidden";
+      }
     })
   }
 
@@ -155,12 +172,13 @@ function ModalAgregarPasaje(props){
               <SearchIcon />
             </InputAdornment>
           }
+          onChange={handleChangeBusquedaAgregar}
         />
         <List className={classes.listacontenedor}>
           {pasajes.map(pasaje=>(
             // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
             <li 
-              id={pasaje.ref_id}
+              id={"agregar"+pasaje.ref_id}
               key={pasaje.ref_id} 
               className={"sideList"} 
               onClick={() => addEToList(pasaje)}>

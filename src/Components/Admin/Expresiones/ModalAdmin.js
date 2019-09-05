@@ -44,6 +44,15 @@ const estiloModalExpresiones = theme => ({
   }
 })
 
+const emptyObjectExp={
+  indice_es:"",
+  indice_de:"",
+  pretty_es:"",
+  pretty_de:"",
+  expresion:"",
+  traduccion:""
+}
+
 function ModalAdmin(props){
   const { classes } = props;
   const [indiceLang, setIndicelang] = React.useState("al");
@@ -85,6 +94,12 @@ function ModalAdmin(props){
     var service = "/expresiones/nuevaExpresion/"
     adminService(service, "POST", JSON.stringify(params), (data) =>{
         console.log("datos",data) 
+        setExpresionLetraIndice(emptyObjectExp.indice_de)
+        setTraduccionLetraIndice(emptyObjectExp.indice_es)
+        setExpresion(emptyObjectExp.pretty_de)
+        setTraduccion(emptyObjectExp.pretty_es)
+        setExpresionContenido(emptyObjectExp.expresion)
+        setTraduccionContenido(emptyObjectExp.traduccion)
     })
 }
 

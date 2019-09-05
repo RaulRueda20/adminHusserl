@@ -65,7 +65,7 @@ function InfoPasajes(props){
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
   const [pasajesEnBlanco, setPasajesEnBlanco] = React.useState([])
-  const [pasajeSeleccionadillo, setPasajeSeleccionadillo] = React.useState("")
+  // const [pasajeSeleccionadillo, setPasajeSeleccionadillo] = React.useState("")
   
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
@@ -91,7 +91,6 @@ function InfoPasajes(props){
       "ref_es" : traduccionPasajeName,
       "clave" : expresionClave
     }
-    var pasajasillo = pasajeSeleccionadillo
     var emptyPasajeNuevo = {
       clave: "",
       ref_def_de: "",
@@ -119,6 +118,7 @@ function InfoPasajes(props){
       "ref_es" : traduccionPasajeName,
       "clave" : expresionClave
     }
+    console.log("parametros",params)
     if (expresionClave=="" && expresionId=="" && expresionPasaje=="" && expresionPasajeName=="" && traduccionPasaje=="" && traduccionPasajeName==""){
         var servicio = "/referencias/new/nuevoPasaje"
         adminService(servicio, "POST", JSON.stringify(params), (data) =>{
