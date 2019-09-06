@@ -4,6 +4,8 @@ import classNames from 'classnames';
 export default function ListaClaves(props){
   var pasajeSeleccionado = props.pasajeId
 
+  console.log("pasajeselecc", props.pasajes)
+
   console.log("pasaje seleccionado en la lista", pasajeSeleccionado)
   return(
     <div>

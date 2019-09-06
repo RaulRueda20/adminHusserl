@@ -56,6 +56,11 @@ function InfoPasajes(props){
     setClave(event.target.value)
   };
 
+  const handleChangeName = (event) => {
+    props.setPasajeName(event.target.value)
+    console.log("nombre", pasajeName)
+  }
+
   React.useEffect(() => {
     setClave(props.clave)
     setId(props.eId)
@@ -83,7 +88,7 @@ function InfoPasajes(props){
                 <TextField
                 id="standard-name"
                 value={pasajeName}
-                onChange={event => setPasajeName(event.target.value)}
+                onChange={handleChangeName}
                 className={classes.contenedorselectpasaje}
                 />
             </Grid>
