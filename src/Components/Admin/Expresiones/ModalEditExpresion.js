@@ -9,7 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Tooltip from '@material-ui/core/Tooltip';
 import Create from '@material-ui/icons/Create';
 import { withStyles } from '@material-ui/styles';
-
+import SwipeableViews from 'react-swipeable-views';
 import {adminService} from '../../../js/webServices';
 
 import es from "../../../Imagenes/spain.png";
@@ -22,20 +22,19 @@ const estiloModalExpresiones = theme => ({
     width:"80%"
   },
   modalin:{
-    width: "60%",
-    left: "20vw",
-    top: "20vh",
-    position:"absolute",
-    padding: "30px",
-    maxHeight: "450px",
-    overflowY: "auto"
+    top: "25vh",
+    left: "calc(20vw - 30px)",
+    width: "60vw",
+    padding: "20px 30px",
+    position: "absolute",
+    height: "50vh"
   },
   contenedorSubtitulos:{
     padding: "15px 15px"
   },
   botonClear:{
-    left: "210px",
-    bottom: "20px"
+    // left: "210px",
+    // bottom: "20px"
   },
   botonAgregar:{
     width:"50%",
@@ -47,6 +46,7 @@ function ModalAdmin(props){
     // const expresionS = props.expresion
     const { classes } = props;
     const [indiceLang, setIndicelang] = React.useState("al");
+    const [vista, setVista] = React.useState(0);
     const [open, setOpen] = React.useState(false);
 
     const [expresionLetraIndice, setExpresionLetraIndice] = React.useState('A')
@@ -66,11 +66,11 @@ function ModalAdmin(props){
     };
 
     const handleAl = () => {
-        setIndicelang("al");
+        setVista(0);
     };
 
     const handleEs = () => {
-        setIndicelang("es");
+        setVista(1);
     };
 
     React.useEffect(()=>{
@@ -95,7 +95,8 @@ function ModalAdmin(props){
         }
         var service = "/expresiones/updateExpresion/" + props.expresion.id
         adminService(service, "POST", JSON.stringify(params), (data) =>{
-            console.log("datos",data) 
+            props.setReload(!props.reload)
+            // console.log("datos",data) 
         })
     }
     
@@ -113,41 +114,44 @@ function ModalAdmin(props){
             onClose={handleClose}
         >
             <Paper className={classes.modalin}>
-            <Grid container className={classes.contenedorSubtitulos}>
-                <Grid item xs={8}>
-                    <Typography variant="h3">
-                        Editar Expresión
-                    </Typography>
+                <Grid container className={classes.contenedorSubtitulos} alignItems="center">
+                    <Grid item xs={11}>
+                        <Typography variant="h3">
+                            Editar Expresión
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <IconButton
+                            onClick={handleClose}
+                            className={classes.botonClear}
+                        >
+                            <ClearIcon fontSize="small"/>
+                        </IconButton>
+                    </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                    <IconButton
-                        onClick={handleClose}
-                        className={classes.botonClear}
-                    >
-                        <ClearIcon fontSize="small"/>
-                    </IconButton>
-                </Grid>
-            </Grid>
-            {indiceLang == "al" ? 
-                <FormularioExpresiones 
-                expresion={expresion} setExpresion={setExpresion}
-                letra={expresionLetraIndice} setLetra={setExpresionLetraIndice} 
-                contenido={expresionContenido} setContenido={setExpresionContenido}
-                indiceLang={indiceLang} handleLang={handleEs} flag={es}
-                label="Expresión"/> : 
-                <FormularioExpresiones 
-                expresion={traduccion} setExpresion={setTraduccion}
-                letra={traduccionLetraIndice} setLetra={setTraduccionLetraIndice} 
-                contenido={traduccionContenido} setContenido={setTraduccionContenido}
-                indiceLang={indiceLang} handleLang={handleAl} flag={al}
-                label="Traducción"/>}
-            <Button
-                variant="contained"
-                className={classes.botonAgregar}
-                onClick={handleClickEdicion}
-            >
-                Agregar
-            </Button>
+                <SwipeableViews axis={ vista == 0 ? 'x-reverse' : 'x'}
+                index={vista}
+                onChangeIndex={setVista}>
+                    <FormularioExpresiones 
+                        expresion={expresion} setExpresion={setExpresion}
+                        letra={expresionLetraIndice} setLetra={setExpresionLetraIndice} 
+                        contenido={expresionContenido} setContenido={setExpresionContenido}
+                        indiceLang={vista} handleLang={handleEs} flag={es}
+                        label="Expresión"/>
+                    <FormularioExpresiones 
+                        expresion={traduccion} setExpresion={setTraduccion}
+                        letra={traduccionLetraIndice} setLetra={setTraduccionLetraIndice} 
+                        contenido={traduccionContenido} setContenido={setTraduccionContenido}
+                        indiceLang={vista} handleLang={handleAl} flag={al}
+                        label="Traducción"/>
+                </SwipeableViews>
+                <Button
+                    variant="contained"
+                    className={classes.botonAgregar}
+                    onClick={handleClickEdicion}
+                >
+                    Agregar
+                </Button>
             </Paper>
         </Modal>
         </div>

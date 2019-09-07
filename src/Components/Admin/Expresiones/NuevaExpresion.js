@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ModalAgregarPasaje from './ModalAgregarPasaje';
 import Tooltip from '@material-ui/core/Tooltip';
 import Alertas from './Alertas';
+import Snackbar from '@material-ui/core/Snackbar';
 import {adminService} from '../../../js/webServices';
 
 const stylebonton = {
@@ -42,19 +43,28 @@ function NuevaExpresion(props){
   const [pasajes, setPasajes] = React.useState([]);
   const [openAp, setOpenAp] = React.useState(false);
   const [openAl, setOpenAl] = React.useState(false);
+  const [snack, setSnack] = React.useState({open : false, text : ""})
+  const [pasajeToDelete, setPasajeToDelete] = React.useState("")
+  const [reload, setReload] = React.useState(true);
+  const [reloadExpresion, setReloadExpresion] = React.useState(true);
 
   React.useEffect(()=>{
+    console.log("Nueva Expresion", props.expresionSeleccionada)
     if(props.expresionSeleccionada != ""){
       var service = "/referencias/obtieneReferenciasByTerm/" + props.expresionSeleccionada
       adminService(service, "GET", {}, (expresionEncontrada) => {
-        // console.log(expresionEncontrada)
+        // console.log(props.expresion)
+        console.log(expresionEncontrada)
         // console.log(expresionEncontrada.data.response[0])
         if(expresionEncontrada.data.response.length > 0){
           setExpresion(expresionEncontrada.data.response[0])
           setPasajes(expresionEncontrada.data.response)
         }else{
-          setExpresion(emptyObj)
-          setPasajes([emptyObj])
+          adminService("/expresiones/byId/" + props.expresionSeleccionada, "GET", {}, (expresionS) => {
+            console.log(expresionS.data.response[0])
+            setExpresion(expresionS.data.response[0])
+          })
+          setPasajes([])
         }
         // adminService("/referencias/obtieneReferencias/" + props.expresionSeleccionada, "GET", {}, (data) => {
         //   console.log("pasajes", data.data.response)
@@ -66,7 +76,7 @@ function NuevaExpresion(props){
       setPasajes([emptyObj])
     }
 
-  }, [props.expresionSeleccionada])
+  }, [props.expresionSeleccionada, props.reload, reloadExpresion])
 
   function handleClickOpenAp() {
     setOpenAp(true);
@@ -84,15 +94,32 @@ function NuevaExpresion(props){
     setOpenAl(false);
   }
 
-  function deletePasaje(){
-    console.log("ok")
-    setOpenAl(false);
+  function deletePasaje(refid){
+    console.log("ok", refid)
+    var service2 = "/referencias/quitarPasaje/" + refid + "/" + expresion.id
+    adminService(service2, "DELETE", {}, (data) => {
+      console.log(data)
+      setSnack({open : true, text: "Pasaje desasociado con éxito."})
+      setOpenAl(false);
+      setReloadExpresion(!reloadExpresion)
+    })
   }
 
   return (
     <div>
+      <Snackbar
+          anchorOrigin={{ vertical : "top", horizontal : "left" }}
+          key={`top,left`}
+          open={snack.open}
+          onClose={() => setSnack({open: false, text: ""}) }
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{snack.text}</span>}
+      />
       <div className={classes.contenedorPaper}>
-        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada}/>
+        <InfoExpresiones expresionSeleccionada={expresion} expresionId={props.expresionSeleccionada} setExpresionId={props.setExpresionSeleccionada} 
+          reload={props.reload} setReload={props.setReload} reloadExpresion={reloadExpresion} setReloadExpresion={setReloadExpresion}/>
       </div>
       <Grid container>
         <Grid item  xs={10}>
@@ -106,19 +133,22 @@ function NuevaExpresion(props){
               <AddIcon/>
             </IconButton>
           </Tooltip>
-          <ModalAgregarPasaje openAp={openAp} handleCloseAp={handleCloseAp}/>
+          <ModalAgregarPasaje expresion={expresion} openAp={openAp} handleCloseAp={handleCloseAp} 
+            reload={reloadExpresion} setReload={setReloadExpresion}/>
         </Grid>
       </Grid>
       <Grid container className={classes.contenedorPasajes} spacing={1}>
         {
           pasajes.map(pasaje =>
             <Grid key={pasaje.refid} item xs={6} sm={4} md={3} lg={2}>
-              <CartaPasajes pasaje={pasaje} deletePasaje={handleClickOpenAl}/>
+              <CartaPasajes setPasajeToDelete={setPasajeToDelete} 
+                pasaje={pasaje} deletePasaje={handleClickOpenAl} 
+                openAlert={handleClickOpenAl} reload={reloadExpresion} setReload={setReloadExpresion}/>
             </Grid>
           )
         }
       </Grid>
-      <Alertas text="¿Desea deshacer la relación del pasaje con la expresión?" openAl={openAl} handleCloseAl={handleCloseAl} accept={deletePasaje}/>
+      <Alertas text="¿Desea deshacer la relación del pasaje con la expresión?" openAl={openAl} handleCloseAl={handleCloseAl} accept={() => deletePasaje(pasajeToDelete)}/>
     </div>
   )
 

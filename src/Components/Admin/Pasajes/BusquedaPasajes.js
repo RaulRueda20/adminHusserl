@@ -27,7 +27,7 @@ function BusquedaPasajes(props){
     pasajes.map(pasaje=>{
       var pasajeNombre=pasaje.ref_libro_de + pasaje.ref_libro_es + pasaje.ref_id
       var pasajeBuscado= pasajeNombre.indexOf(busqueda)
-      console.log("pasajeNombre",pasajeNombre)
+      // console.log("pasajeNombre",pasajeNombre)
       document.getElementById(pasaje.ref_id).classList.remove("hidden")
       if (pasajeBuscado == -1){
         document.getElementById(pasaje.ref_id).className += " hidden";

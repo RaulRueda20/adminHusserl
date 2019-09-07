@@ -16,6 +16,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/styles';
 import {adminService} from '../../../js/webServices';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const modalagregar={
   modalina:{
@@ -64,6 +65,7 @@ function ModalAgregarPasaje(props){
   const [pasajes, setPasajes] = React.useState([])
   const [nivel, setNivel] = React.useState('1')
   const [selectedPasajes, setSelectedPasajes] = React.useState(null);
+  const [snack, setSnack] = React.useState({open : false, text : ""})
 
   React.useEffect(()=>{
     var service = "/referencias/lista"
@@ -84,17 +86,18 @@ function ModalAgregarPasaje(props){
   };
 
   const handleClickAddPasaje=()=>{
-    var params={
-      'ref_id': selectedPasajes.ref_id,
-      'ref_de' : selectedPasajes.ref_libro_de,
-      'ref_es' : selectedPasajes.ref_libro_es,
-      'clave' : selectedPasajes.clave,
-      'nivel' : nivel
+    // console.log(selectedPasajes)
+    var params = {
+      'termId' : props.expresion.id,
+      'orden' : parseInt(nivel),
+      'referencia' : selectedPasajes.ref_id
   }
-    var servicio = "/referencias/new/nuevoPasaje"
-    adminService(servicio, "POST", JSON.stringify(params), (data) =>{
-      console.log("datos",data)
-    })
+  var service = "/referencias/agregarReferencia"
+  adminService(service, "POST", JSON.stringify(params), (data) =>{
+    console.log("datos",data)
+    setSnack({open : true, text: "Pasaje agregado con éxito."})
+    props.setReload(!props.reload)
+  })
   }
 
   return(
@@ -102,18 +105,28 @@ function ModalAgregarPasaje(props){
       open={props.openAp}
       onClose={props.handleCloseAp}
     >
+      
       <Paper className={classes.modalina}>
+        <Snackbar
+          anchorOrigin={{ vertical : "top", horizontal : "left" }}
+          key={`top,left`}
+          open={snack.open}
+          onClose={() => setSnack({open: false, text: ""}) }
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{snack.text}</span>}
+        />
         <Grid container>
-          <Grid item xs={10}>
+          <Grid item xs={11}>
             <Typography variant="h3">
               Agregar Pasaje
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={1}>
             <IconButton
               aria-haspopup="true"
               onClick={props.handleCloseAp}
-              className={classes.botonClearAp}
             >
               <ClearIcon fontSize="small"/>
             </IconButton>

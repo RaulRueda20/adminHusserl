@@ -42,6 +42,12 @@ function CartaPasajes(props){
     setOpen(false);
   };
 
+  const deleteP = () => {
+    console.log(props.pasaje.refid)
+    props.setPasajeToDelete(props.pasaje.refid)
+    props.deletePasaje(props.pasaje.refid)
+  }
+
   return(
     <Card className={classes.cartadepasajes}>
       <Grid container>
@@ -53,7 +59,7 @@ function CartaPasajes(props){
           size="small"
           className={classes.closeButton}
           aria-haspopup="true"
-          onClick={()=>props.deletePasaje()}
+          onClick={deleteP}
           // onClick={()=>handleClose()}
           >
             <ClearIcon fontSize="small"/>

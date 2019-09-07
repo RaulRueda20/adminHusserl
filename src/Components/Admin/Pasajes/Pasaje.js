@@ -47,30 +47,17 @@ const infopasajes={
 
 function InfoPasajes(props){
   const {classes}=props;
-  const [clave, setClave] = React.useState('')
-  const [id, setId] = React.useState('')
-  const [pasaje, setPasaje] = React.useState('')
-  const [pasajeName, setPasajeName] = React.useState('')
 
   const handleChangeC = (event) => {
-    setClave(event.target.value)
+    props.setClave(event.target.value)
   };
-
-  React.useEffect(() => {
-    setClave(props.clave)
-    // setId(props.eId)
-    setPasaje(props.pasaje)
-    setPasajeName(props.pasajeName)
-  }, [props])
-
-
 
   return(
     <div className={classes.cartainfodepasajes}>
         <Grid container alignItems="center" className={classes.headerPasajes}>
             <Grid item xs={2}>
                 <Select
-                    value={clave}
+                    value={props.clave}
                     onChange={handleChangeC}
                     className={classes.contenedorselectpasaje}
                 >
@@ -84,21 +71,20 @@ function InfoPasajes(props){
             <Grid item xs={10}>
                 <TextField
                 id="standard-name"
-                value={pasajeName}
-                onChange={event => setPasajeName(event.target.value)}
+                value={props.pasajeName}
+                onChange={event => props.setPasajeName(event.target.value)}
                 className={classes.contenedorselectpasaje}
                 />
             </Grid>
         </Grid>
         <Grid container>
-            <Grid item className={classes.contenedoreditorpasaje} id="pasaje">
+            <Grid item className={classes.contenedoreditorpasaje} id={"pasaje" + props.pasajeName}>
                 <CKEditor
                     editor={ ClassicEditor }
-                    data={pasaje}
+                    data={props.pasaje}
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        console.log( { event, editor, data } );
-                        setPasaje(data)
+                        props.setPasaje(data)
                     } }
                 />
             </Grid>

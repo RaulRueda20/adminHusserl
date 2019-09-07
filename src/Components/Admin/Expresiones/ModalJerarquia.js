@@ -10,7 +10,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/styles';
 
-
 import ModalJerarquiaPadres from './ModalJerarquiaPadres';
 import ModalJerarquiaHijos from './ModalJerarquiaHijos';
 
@@ -21,7 +20,7 @@ const estiloModalJerarquia={
     width: "50%",
     maxHeight:"75vh",
     left: "25vw",
-    top: "15vh",
+    top: "12.5vh",
     position:"absolute",
     padding: "30px 30px",
     overflowY: "auto"
@@ -119,7 +118,7 @@ function ModalJerarquia(props){
               Hijos
             </Button>
           </div>
-          {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones}/> : <ModalJerarquiaHijos hijos={props.hijos} expresiones={props.expresiones}/>}
+          {vistaModal == "padres" ? <ModalJerarquiaPadres padres={props.padres} expresiones={props.expresiones} expresionSeleccionada={props.expresionSeleccionada} reload={props.reload} setReload={props.setReload}/> : <ModalJerarquiaHijos expresionSeleccionada={props.expresionSeleccionada} hijos={props.hijos} expresiones={props.expresiones} reload={props.reload} setReload={props.setReload}/>}
         </Paper>
       </Modal>
     </div>

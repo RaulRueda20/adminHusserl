@@ -52,12 +52,14 @@ function InfoExpresiones(props){
   }
 
   function deleteExpresion(){
-    console.log("ok")
-    var service = "/expresiones/deleteExpresion/" + props.expresionId
+    console.log(props.expresion)
+    var service = "/expresiones/deleteExpresion/" + props.expresion.id
     adminService(service, "DELETE", {}, (data) =>{
       console.log("Eliminar",data)
+      props.setExpresion("")
+      props.setReload(!props.reload)
+      setOpenAl(false);
     })
-    setOpenAl(false);
   }
 
   React.useEffect(()=>{
@@ -65,18 +67,18 @@ function InfoExpresiones(props){
     adminService(service, "GET", {}, (data) => {
       setAllExpresiones(data.data.response)
     })
-  }, [true])
+  }, [props.reload])
 
   return(
       <Grid container className={classes.titulo}>
         <Grid item xs>
-          <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={allExpresiones}/>
+          <ModalJerarquia padres={props.padres} hijos={props.hijos} expresiones={allExpresiones} expresionSeleccionada={props.expresion} reload={props.reloadExpresion} setReload={props.setReloadExpresion}/>
         </Grid>
         <Grid item xs>
-          <ModalEditar expresion={props.expresion}/>
+          <ModalEditar expresion={props.expresion} reload={props.reload} setReload={props.setReload}/>
         </Grid>
         <Grid item xs>
-          <ModalVerTambien expresiones={allExpresiones}/>
+          <ModalVerTambien expresion={props.expresion} expresiones={allExpresiones}/>
         </Grid>
         <Grid item xs>
           <Tooltip title="Eliminar expresión">
@@ -87,7 +89,7 @@ function InfoExpresiones(props){
           <Alertas text="¿Quiere eliminar la expresión seleccionada?" openAl={openAl} handleCloseAl={handleCloseAl} accept={deleteExpresion}/>
         </Grid>
         <Grid item xs>
-          <ModalAdmin/>
+          <ModalAdmin reload={props.reload} setReload={props.setReload}/>
         </Grid>
       </Grid>
   )

@@ -54,7 +54,7 @@ function InfoExpresiones(props){
   React.useEffect(()=>{
     adminService(("/expresiones/al/abuelosList/" + props.expresionId),"GET", {}, (data) => setPadres(data.data.response))
     adminService(("/expresiones/al/hijosList/" + props.expresionId), "GET", {}, (data) => setHijos(data.data.response))
-  }, [props.expresionId])
+  }, [props.expresionId, props.reloadExpresion])
 
   const paintJerarquia = (lista) => {
     var lastString = ""
@@ -75,7 +75,9 @@ function InfoExpresiones(props){
           </Typography>
         </Grid>
         <Grid item xs={5} className={classes.botonesaccion}>
-          <MenuBarra expresion={props.expresionSeleccionada} padres={padres} hijos={hijos} expresiones={props.expresiones}/>
+          <MenuBarra expresion={props.expresionSeleccionada} setExpresion={props.setExpresionId} padres={padres} hijos={hijos} 
+            expresiones={props.expresiones} reload={props.reload} setReload={props.setReload} 
+            reloadExpresion={props.reloadExpresion} setReloadExpresion={props.setReloadExpresion}/>
         </Grid>
       </Grid>
       <Divider className="divisor"/>

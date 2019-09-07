@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import Tooltip from '@material-ui/core/Tooltip';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/styles';
-
+import SwipeableViews from 'react-swipeable-views';
 import {adminService} from '../../../js/webServices';
 
 import Delete from '@material-ui/icons/Delete';
@@ -52,9 +52,18 @@ const infopasajes={
   }
 }
 
+var emptyPasajeNuevo = {
+  clave: "",
+  ref_def_de: "",
+  ref_def_es: "",
+  ref_id: "",
+  ref_libro_de: "",
+  ref_libro_es: ""
+}
+
 function InfoPasajes(props){
   const {classes}=props;
-  const [vista, setVista] = React.useState('de')
+  const [vista, setVista] = React.useState(0)
   const [expresionClave, setExpresionClave] = React.useState("")
   const [expresionId, setExpresionId] = React.useState("")
   const [openAlP, setOpenAlP] = React.useState(false);
@@ -64,8 +73,7 @@ function InfoPasajes(props){
   const [expresionPasajeName, setExpresionPasajeName] = React.useState("")
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
   const [traduccionPasajeName, setTraduccionPasajeName] = React.useState("")
-  const [pasajesEnBlanco, setPasajesEnBlanco] = React.useState([])
-  const [pasajeSeleccionadillo, setPasajeSeleccionadillo] = React.useState("")
+  const [opcionGuardado, setOpcionGuardado] = React.useState("editar")
   
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
@@ -83,61 +91,49 @@ function InfoPasajes(props){
   };
 
   const handleClickiNuevoPasaje=()=>{
-    var params = {
-      "ref_id": expresionId,
-      "pasaje_de" : expresionPasaje,
-      "ref_de" : expresionPasajeName,
-      "pasaje_es" : traduccionPasaje,
-      "ref_es" : traduccionPasajeName,
-      "clave" : expresionClave
-    }
-    var pasajasillo = pasajeSeleccionadillo
-    var emptyPasajeNuevo = {
-      clave: "",
-      ref_def_de: "",
-      ref_def_es: "",
-      ref_id: "",
-      ref_libro_de: "",
-      ref_libro_es: ""
-    }
-    setPasajeSeleccionado(props.setPasajeSeleccionado)
-    setExpresionClave(emptyPasajeNuevo.clave)
-    setExpresionId(emptyPasajeNuevo.ref_id)
-    setExpresionPasaje(emptyPasajeNuevo.ref_def_de)
-    setExpresionPasajeName(emptyPasajeNuevo.ref_libro_de)
-    setTraduccionPasaje(emptyPasajeNuevo.ref_def_es)
-    setTraduccionPasajeName(emptyPasajeNuevo.ref_libro_es)
-    console.log("pasajes en blanco", pasajesEnBlanco)
+    props.setPasajeSeleccionado(emptyPasajeNuevo)
+    props.setPasajeSeleccionadoId("")
+
+    setOpcionGuardado("nuevo")
   }
 
   const handleClickEditarPasaje=()=>{
+    console.log(expresionPasaje)
     var params = {
-      "ref_id": expresionId,
-      "pasaje_de" : expresionPasaje,
-      "ref_de" : expresionPasajeName,
-      "pasaje_es" : traduccionPasaje,
-      "ref_es" : traduccionPasajeName,
+      "ref_id": btoa(expresionId),
+      "pasaje_de" : btoa(expresionPasaje),
+      "ref_de" : btoa(expresionPasajeName),
+      "pasaje_es" : btoa(traduccionPasaje),
+      "ref_es" : btoa(traduccionPasajeName),
       "clave" : expresionClave
     }
-    if (expresionClave=="" && expresionId=="" && expresionPasaje=="" && expresionPasajeName=="" && traduccionPasaje=="" && traduccionPasajeName==""){
+    if (opcionGuardado != "editar"){
         var servicio = "/referencias/new/nuevoPasaje"
         adminService(servicio, "POST", JSON.stringify(params), (data) =>{
-        console.log("nuevo pasaje", data)
+          console.log("nuevo pasaje", data)
+          setSnack({open : true, text: "Pasaje creado con éxito"})
+          props.setReload(!props.reload)
         })
       }else{
         var servicio = "/referencias/editarPasaje/" + expresionId
         adminService(servicio, "POST", JSON.stringify(params), (data) => {
-        console.log("Edición de pasajes", data)
+          setSnack({open : true, text: "Pasaje editado con éxito"})
+          console.log("Edición de pasajes", data)
       })
     }
   }
 
   const handleClickEliminarPasaje=()=>{
+    setOpenAlP(false);
     if (props.pasajeSeleccionado > 0){
       setSnack({open : true, text: "Este pasaje está relacionado con expresiones del diccionario. Por favor, elimine dichas relaciones antes de continuar."})
       return true
     }else{
       adminService("/referencias/eliminarPasaje/" + expresionId, "DELETE", {}, (datad) => {
+        setSnack({open : true, text: "Pasaje eliminado con éxito."})
+        handleClickiNuevoPasaje()
+        // props.setPasajeSeleccionado(emptyPasajeNuevo)
+        props.setReload(!props.reload)
         console.log("pasaje eliminado", datad)
       })
     }
@@ -157,6 +153,16 @@ function InfoPasajes(props){
 
   return(
     <div className={classes.cartainfodepasajes}>
+      <Snackbar
+        anchorOrigin={{ vertical : "top", horizontal : "left" }}
+        key={`top,left`}
+        open={snack.open}
+        onClose={() => setSnack({open : false, text : ""})}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{snack.text}</span>}
+      />
       <Grid container alignItems="center" className={classes.headerContainer}>
         <Grid item xs={10} className={classes.textCont}>
           <TextField
@@ -186,38 +192,39 @@ function InfoPasajes(props){
         <Grid item xs={12}>
           <Button
             // variant="contained"
-            className={classNames({"selectedButton" : vista == 'de'})}
-            onClick={() => setVista('de')}
+            className={classNames({"selectedButton" : vista == 0})}
+            onClick={() => setVista(0)}
             size="small"
           >
             Aleman
           </Button>
           <Button
             // variant="contained"
-            className={classNames({"selectedButton" : vista == 'es'}, classes.botonEs)}
+            className={classNames({"selectedButton" : vista == 1}, classes.botonEs)}
             size="small"
-            onClick={() => setVista('es')}
+            onClick={() => setVista(1)}
           >
             Español
           </Button>
         </Grid>
       </Grid>
       <Divider/>
-      {
-        vista == 'de' ? 
-        <Pasaje 
+      <SwipeableViews axis={ vista == 0 ? 'x-reverse' : 'x'}
+        index={vista}
+        onChangeIndex={setVista}>
+          <Pasaje 
           clave={expresionClave} setClave={setExpresionClave}
           eId={expresionId} setEId={setExpresionId}
           pasaje={expresionPasaje} setPasaje={setExpresionPasaje}
           pasajeName={expresionPasajeName} setPasajeName={setExpresionPasajeName}
-          /> : 
-        <Pasaje 
+          />
+          <Pasaje 
           clave={expresionClave} setClave={setExpresionClave}
           eId={expresionId} setEId={setExpresionId}
           pasaje={traduccionPasaje} setPasaje={setTraduccionPasaje}
           pasajeName={traduccionPasajeName} setPasajeName={setTraduccionPasajeName}
           />
-      }
+      </SwipeableViews>
       <Divider className="divisor"/>
       <Grid container justify="flex-end">
         <Grid item>

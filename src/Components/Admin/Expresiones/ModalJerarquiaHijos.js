@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -13,10 +14,21 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/styles';
 import ClearIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 import {adminService} from '../../../js/webServices';
 
 import '../../../css/expresiones.css';
+
+const addHijos = (expresionId,index,lista, last) => {
+  var service = "/expresiones/agregarHijo/" + expresionId
+  adminService(service, "POST", JSON.stringify({"hijo" : lista[index].split("o")[1]}), (datax) => {
+    if(index + 1 < lista.length){
+      return addHijos(expresionId, index+1, lista, last)
+    }else{
+      return last()
+    }
+  })
+}
 
 const estiloModalJerarquiaHijos={
   botonhijos:{
@@ -45,34 +57,35 @@ const estiloModalJerarquiaHijos={
 
 function ModalJerarquiaHijos(props){
   const {classes}=props;
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [selectedExpresions, setSelectedExpresions] = React.useState([]);
   const [snack, setSnack] = React.useState({open : false, text : ""})
-
-  function handleListItemClick(event, index) {
-    setSelectedIndex(index);
-  }
+  const [loading, setLoading] = React.useState(false) 
 
   const checkExistence = () => {
-    var hijo=props.hijos.hijo
-    var service = "/expresiones/agregarHijo/" + selectedExpresions
-    adminService(service, "POST", JSON.stringify(hijo),(datax)=>{
-      console.log("hijos ingresados", datax)
-    })
     if(selectedExpresions.length == 0){
       setSnack({open : true, text: "No ha seleccionado ninguna expresión."})
       return true
     }
     for(var i in selectedExpresions){
       for(var j in props.hijos){
-        if(selectedExpresions[i] == props.hijos[j].hijo){
+        if(selectedExpresions[i].split("o")[1] == props.hijos[j].hijo){
           setSnack({open : true, text: "La expresión '" + props.hijos[j].hijo + " - " + props.hijos[j].expresion + "' ya forma parte de la jerarquía."})
           return true
         }
       }
     }
-    console.log("ok")
     return false
+  }
+
+  const add = () => {
+    if(!checkExistence()){
+      setLoading(true)
+      addHijos(props.expresionSeleccionada.id, 0, selectedExpresions, () => {
+        setLoading(false)
+        setSnack({open : true, text: "Se ha(n) agregado el/los hijo(s) con éxito."})
+        props.setReload(!props.reload)
+      })
+    }
   }
 
   function handleClose() {
@@ -87,27 +100,21 @@ function ModalJerarquiaHijos(props){
     setSelectedExpresions(se)
   }
 
-  const handleClickEliminarHijo=()=>{
-    var hijo_id=props.hijos.id
-    var hijo_expresion=props.hijos.hijo
-    var service = "/expresiones/eliminarRelacion/" + hijo_id + "/" + hijo_expresion
+  const handleClickEliminarHijo=(hijo)=>{
+    var service = "/expresiones/eliminarRelacion/" + hijo.hijo + "/" + props.expresionSeleccionada.id
     adminService(service, "DELETE", {}, (datax) => {
-      console.log("eliminacion de hijos",datax)
+      setSnack({open : true, text: "Se ha eliminado el hijo de la expresión"})
+      props.setReload(!props.reload)
     })
-    setSnack({open : true, text: "Se ha eliminado el hijo de la expresión"})
-    return true
   }
 
   var expresionesHijos= props.expresiones
-
-  console.log("expresiones en hijos", expresionesHijos)
 
   const handleChangeBusquedaHijos = (event) => {
     var expresionHijosBuscada=event.target.value
     expresionesHijos.map(expresionp=>{
       var expresionHijosNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
       var expresionHijosEncontrada= expresionHijosNombre.indexOf(expresionHijosBuscada)
-      console.log("expresion buscada",expresionHijosEncontrada)
       document.getElementById('hijo'+expresionp.t_id).classList.remove("hiddenE")
       if (expresionHijosEncontrada == -1){
         document.getElementById('hijo'+expresionp.t_id).className += " hiddenE";
@@ -127,19 +134,18 @@ function ModalJerarquiaHijos(props){
         }}
         message={<span id="message-id">{snack.text}</span>}
       />
+      <LinearProgress className={classNames([{"hidden" : !loading}, "loadingBar"])}/>
       <List className={classes.listacontenedor}>
         {props.hijos.map(hijo=>(
           <ListItem
             key={hijo.hijo}
             className={classes.listaitemj}
-            // selected={selectedIndex === 1}
           >
             <ListItemText
               primary={hijo.expresion}
-              // secondary={secondary ? 'Secondary text' : null}
             />
             <ListItemSecondaryAction>
-              <IconButton size="small" onClick={handleClickEliminarHijo}>
+              <IconButton size="small" onClick={() => handleClickEliminarHijo(hijo)}>
                 <ClearIcon fontSize="small"/>
               </IconButton>
             </ListItemSecondaryAction>
@@ -162,12 +168,11 @@ function ModalJerarquiaHijos(props){
       </FormControl>
       <List className={classes.listacontenedor}>
         {props.expresiones.map(expresionp=>(
-          // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
           <li 
             id={'hijo'+expresionp.t_id}
             key={expresionp.t_id} 
             className={"sideList"} 
-            onClick={() => addEToList(expresionp.t_id)}>
+            onClick={() => addEToList("hijo"+expresionp.t_id)}>
               {expresionp.t_id + " - " + expresionp.t_term_de + " // " + expresionp.t_term_es}
           </li>
         ))}
@@ -175,7 +180,7 @@ function ModalJerarquiaHijos(props){
       <Button
         variant="contained"
         className={classes.botonAgregar}
-        onClick={checkExistence}
+        onClick={add}
       >
         Agregar
       </Button>

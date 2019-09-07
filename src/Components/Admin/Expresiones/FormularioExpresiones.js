@@ -90,7 +90,7 @@ function FormularioExpresiones(props){
               id="input-with-icon-textfield"
               select
               margin="normal"
-              value={props.letra}
+              value={props.letra ? props.letra : 'A'}
               onChange={handleChange}
               className={classes.TextFielDerecho}
             >
@@ -108,7 +108,6 @@ function FormularioExpresiones(props){
           editor={ ClassicEditor }
           data={props.contenido}
           onChange={ ( event, editor ) => {
-            console.log(editor.getData())
             props.setContenido(editor.getData())
           } }
         />

@@ -28,6 +28,7 @@ const adminService = (service, method, params, next) => {
   var serverUsername = localStore.getObjects("admin_sesion").email
   var serverPassword = localStore.getObjects("admin_sesion").user_password
   var auth = "Basic " + btoa(serverUsername + ":" + serverPassword)
+  // console.log(serverUsername,serverPassword)
   axios({
     method: method,
     // contentType : 'application/json',
