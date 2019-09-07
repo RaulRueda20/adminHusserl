@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/styles';
-import AbortController from "abort-controller"
 
 import Alerts from '../Alerts';
 import {adminService} from '../../js/webServices';

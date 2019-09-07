@@ -30,12 +30,16 @@ export default function Expresiones(props){
     <div>
         <Grid container>
           <Grid item xs={12}>
-            <ListaLetras letraMain={letraMain} setLetraMain={setLetraMain}/>
+            <ListaLetras letraMain={letraMain} setLetraMain={setLetraMain} valorB={valorB} setValorB={setValorB} 
+            emptyB={emptyB} setEmptyB={setEmptyB} cambioLetra={cambioLetra} setCambioLetra={setCambioLetra}
+          />
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={3} style={{borderRight:"1px rgb(240, 240, 240) solid"}}>
-            <Busqueda expresiones={expresiones} setExpresiones={setExpresiones}/><br/>
+            <Busqueda expresiones={expresiones} setExpresiones={setExpresiones} valorB={valorB} setValorB={setValorB} 
+            cambioLetra={cambioLetra}
+            /><br/>
             <ListaExpresiones expresiones={expresiones} idExpresion={idExpresion} setIdExpresion={setIdExpresion}/>
           </Grid>
           <Grid item xs={9} align="center">

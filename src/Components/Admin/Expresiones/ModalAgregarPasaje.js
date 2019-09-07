@@ -18,6 +18,8 @@ import { withStyles } from '@material-ui/styles';
 import {adminService} from '../../../js/webServices';
 import Snackbar from '@material-ui/core/Snackbar';
 
+import '../../../css/pasajes.css';
+
 const modalagregar={
   modalina:{
     width: "50%",
@@ -100,6 +102,19 @@ function ModalAgregarPasaje(props){
   })
   }
 
+  const handleChangeBusquedaAgregar = (event) => {
+    var busquedaAg = event.target.value
+    pasajes.map(pasaje=>{
+      var pasajeNombre=pasaje.ref_libro_de + pasaje.ref_libro_es + pasaje.ref_id
+      var pasajeBuscado= pasajeNombre.indexOf(busquedaAg)
+      console.log("pasajeNombre",pasajeNombre)
+      document.getElementById("agregar"+pasaje.ref_id).classList.remove("hidden")
+      if (pasajeBuscado == -1){
+        document.getElementById("agregar"+pasaje.ref_id).className += " hidden";
+      }
+    })
+  }
+
   return(
     <Modal
       open={props.openAp}
@@ -168,12 +183,13 @@ function ModalAgregarPasaje(props){
               <SearchIcon />
             </InputAdornment>
           }
+          onChange={handleChangeBusquedaAgregar}
         />
         <List className={classes.listacontenedor}>
           {pasajes.map(pasaje=>(
             // <li key={expresionp.t_id} className="sideList" onClick={addEToList(expresionp.t_id)}>
             <li 
-              id={pasaje.ref_id}
+              id={"agregar"+pasaje.ref_id}
               key={pasaje.ref_id} 
               className={"sideList"} 
               onClick={() => addEToList(pasaje)}>
