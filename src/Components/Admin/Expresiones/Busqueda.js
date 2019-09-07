@@ -9,23 +9,21 @@ import { withStyles } from '@material-ui/styles';
 import '../../../css/expresiones.css';
 
 const styles = {
- TextFieldbus:{
+  TextFieldbus:{
     width:"100%"
-   }
- }
-
+  }
+}
 
 function Busqueda(props){
   const { classes } = props;
+  const [valorB, setValorB] = React.useState("")
 
   var expresiones=props.expresiones
-  var valorB=props.valorB
-  var setValorB=props.setValorB
 
   const handleChangeBusquedaExpresiones = (event) => {
     const value=event.target.value
     setValorB(value)
-      expresiones.map(expresion=>{
+    expresiones.map(expresion=>{
       var expresionNombre=expresion.expresion_de  +  expresion.expresion_es +  expresion.id
       var expresionEncontrada=expresionNombre.indexOf(valorB)
       console.log("expresion buscada",valorB)
@@ -36,11 +34,16 @@ function Busqueda(props){
     })
   }
 
+  React.useEffect(()=>{
+    setValorB("")
+  }, [props.reload])
+
   return (
     <FormControl className={classes.TextFieldbus}>
       <InputLabel htmlFor="input-with-icon-adornment">Busqueda por letra</InputLabel>
       <Input
         id="input-with-icon-adornment"
+        value={valorB}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />
