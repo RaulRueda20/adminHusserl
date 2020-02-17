@@ -6,12 +6,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-function Alertas(props){
+function AlertaPasaje(props){
 
   return(
     <Dialog
-      open={props.openAl}
-      onClose={props.handleCloseAl}
+      open={props.openAlP}
+      onClose={props.handleCloseAlP}
       aria-labelledby="simple-dialog-title"
       aria-describedby="simple-dialog-description"
     >
@@ -22,7 +22,7 @@ function Alertas(props){
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleCloseAl}>
+        <Button onClick={props.handleCloseAlP}>
           Cancelar
         </Button>
         <Button onClick={props.accept}>
@@ -33,4 +33,4 @@ function Alertas(props){
   )
 }
 
-export default Alertas;
+export default AlertaPasaje;

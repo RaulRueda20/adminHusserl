@@ -18,31 +18,43 @@ const theme = createMuiTheme({
 
 theme.typography.h1={
   fontSize : "3rem",
-  fontFamily: "DHTitle"
+  fontFamily: "DHTitle",
+  color: "rgba(0,0,0,.9)"
 }
 
 theme.typography.h2={
-  fontSize : "1.20rem",
+  fontSize : "2rem",
   fontFamily: "ROBOTO",
-  fontWeight: "lighter"
+  color: "rgba(0,0,0,.8)",
+  fontWeight: "400"
 }
 
 theme.typography.h3={
-  fontSize : "1.45rem",
+  fontSize : "1.5rem",
   fontFamily: "ROBOTO",
-  fontWeight: "lighter"
+  color: "rgba(0,0,0,.8)",
+  fontWeight: "300"
 }
 
 theme.typography.h4={
-  fontSize : "1rem",
+  fontSize : "1.2rem",
   fontFamily: "ROBOTO",
-  fontWeight: "lighter"
+  color: "rgba(0,0,0,.7)",
+  fontWeight: "300"
 }
 
 theme.typography.h5={
+  fontSize : "1rem",
+  fontFamily: "ROBOTO",
+  fontWeight: "300",
+  color: "rgba(0,0,0,.7)"
+}
+
+theme.typography.h6={
   fontSize : "0.90rem",
   fontFamily: "ROBOTO",
-  fontWeight: "lighter"
+  color: "rgba(0,0,0,.7)",
+  fontWeight: "300"
 }
 
 ReactDOM.render(

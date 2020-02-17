@@ -62,11 +62,19 @@ h1{
 }
 
 .list-container{
-  height: 92.5vh;
+  height: 83.5vh;
   overflow-y: scroll;
   overflow-x: hidden;
   width: auto;
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
+}
+
+.list-containerP{
+  height: 87.5vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: auto;
+  /* padding: 10px 0px; */
 }
 
 .list-item{
@@ -85,11 +93,73 @@ h1{
   height: 20px;
 }
 
-.formLogin{
-  height: 400px;
+ul{
+  list-style: none;
+  margin: 0px;
+  padding: 0px !important;
 }
 
-.gridsBoton{
-  margin-top: 15px !important;
-  width: 100% !important;
+li.sideList{
+  padding: 10px;
+  border-bottom: 1px lightgray solid;
+  cursor: pointer;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  color: rgba(80, 80, 80);
+}
+
+option{
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+li.sideList:hover{
+  background: rgba(0,0,0,0.18);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  opacity: .75;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px grey;  */
+  /* border: 1px rgba(0,0,0, .05) solid; */
+  /* border-radius: 10px; */
+  opacity: .75;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 10, 10, .3); 
+  /* border-radius: 10px; */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(20, 10, 10, .5); 
+}
+
+.selected, .selectedP{
+  background: rgba(0,0,0,0.15);
+}
+
+header{
+  height: 7vh;
+  justify-content: center;
+}
+
+a{
+  color: rgba(80, 80, 80);
+  text-decoration: none;
+}
+
+.selectedButton{
+  color: white !important;
+  background : #38673d !important;
+}
+
+.selectedButton:hover{
+  color: white !important;
+  background : #315a35 !important;
 }

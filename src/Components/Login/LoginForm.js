@@ -20,14 +20,18 @@ const stylesFor = {
   TextField2:{
      justify: 'center',
      width:"100%",
-   }
+  },
+  gridsF : {
+    margin: "7.5vh 2.5vw"
+  }
  }
 
 var setStore = (user, pass) => {
-    var newSession = {"user" : user, "password" : pass}
+    var newSession = {"email" : user, "user_password" : pass}
     newSession['ultimasVisitadas'] = []
     newSession["ultimaVisitada"] = "alfabeto"
-    localStore.setObjects("sesion", newSession)
+    localStore.setObjects("admin_sesion", newSession)
+    document.getElementById("toMain").click()
     // linkTo("main.html")
 }
 
@@ -40,73 +44,72 @@ function LoginForm(props){
 
   function onFormSubmit(event){
     event.preventDefault();
-    if(correo=="" || password == ""){
-      setSnackbar({open:true,variant:"error",message:"Correo o password incorrecto"})
-    }else{
-      setLoading(true);
-      var params = ({"email" : correo, "user_password" : password})
+    var params = {"email" : correo, "user_password" : password}
+    if(correo == "" || password == ""){
+      setSnackbar({open:true,variant:"error",message:"correo o password invalidos"})
+    }else if(!correo && !password){
+      setLoading(true)
+      localStore.setObjects("admin_sesion", params)
       var service = "/login/admin?userId=" + correo + "&password=" + password
       loginService(service, "GET", params, (data) => {
-        console.log(data)
+        console.log("data", data)
         setLoading(false)
-        if(data.data.error == null){
-          console.log("Passed")
-          localStorage.removeItem("admin_sesion")
-          localStore.setObjects("admin_sesion", data.response)
-          document.getElementById("toMain").click()
-        }
+        localStorage.removeItem("admin_sesion")
+        setStore(data.data.response.email, data.data.response.user_password)
       })
-    } 
+    }else{
+      localStorage.removeItem("admin_sesion")
+    }
   }
 
   const handleClose=(event,reason)=>{
     setSnackbar({open:false,variant:snackbar.variant,message:""})
   }
 
-  return (
-    <form onSubmit={onFormSubmit} className="formLogin">
-      <br/><br/>
-      <Typography variant="h3" align="center" gutterBottom >
-        Inicio
-      </Typography>
-      <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
-        <Grid item xs={12} sm={8} lg={7} className="grids">
-          <TextField
-            label="Correo"
-            // variant="outlined"
-            id="custom-css-outlined-input"
-            margin="normal"
-            value={correo}
-            onChange={e => setCorreo(e.target.value)}
-            className={classes.TextField1}
-          />
-        </Grid>
-        <Grid item xs={12} sm={8} lg={7} className="grids">
-          <TextField
-            label="Contraseña"
-            // variant="outlined"
-            id="custom-css-outlined-input"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className={classes.TextField2}
-            type = "password"
-          />
-        </Grid>
-        <Grid item xs={12} sm={8} lg={7} className="gridsBoton">
-          <Grid container justify="flex-end" className="grids">
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-              Ingresar
-              </Button>
+    return (
+
+      <form className={classes.gridsF} onSubmit={onFormSubmit}>
+        <br/><br/>
+        <Typography variant="h4" align="center" gutterBottom >
+          Inicio
+        </Typography><br/><br/>
+        <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
+            <TextField
+              label="Usuario"
+              // variant="outlined"
+              id="custom-css-outlined-input"
+              margin="normal"
+              value={correo}
+              onChange={e => setCorreo(e.target.value)}
+              className={classes.TextField1}
+            />
+          </Grid>
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
+            <TextField
+              label="Contraseña"
+              // variant="outlined"
+              id="custom-css-outlined-input"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className={classes.TextField2}
+              type = "password"
+            />
+          </Grid>
+          <Grid item xs={12} sm={8} md={6} lg={5} className="grids">
+            <Grid container justify="flex-end" className="grids">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                Ingresar
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-
-      </Grid>
       <Snackbars snackbar={snackbar} handleClose={handleClose} lang={props.lang}/>
       <LinearProgress className={classNames([{"hidden" : !loading}, "loadingBar"])}/>
       <Link id="toMain" to="/main"/>
