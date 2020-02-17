@@ -68,7 +68,6 @@ function InfoPasajes(props){
   const [expresionId, setExpresionId] = React.useState("")
   const [openAlP, setOpenAlP] = React.useState(false);
   const [snack, setSnack] = React.useState({open : false, text : ""})
-
   const [expresionPasaje, setExpresionPasaje] = React.useState("")
   const [expresionPasajeName, setExpresionPasajeName] = React.useState("")
   const [traduccionPasaje, setTraduccionPasaje] = React.useState("")
@@ -77,7 +76,7 @@ function InfoPasajes(props){
   
   React.useEffect(() => {
     const pasajeSeleccionado = props.pasajeSeleccionado
-    console.log("pasaje",pasajeSeleccionado)
+    // console.log("pasaje",pasajeSeleccionado)
     setExpresionClave(pasajeSeleccionado.clave)
     setExpresionId(pasajeSeleccionado.ref_id)
     setExpresionPasaje(pasajeSeleccionado.ref_def_de)
@@ -93,12 +92,11 @@ function InfoPasajes(props){
   const handleClickiNuevoPasaje=()=>{
     props.setPasajeSeleccionado(emptyPasajeNuevo)
     props.setPasajeSeleccionadoId("")
-
     setOpcionGuardado("nuevo")
   }
 
   const handleClickEditarPasaje=()=>{
-    console.log(expresionPasaje)
+    console.log("expresion pasajes",expresionPasaje)
     var params = {
       "ref_id": btoa(expresionId),
       "pasaje_de" : btoa(expresionPasaje),
@@ -115,7 +113,9 @@ function InfoPasajes(props){
           props.setReload(!props.reload)
         })
       }else{
+        console.log("params", params)
         var servicio = "/referencias/editarPasaje/" + expresionId
+        console.log("id",expresionId)
         adminService(servicio, "POST", JSON.stringify(params), (data) => {
           setSnack({open : true, text: "Pasaje editado con éxito"})
           console.log("Edición de pasajes", data)
