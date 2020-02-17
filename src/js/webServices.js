@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as localStore from './localStore';
 const serverUrl = "http://localhost:1938/api/v1.0"
+// const serverUrl = "http://localhost:8080/api/v1.0"
 
 const webService = (service, method, params, next) => {
   var serverUsername = localStore.getObjects("sesion").user
@@ -30,7 +31,7 @@ const adminService = (service, method, params, next) => {
   var auth = "Basic " + btoa(serverUsername + ":" + serverPassword)
   axios({
     method: method,
-    // contentType : 'application/json',
+    contentType : 'application/json',
     url: serverUrl + service,
     data: params,
     headers: {

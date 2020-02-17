@@ -7,9 +7,6 @@ const styles = {
   footerText : {
     paddingTop: "22px !important",
     color: "rgba(255,255,255, .9)",
-  },
-  footerBody: {
-    marginTop: 80
   }
 }
 
@@ -18,7 +15,7 @@ class Footer extends React.Component{
   render(){
     const { classes } = this.props;
     return(
-      <div className={classes.footerBody}>
+      <div>
         <Typography variant="h4" gutterBottom align="center">
            El proyecto del Diccionario Husserl es desarrollado por Antonio Zirión Quijano en el Instituto de Investigaciones Filosóficas de la Universidad Nacional Autónoma de México.
         </Typography>

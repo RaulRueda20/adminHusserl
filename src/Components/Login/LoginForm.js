@@ -7,10 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/styles';
-import AbortController from "abort-controller"
 
-import Alerts from '../Alerts';
-import {adminService} from '../../js/webServices';
+import Snackbars from './Snackbars';
+import {adminService, loginService} from '../../js/webServices';
 import * as localStore from '../../js/localStore';
 
 const stylesFor = {
@@ -32,92 +31,87 @@ var setStore = (user, pass) => {
     // linkTo("main.html")
 }
 
-class LoginForm extends React.Component {
+function LoginForm(props){
+  const {classes}=props;
+  const [correo, setCorreo]=React.useState("");
+  const [password, setPassword]=React.useState("");
+  const [snackbar, setSnackbar]=React.useState({open:false, variant:"", message:""});
+  const [loading, setLoading]=React.useState(false);
 
-  state={  correo:'', password:'', alert : false, mensajeAlert : "", tituloAlert: "", loading : false}
-
-   onFormSubmit = (event) => {
+  function onFormSubmit(event){
     event.preventDefault();
-    this.setState({loading : true})
-    var as = {"email" : this.state.correo, "user_password" : this.state.password}
-    localStore.setObjects("admin_sesion", as)
-    var service = "/login/admin?userId=" + this.state.correo + "&password=" + this.state.password
-    adminService(service, "GET", {}, (data) => {
-      console.log(data)
-      this.setState({loading : false})
-      if(data.data.error == null){
-        console.log("Passed")
-        localStorage.removeItem("admin_sesion")
-        localStore.setObjects("admin_sesion", data.response)
-        document.getElementById("toMain").click()
-      }else{
-        this.setState({mensajeAlert : data.data.error, alert : true, tituloAlert:"Usuario o Contreña Incorrectos"})
-        localStorage.removeItem("admin_sesion")
-      }
-    })
+    if(correo=="" || password == ""){
+      setSnackbar({open:true,variant:"error",message:"Correo o password incorrecto"})
+    }else{
+      setLoading(true);
+      var params = ({"email" : correo, "user_password" : password})
+      var service = "/login/admin?userId=" + correo + "&password=" + password
+      loginService(service, "GET", params, (data) => {
+        console.log(data)
+        setLoading(false)
+        if(data.data.error == null){
+          console.log("Passed")
+          localStorage.removeItem("admin_sesion")
+          localStore.setObjects("admin_sesion", data.response)
+          document.getElementById("toMain").click()
+        }
+      })
+    } 
   }
 
-
-  handleAlertClose = () => {
-    this.setState({alert:false})
+  const handleClose=(event,reason)=>{
+    setSnackbar({open:false,variant:snackbar.variant,message:""})
   }
 
-
-  render(){
-    const{ correo, password } = this.state
-    const { classes } = this.props;
-
-    return (
-      <form onSubmit={this.onFormSubmit}>
-        <br/><br/>
-        <Typography variant="h3" align="center" gutterBottom >
-          Inicio
-        </Typography>
-        <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
-            <TextField
-              label="Correo"
-              // variant="outlined"
-              id="custom-css-outlined-input"
-              margin="normal"
-              value={this.state.correo}
-              onChange={e => this.setState({correo: e.target.value})}
-              className={classes.TextField1}
-            />
-          </Grid>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
-            <TextField
-              label="Contraseña"
-              // variant="outlined"
-              id="custom-css-outlined-input"
-              value={this.state.password}
-              onChange={e => this.setState({password: e.target.value})}
-              className={classes.TextField2}
-              type = "password"
-            />
-          </Grid>
-          <Grid item xs={12} sm={8} lg={7} className="grids">
-            <Grid container justify="flex-end" className="grids">
-              <Grid item>
-                <Button
-                  onClick={this.onSubmitRegistre}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                Ingresar
-                </Button>
-              </Grid>
+  return (
+    <form onSubmit={onFormSubmit} className="formLogin">
+      <br/><br/>
+      <Typography variant="h3" align="center" gutterBottom >
+        Inicio
+      </Typography>
+      <Grid className="gridsF" container direction="column" alignItems="center" spacing={2}>
+        <Grid item xs={12} sm={8} lg={7} className="grids">
+          <TextField
+            label="Correo"
+            // variant="outlined"
+            id="custom-css-outlined-input"
+            margin="normal"
+            value={correo}
+            onChange={e => setCorreo(e.target.value)}
+            className={classes.TextField1}
+          />
+        </Grid>
+        <Grid item xs={12} sm={8} lg={7} className="grids">
+          <TextField
+            label="Contraseña"
+            // variant="outlined"
+            id="custom-css-outlined-input"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className={classes.TextField2}
+            type = "password"
+          />
+        </Grid>
+        <Grid item xs={12} sm={8} lg={7} className="gridsBoton">
+          <Grid container justify="flex-end" className="grids">
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+              Ingresar
+              </Button>
             </Grid>
           </Grid>
-
         </Grid>
-        <Alerts mensaje={this.state.mensajeAlert} open={this.state.alert} handleClose={this.handleAlertClose} titulo={this.state.tituloAlert}/>
-        <LinearProgress className={classNames([{"hidden" : !this.state.loading}, "loadingBar"])}/>
-        <Link id="toMain" to="/main"/>
-      </form>
-    )
-  }
+
+      </Grid>
+      <Snackbars snackbar={snackbar} handleClose={handleClose} lang={props.lang}/>
+      <LinearProgress className={classNames([{"hidden" : !loading}, "loadingBar"])}/>
+      <Link id="toMain" to="/main"/>
+    </form>
+  )
 };
 
 export default withStyles(stylesFor)(LoginForm);
