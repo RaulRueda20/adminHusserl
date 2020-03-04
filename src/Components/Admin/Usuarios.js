@@ -126,13 +126,10 @@ function Usuarios() {
 
   React.useEffect(() => {
     adminService('/login/all', 'GET', {}, (response) => {
-      // console.log("usuarios", response.data.response)
       var r = []
       for(var i in response.data.response){
-        setUsuarioId(response.data.response[i].id)
-        console.log("respuesta", response.data.response[i].id)
-        // r.push(createData(usuario.id, usuario.nombre, usuario.apellidos, usuario.pais, usuario.email, usuario.institucion, getFecha(usuario.registro), getFecha(usuario.lastaccess)))
-        // console.log(r)
+        console.log(response.data.response[i])
+        r.push(createData(response.data.response[i].id, response.data.response[i].nombre, response.data.response[i].apellidos, response.data.response[i].pais, response.data.response[i].email, response.data.response[i].institucion, response.data.response[i].lastaccess, response.data.response[i].registro))
       }
       setRows(r)
     })
@@ -146,20 +143,6 @@ function Usuarios() {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {/* <TableCell
-                key={row.id}
-                align={row.numeric ? 'right' : 'left'}
-                padding={row.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === row.id ? order : false}
-              >
-                <TableSortLabel
-                  active={orderBy === row.id}
-                  direction={order}
-                  onClick={createSortHandler(row.id)}
-                >
-                  {row.label}
-                </TableSortLabel>
-              </TableCell> */}
               <TableCell align="right">ID</TableCell>
               <TableCell align="right">Nombre</TableCell>
               <TableCell align="right">Apellidos</TableCell>
