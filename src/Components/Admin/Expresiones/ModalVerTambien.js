@@ -78,6 +78,17 @@ function ModalVerTambien(props){
   const [reload, setReload] = React.useState(true)
   const [open, setOpen] = React.useState(false);
 
+  React.useEffect(() => {
+    if(props.expresion.id != null){
+      var service = "/vertambien/" + props.expresion.id
+      adminService(service, "GET", {}, response => {
+        console.log(response)
+        // setListaVerTambien(response.data.response)
+      })
+    }
+    
+  }, [props.expresion.id, reload])
+
   function handleOpenModal() {
     setOpen(true);
   };
@@ -135,19 +146,6 @@ function ModalVerTambien(props){
     })
   }
 
-  // var expresionesHijos= props.expresiones
-
-  React.useEffect(() => {
-    if(props.expresion.id != null){
-      var service = "/vertambien/" + props.expresion.id
-      adminService(service, "GET", {}, response => {
-        setListaVerTambien(response.data.response)
-        console.log(response)
-      })
-    }
-    
-  }, [props.expresion.id, reload])
-
   const handleChangeBusquedaVerTambien = (event) => {
     var expresionVertBuscada=event.target.value
     expresiones.map(expresionp=>{
@@ -202,9 +200,9 @@ function ModalVerTambien(props){
             message={<span id="message-id">{snack.text}</span>}
           />
           <LinearProgress className={classNames([{"hidden" : !loading}, "loadingBar"])}/>
-          <List className={classes.listacontenedor}>
+          {/* <List className={classes.listacontenedor}>
             {listaVerTambien.map(expresion=>{
-              console.log(expresion)
+              console.log(listaVerTambien)
               return (
                 <ListItem
                   key={expresion.id}
@@ -220,7 +218,7 @@ function ModalVerTambien(props){
                   </ListItemSecondaryAction>
                 </ListItem>)
             })}
-          </List>
+          </List> */}
           <Typography variant="h3">
             Expresiones
           </Typography>

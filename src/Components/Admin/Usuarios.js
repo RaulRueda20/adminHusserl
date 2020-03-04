@@ -107,11 +107,11 @@ function Usuarios() {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([])
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [usuarios, setUsuarios] = React.usetState([])
+  const [usuarioId, setUsuarioId] = React.useState([])
 
-  React.useEffect(()=>{
-    var service = '/listausuarios'
-  })
+  // React.useEffect(()=>{
+  //   var service = '/listausuarios'
+  // })
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -126,15 +126,17 @@ function Usuarios() {
 
   React.useEffect(() => {
     adminService('/login/all', 'GET', {}, (response) => {
-      console.log("usuarios", response)
+      // console.log("usuarios", response.data.response)
       var r = []
       for(var i in response.data.response){
-        var usuario = response.data.response[i]
-        r.push(createData(usuario.id, usuario.nombre, usuario.apellidos, usuario.pais, usuario.email, usuario.institucion, getFecha(usuario.registro), getFecha(usuario.lastaccess)))
+        setUsuarioId(response.data.response[i].id)
+        console.log("respuesta", response.data.response[i].id)
+        // r.push(createData(usuario.id, usuario.nombre, usuario.apellidos, usuario.pais, usuario.email, usuario.institucion, getFecha(usuario.registro), getFecha(usuario.lastaccess)))
+        // console.log(r)
       }
       setRows(r)
     })
-  }, [true])
+  }, [])
 
   return (
     <div className={classes.root}>

@@ -47,7 +47,7 @@ function LoginForm(props){
     var params = {"email" : correo, "user_password" : password}
     if(correo == "" || password == ""){
       setSnackbar({open:true,variant:"error",message:"correo o password invalidos"})
-    }else if(!correo && !password){
+    }else if(correo && password){
       setLoading(true)
       localStore.setObjects("admin_sesion", params)
       var service = "/login/admin?userId=" + correo + "&password=" + password

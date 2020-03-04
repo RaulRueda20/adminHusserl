@@ -4,18 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Divider from "@material-ui/core/Divider";
 import { withStyles } from '@material-ui/styles';
 
-// import ModalJerarquia from './ModalJerarquia';
-// import Alertas from './Alertas';
-// import ModalVerTambien from './ModalVerTambien';
-// import ModalAdmin from './ModalAdmin';
-
 import MenuBarra from './MenuBarra';
 
 import {adminService} from '../../../js/webServices';
 
-// import editar from "../../../Imagenes/editar.png";
-// import Create from "@material-ui/icons/Create";
-// import Delete from "@material-ui/icons/Delete";
 
 const infoExpresiones= {
   titulo:{
