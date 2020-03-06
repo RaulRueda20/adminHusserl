@@ -90,16 +90,19 @@ function createData(id_usuario, nombre_usuario, apellido_usuario, pais_usuario, 
 
 const useStyles2 = makeStyles(theme => ({
   root: {
-    // width: '100%',
     margin: theme.spacing(3),
     textAlign : "center",
   },
   table: {
     minWidth: 500,
+    minHeight: 700
   },
   tableWrapper: {
     overflowX: 'auto',
   },
+  paginador : {
+    minWidth: 750
+  }
 }));
 
 function Usuarios() {
@@ -108,10 +111,6 @@ function Usuarios() {
   const [rows, setRows] = React.useState([])
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [usuarioId, setUsuarioId] = React.useState([])
-
-  // React.useEffect(()=>{
-  //   var service = '/listausuarios'
-  // })
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -190,6 +189,7 @@ function Usuarios() {
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 ActionsComponent={TablePaginationActions}
+                className={classes.paginador}
               />
             </TableRow>
           </TableFooter>

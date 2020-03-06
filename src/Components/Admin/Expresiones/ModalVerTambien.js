@@ -82,8 +82,7 @@ function ModalVerTambien(props){
     if(props.expresion.id != null){
       var service = "/vertambien/" + props.expresion.id
       adminService(service, "GET", {}, response => {
-        console.log(response)
-        // setListaVerTambien(response.data.response)
+        setListaVerTambien(response.data.response)
       })
     }
     
@@ -147,12 +146,14 @@ function ModalVerTambien(props){
   }
 
   const handleChangeBusquedaVerTambien = (event) => {
+    // console.log("expresiones",props.expresiones)
     var expresionVertBuscada=event.target.value
-    expresiones.map(expresionp=>{
+    props.expresiones.map(expresionp=>{
       var expresionVertNombre=expresionp.t_id + expresionp.t_term_de + expresionp.t_term_es
+      // console.log("expresionVertNombre", expresionVertNombre)
       var expresionVertEncontrada= expresionVertNombre.indexOf(expresionVertBuscada)
-      // console.log("expresion buscada",expresionVertBuscada)
-      document.getElementById("vertam"+expresionp.t_id).classList.remove("hiddenE")
+      // console.log("expresion buscada",expresionVertEncontrada)
+      document.getElementById("vertam"+props.expresion.t_id).classList.remove("hiddenE")
       if (expresionVertEncontrada == -1){
         document.getElementById("vertam"+expresionp.t_id).className += " hiddenE";
       }
@@ -200,7 +201,7 @@ function ModalVerTambien(props){
             message={<span id="message-id">{snack.text}</span>}
           />
           <LinearProgress className={classNames([{"hidden" : !loading}, "loadingBar"])}/>
-          {/* <List className={classes.listacontenedor}>
+          <List className={classes.listacontenedor}>
             {listaVerTambien.map(expresion=>{
               console.log(listaVerTambien)
               return (
@@ -218,7 +219,7 @@ function ModalVerTambien(props){
                   </ListItemSecondaryAction>
                 </ListItem>)
             })}
-          </List> */}
+          </List>
           <Typography variant="h3">
             Expresiones
           </Typography>
